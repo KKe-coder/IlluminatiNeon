@@ -24,7 +24,7 @@
 - カラー分析して、似たカラーの投稿を探す。(GoogleAI: Vision AI)
 
 ## 設計書
-- UI Flows:画像
+- [UI Flows](https://user-images.githubusercontent.com/72348241/103531119-0c349680-4ecc-11eb-8eb4-77e336aa7d92.jpg)
 - [ワイヤーフレーム](https://drive.google.com/file/d/17SOuHc5nwXeLgqAALM4Vfok0yPFAS4U-/view?usp=sharing)
 - [ER図](https://drive.google.com/file/d/1L0wyXRwRh0ZhM3KTA0_3efIgPa-2TFYw/view?usp=sharing)
 - [テーブル定義書](https://docs.google.com/spreadsheets/d/1xBHuTQjqQHDeUyWBLZMeyqErV9b5m90aDCSAq-uzbc4/edit?usp=sharing)
