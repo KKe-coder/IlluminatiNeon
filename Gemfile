@@ -69,7 +69,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # KKe-coder added
 gem 'activeadmin'
 gem 'devise'
-gem 'slim'
+gem 'slim-rails'
 gem 'html2slim'
 gem 'refile', require: "refile/rails", github: 'manfe/refile'
 gem 'refile-mini_magick'
