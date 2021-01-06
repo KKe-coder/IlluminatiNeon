@@ -1,2 +1,19 @@
 h1 Homes#top
-p Find me in app/views/homes/top.html.slim
+
+- if user_signed_in?
+
+  p welcome #{@user.name} !
+
+  p Your Murmurs...
+
+  - @user.murmurs.each do |murmur|
+    = murmur.body
+    br
+
+  = form_with(model:[@user, @murmur], local:true) do |f|
+    = f.text_area :body, placeholder: "Murmur"
+    = f.submit
+
+- else
+
+  p hello!!!Please login.
