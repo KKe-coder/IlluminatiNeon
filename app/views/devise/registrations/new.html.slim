@@ -1,6 +1,6 @@
 h2
   | Sign up
-= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+= form_with model: @user, url: user_registration_path, id: 'new_user', class: 'new_user', local: true do |f|
   = render "devise/shared/error_messages", resource: resource
 
   .field
@@ -11,6 +11,10 @@ h2
     = f.label :email
     br
     = f.email_field :email, autofocus: true, autocomplete: "email"
+  .field
+    = f.label :residence
+    br
+    = f.select :residence, options_for_select(User.residences.keys)
   .field
     = f.label :password
     - if @minimum_password_length
