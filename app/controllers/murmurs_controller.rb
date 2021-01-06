@@ -9,6 +9,8 @@ class MurmursController < ApplicationController
   end
 
   def destroy
+    Murmur.find_by(user_id: params[:user_id], id: params[:id]).destroy
+    redirect_to request.referer
   end
 
   private

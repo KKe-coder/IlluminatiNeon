@@ -8,11 +8,14 @@ h1 Homes#top
 
   - @user.murmurs.each do |murmur|
     = murmur.body
+    - if murmur.user == current_user
+      = link_to "Delete!!", user_murmur_path(murmur.user_id, murmur.id), method: :delete
     br
 
   = form_with(model:[@user, @murmur], local:true) do |f|
     = f.text_area :body, placeholder: "Murmur"
     = f.submit
+
 
 - else
 
