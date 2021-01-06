@@ -19,4 +19,6 @@ class User < ApplicationRecord
 
   enum is_deleted: { 有効: false, 退会済: true }
 
+  has_many :murmurs, dependent: :destroy
+
 end

@@ -7,4 +7,8 @@ Rails.application.routes.draw do
 
   root to: 'homes#top'
 
+  resources :users do
+    resources :murmurs, only: [:create, :destroy]
+  end
+
 end
