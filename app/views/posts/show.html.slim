@@ -32,7 +32,10 @@ p
   strong  #{@post.place}
 #star-rate
 
-h1 -
+p
+  |
+  = link_to "編集する", edit_post_path(@post.id)
+h1 ---
 
 javascript:
   $('#star-rate').raty({
