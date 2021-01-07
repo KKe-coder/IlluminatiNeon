@@ -2,8 +2,6 @@ h1 Homes#top
 
 - if user_signed_in?
 
-  p welcome #{@user.name} !
-
   p Your Murmurs...
 
   - @user.murmurs.each do |murmur|
