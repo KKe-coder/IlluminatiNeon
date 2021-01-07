@@ -30,13 +30,12 @@ p
 p
   |場所
   strong  #{@post.place}
-span id="star-rate"
+#star-rate
 
 h1 -
 
 javascript:
-  $(document).on('turbolinks:load', function(){
-   $('#star-rate').raty({
+  $('#star-rate').raty({
      size: 36,
      starOff: "#{asset_path('star-off.png')}",
      starOn: "#{asset_path('star-on.png')}",
@@ -44,7 +43,9 @@ javascript:
      half: true,
      readOnly: true,
      score: "#{@post.rate.to_f}",
-   });
   });
 
-
+javascript:
+  window.addEventListener('popstate', function(e) {
+    location.reload();
+  });

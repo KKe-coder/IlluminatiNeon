@@ -1,5 +1,4 @@
 javascript:
-  $(document).on('turbolinks:load', function(){
    $('#star-rate-#{post.id}').raty({
      size: 36,
      starOff: "#{asset_path('star-off.png')}",
@@ -9,4 +8,3 @@ javascript:
      readOnly: true,
      score: "#{post.rate.to_f}",
    });
-  });
