@@ -1,0 +1,42 @@
+h1 Posts#index
+p Find me in app/views/posts/index.html.slim
+
+- @posts.each do |post|
+  p
+    |画像
+  = attachment_image_tag post, :image
+  p
+    |タイトル
+    strong
+      |&nbsp;
+      = link_to post.title, post_path(post.id)
+  p
+    |投稿者
+    strong  #{post.user.name}
+  p
+    |投稿日時
+    strong  #{post.created_at.strftime('%Y/%m/%d %H:%M')}
+  p
+    |居住地
+    strong  #{post.user.residence}
+  p
+    |投稿者
+    strong  #{post.user.name}
+  p
+    |カテゴリ
+    strong  #{post.category}
+  p
+    |カラー
+    strong  #{post.color}
+  p
+    |場所
+    strong  #{post.place}
+
+  p
+    |評価 &nbsp;
+    span id="star-rate-#{post.id}"
+
+  h1 -
+
+  = render 'devise/shared/star', post: post
+

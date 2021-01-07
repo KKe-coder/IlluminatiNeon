@@ -1,0 +1,54 @@
+h1 Posts#show
+p Find me in app/views/posts/show.html.slim
+
+= link_to '一覧に戻る', posts_path
+
+p
+  |画像
+= attachment_image_tag @post, :image
+p
+  |タイトル
+  strong  #{@post.title}
+p
+  |投稿者
+  strong  #{@post.user.name}
+p
+  |投稿日時
+  strong  #{@post.created_at.strftime('%Y/%m/%d %H:%M')}
+p
+  |居住地
+  strong  #{@post.user.residence}
+p
+  |カテゴリ
+  strong  #{@post.category}
+p
+  |カラー
+  strong  #{@post.color}
+p
+  |場所
+  strong  #{@post.place}
+#star-rate
+
+p
+  |
+  = link_to "編集する", edit_post_path(@post.id)
+p
+  |
+  = link_to "削除する", post_path(@post.id), method: :delete, "data-confirm" => "本当に削除しますか?"
+h1 ---
+
+javascript:
+  $('#star-rate').raty({
+     size: 36,
+     starOff: "#{asset_path('star-off.png')}",
+     starOn: "#{asset_path('star-on.png')}",
+     starHalf: "#{asset_path('star-half.png')}",
+     half: true,
+     readOnly: true,
+     score: "#{@post.rate.to_f}",
+  });
+
+javascript:
+  window.addEventListener('popstate', function(e) {
+    location.reload();
+  });
