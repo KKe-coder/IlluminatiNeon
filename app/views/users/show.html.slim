@@ -52,3 +52,9 @@ p other User page...
 - User.all.each do |user|
   = link_to user.name, user_path(user.id)
   br
+
+p Posts
+
+- @user.posts.each do |post|
+  = link_to post.title, post_path(post.id)
+  br
