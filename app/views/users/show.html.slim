@@ -17,10 +17,20 @@ h2
       tr
         th your name
         th your residence
+        th your following
+        th your follower
     tbody
       tr
         td #{@user.name}
         td #{@user.residence}
+        td
+          - @user.followings.reverse.each do |following|
+            | #{following.name}
+            br
+        td
+          - @user.followers.reverse.each do |follower|
+            | #{follower.name}
+            br
 - else
   table.table
     thead
@@ -31,12 +41,14 @@ h2
       tr
         td #{User.find(params[:id]).name}
         td #{User.find(params[:id]).residence}
+  - if current_user.following?(User.find(params[:id]))
+    = link_to "フォロー解除", user_relationships_path(User.find(params[:id]).id), method: :delete, class: "btn btn-primary"
+  - else
+    = link_to "フォローする", user_relationships_path(User.find(params[:id]).id), method: :post, class: "btn btn-success"
 
 
 p other User page...
 
-br
-br
 - User.all.each do |user|
   = link_to user.name, user_path(user.id)
   br
