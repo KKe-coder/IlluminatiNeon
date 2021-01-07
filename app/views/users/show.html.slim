@@ -1,0 +1,42 @@
+h1 Users#show
+p Find me in app/views/users/show.html.slim
+
+p welcome #{@user.name} !
+
+h2
+  - if User.find(params[:id]) == current_user
+    |Your page.
+  - else
+    |now in &nbsp;
+    strong #{User.find(params[:id]).name}
+    |'s page.
+
+- if User.find(params[:id]) == current_user
+  table.table
+    thead
+      tr
+        th your name
+        th your residence
+    tbody
+      tr
+        td #{@user.name}
+        td #{@user.residence}
+- else
+  table.table
+    thead
+      tr
+        th #{User.find(params[:id]).name}'s name
+        th #{User.find(params[:id]).name}'s residence
+    tbody
+      tr
+        td #{User.find(params[:id]).name}
+        td #{User.find(params[:id]).residence}
+
+
+p other User page...
+
+br
+br
+- User.all.each do |user|
+  = link_to user.name, user_path(user.id)
+  br
