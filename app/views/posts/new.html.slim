@@ -1,2 +1,37 @@
 h1 Posts#new
 p Find me in app/views/posts/new.html.slim
+
+= form_with model:@post, local:true do |f|
+  = f.label :image
+  = f.attachment_field :image
+  br
+  = f.label :title
+  = f.text_field :title
+  br
+  = f.label :category
+  = f.select :category, options_for_select(Post.categories.keys)
+  br
+  = f.label :color
+  = f.select :color, options_for_select(Post.colors.keys)
+  br
+  = f.label :place
+  = f.select :place, options_for_select(Post.places.keys)
+  br
+  span#star
+    = f.label :rate
+    = f.hidden_field :rate, id: :post_star
+  br
+  = f.label :impression
+  = f.text_field :impression
+  br
+  = f.submit 'Go'
+
+javascript:
+ $('#star').raty({
+   size: 36,
+   starOff: "#{asset_path('star-off.png')}",
+   starOn: "#{asset_path('star-on.png')}",
+   starHalf: "#{asset_path('star-half.png')}",
+   scoreName: 'post[rate]',
+   half: true,
+ });

@@ -17,9 +17,10 @@ class User < ApplicationRecord
    沖縄県:47
   }
 
-  enum is_deleted: { 有効: false, 退会済: true }
+  enum is_deleted: { 入会中: false, 退会済: true }
 
   has_many :murmurs, dependent: :destroy
+  has_many :posts, dependent: :destroy
 
   has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
