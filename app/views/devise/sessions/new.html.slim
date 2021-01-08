@@ -15,4 +15,8 @@ h2
       = f.label :remember_me
   .actions
     = f.submit "Log in"
+
+p
+  |
+  = flash[:danger]
 = render "devise/shared/links"
