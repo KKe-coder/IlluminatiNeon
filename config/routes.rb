@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   root to: 'homes#top'
 
-  resources :users, only: [:show] do
+  resources :users, only: [:show, :edit] do
     resources :murmurs, only: [:create, :destroy]
     resource :relationships, only: [:create, :destroy]
   end
