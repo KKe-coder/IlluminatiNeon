@@ -14,7 +14,7 @@ br
       | ♡ #{@post.favorites.count} いいね
 p
   |画像
-= attachment_image_tag @post, :image
+  = attachment_image_tag @post, :image, :fill, 40, 40
 p
   |タイトル
   strong  #{@post.title}
@@ -36,7 +36,37 @@ p
 p
   |場所
   strong  #{@post.place}
-#star-rate
+
+p
+  |評価
+  <span id="star-rate-#{@post.id}"></span>
+  = render 'devise/shared/star', object: @post
+
+p
+  |レビューの平均評価
+  #starave
+
+p
+  | レビュー件数: #{@post.reviews.count}
+- @post.reviews.each do |review|
+  p
+    = attachment_image_tag review.user, :profile_image, :fill, 20, 20
+    | #{review.user.name} #{review.comment}
+    <span id="star-rate-#{review.id}"></span>
+    = render 'devise/shared/star', object: review
+    - if review.user == current_user
+      = link_to "Delete", post_review_path(review.post, review), method: :delete, class: "btn btn-danger"
+
+br
+= form_with(model:[@post, @review], local: true) do |f|
+  = f.text_area :comment, placeholder: "Comment Please"
+  br
+  span#starreview
+    = f.label :rate
+    = f.hidden_field :rate, id: :review_star
+  br
+  = f.submit "Create Review"
+br
 
 p
   |
@@ -47,17 +77,27 @@ p
 h1 ---
 
 javascript:
-  $('#star-rate').raty({
+  window.addEventListener('popstate', function(e) {
+    location.reload();
+  });
+
+javascript:
+ $('#starreview').raty({
+   size: 20,
+   starOff: "#{asset_path('star-off.png')}",
+   starOn: "#{asset_path('star-on.png')}",
+   starHalf: "#{asset_path('star-half.png')}",
+   scoreName: 'review[rate]',
+   half: true,
+ });
+
+javascript:
+   $('#starave').raty({
      size: 36,
      starOff: "#{asset_path('star-off.png')}",
      starOn: "#{asset_path('star-on.png')}",
      starHalf: "#{asset_path('star-half.png')}",
      half: true,
      readOnly: true,
-     score: "#{@post.rate.to_f}",
-  });
-
-javascript:
-  window.addEventListener('popstate', function(e) {
-    location.reload();
-  });
+     score: "#{@post.reviews.average(:rate).to_f}",
+   });

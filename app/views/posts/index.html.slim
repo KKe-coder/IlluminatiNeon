@@ -4,7 +4,7 @@ p Find me in app/views/posts/index.html.slim
 - @posts.each do |post|
   p
     |画像
-  = attachment_image_tag post, :image
+  = attachment_image_tag post, :image, :fill, 40, 40
   p
     |タイトル
     strong
@@ -38,5 +38,5 @@ p Find me in app/views/posts/index.html.slim
 
   h1 -
 
-  = render 'devise/shared/star', post: post
+  = render 'devise/shared/star', object: post
 
