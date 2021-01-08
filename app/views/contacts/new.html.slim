@@ -1,0 +1,9 @@
+h5  お問合せフォーム
+
+= form_with model: @contact do |f|
+  = f.label :name, "お名前"
+  = f.text_field :name
+  br
+  = f.label :message, "お問い合わせ内容"
+  = f.text_field :message
+  = f.submit "メール送信"
