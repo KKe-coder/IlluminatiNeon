@@ -1,8 +1,7 @@
 h1 Users#edit
 p Find me in app/views/users/edit.html.slim
 
-= form_with model: @user, url: user_registration_path, id: 'new_user', class: 'new_user', local: true do |f|
-  = render "devise/shared/error_messages", resource: resource
+= form_with model: @user, url: user_path(@user.id), local: true do |f|
 
   .field
     = f.label :profile_image
@@ -19,19 +18,6 @@ p Find me in app/views/users/edit.html.slim
   .field
     = f.label :residence
     br
-    = f.select :residence, options_for_select(User.residences.keys)
-  .field
-    = f.label :password
-    - if @minimum_password_length
-      em
-        | (
-        = @minimum_password_length
-        |  characters minimum)
-    br
-    = f.password_field :password, autocomplete: "new-password"
-  .field
-    = f.label :password_confirmation
-    br
-    = f.password_field :password_confirmation, autocomplete: "new-password"
+    = f.select :residence, options_for_select(User.residences.keys, selected: @user.residence)
   .actions
-    = f.submit "Sign up"
+    = f.submit "Finish Edit"
