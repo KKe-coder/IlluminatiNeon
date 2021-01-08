@@ -19,4 +19,8 @@ Rails.application.routes.draw do
 
   resource :contacts, only: [:new, :create]
 
+  get '/unsubscribe', to: 'users#unsubscribe', as: 'unsubscribe'
+  patch '/unsubscribe', to: 'users#withdraw', as: 'withdraw'
+
+
 end

@@ -21,3 +21,5 @@ p Find me in app/views/users/edit.html.slim
     = f.select :residence, options_for_select(User.residences.keys, selected: @user.residence)
   .actions
     = f.submit "Finish Edit"
+
+= link_to "退会をご希望ですか？", unsubscribe_path
