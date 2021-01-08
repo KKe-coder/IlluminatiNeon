@@ -1,7 +1,22 @@
 class UsersController < ApplicationController
 
   def show
-    @user = current_user
+    @user = User.find(params[:id])
+
+  end
+
+  def followings
+    @user = User.find(params[:id])
+    @users = @user.followings
+    @murmurs = Murmur.where(user_id: @users.ids)
+    @posts = Post.where(user_id: @users.ids)
+  end
+
+  def followers
+    @user = User.find(params[:id])
+    @users = @user.followers
+    @murmurs = Murmur.where(user_id: @users.ids)
+    @posts = Post.where(user_id: @users.ids)
   end
 
   def edit

@@ -1,0 +1,21 @@
+h1 Users#followers #{@user.name}
+p Find me in app/views/users/followers.html.slim
+
+table.table
+  thead
+    th
+      フォロワー一覧
+    th
+      フォロワー投稿一覧
+    th
+      フォロワーつぶやき一覧
+  tbody
+    th
+      - @users.each do |user|
+        p #{user.name}
+    td
+      - @posts.each do |post|
+        p #{post.title} by #{post.user.name}
+    td
+      - @murmurs.each do |murmur|
+        p #{murmur.body} by #{murmur.user.name}
