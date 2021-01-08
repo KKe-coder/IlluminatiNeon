@@ -29,5 +29,6 @@ Rails.application.routes.draw do
 
   get '/unsubscribe', to: 'users#unsubscribe', as: 'unsubscribe'
   patch '/withdraw', to: 'users#withdraw', as: 'withdraw'
+  get '/withdraw', to: 'homes#top'
 
 end
