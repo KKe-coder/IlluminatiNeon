@@ -18,8 +18,10 @@ class UsersController < ApplicationController
   end
 
   def withdraw
-    current_user.is_deleted = true
-    current_user.update(user_is_deleted)
+    @user = current_user
+    @user.is_deleted = true
+    @user.update(user_is_deleted)
+    UnsubscribeMailer.unsubscribe_mail(@user).deliver_now
     reset_session
     redirect_to root_path
   end
