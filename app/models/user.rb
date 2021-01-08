@@ -21,6 +21,7 @@ class User < ApplicationRecord
 
   has_many :murmurs, dependent: :destroy
   has_many :posts, dependent: :destroy
+  has_many :favorites, dependent: :destroy
   attachment :profile_image
 
   has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
