@@ -3,6 +3,12 @@ p Find me in app/views/users/show.html.slim
 
 p welcome #{@user.name} !
 
+= attachment_image_tag @user, :profile_image, :fill, 60, 60
+
+br
+
+= link_to "プロフィールを編集する", edit_user_path(@user.id), class: "btn btn-success"
+
 h2
   - if User.find(params[:id]) == current_user
     |Your page.
