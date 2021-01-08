@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   resources :posts do
     resource :favorites, only: [:create, :destroy]
+    resources :reviews, only: [:create, :destroy]
   end
 
 end

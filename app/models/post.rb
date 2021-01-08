@@ -1,6 +1,9 @@
 class Post < ApplicationRecord
 
   belongs_to :user
+  has_many :favorites, dependent: :destroy
+  has_many :reviews, dependent: :destroy
+
   attachment :image
 
   enum category:{
@@ -30,8 +33,6 @@ class Post < ApplicationRecord
     less_than_or_equal_to: 5,
     greater_than_or_equal_to: 1
   }, presence: true
-
-  has_many :favorites, dependent: :destroy
 
   def favorited_by?(user)
     favorites.where(user_id: user.id).exists?
