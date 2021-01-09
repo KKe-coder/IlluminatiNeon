@@ -1,17 +1,40 @@
-- if user_signed_in?
-  = link_to 'マイページ', user_path(current_user.id)
-  span
-    | &nbsp;
-  = link_to 'ログアウト', destroy_user_session_path, method: :delete
-- else
-  = link_to '新規登録', new_user_registration_path
-  span
-    | &nbsp;
-  = link_to 'ログイン', new_user_session_path
-| &nbsp;
-= link_to '問合わせ', new_contacts_path
-
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.d-flex.justify-content-between
+  = link_to "IlluminatiNeon", root_path, class: "navbar-brand border border-dark"
+  ul.navbar-nav.mx-auto
+    - if user_signed_in?
+      li.nav-item
+        = link_to 'マイページ', user_path(current_user.id)
+        |&nbsp;
+      li.nav-item
+        = link_to 'ログアウト ', destroy_user_session_path, method: :delete
+        |&nbsp;
+    - else
+      li.nav-item
+        = link_to '新規登録', new_user_registration_path, style:"text-decoration: none;color: white;"
+        |&nbsp;
+      li.nav-item
+        = link_to 'ログイン', new_user_session_path
+        |&nbsp;
+    li.nav-item
+      = link_to '問合わせ', new_contacts_path
 .container
-  .row
-    .col-3
-      span test
+  .row.mx-auto.border.mt-2
+    .col.text-center
+      - if user_signed_in?
+        .d-flex.justify-content-between
+          = attachment_image_tag current_user, :profile_image, :fill, 70, 70
+          span.align-self-center #{@header_user.name}さん、ようこそ！
+          .align-self-center
+            = form_with(model:[@header_user, @header_murmur], url: user_murmurs_path(@header_user.id),method: :post, local:true) do |f|
+              = f.text_area :body, placeholder: "#{@header_user.name}", size: "20x1"
+              | &nbsp;
+              = f.submit "つぶやく", class: "align-top"
+          .d-flex.justify-content-between.align-self-center
+              - @header_user.murmurs.last(3).reverse.each do |murmur|
+                span.text-truncate style="width:120px"
+                  = murmur.body
+                | &nbsp;
+                = ((Time.now - murmur.created_at) / 60 ).round(0)
+                | 分前&nbsp;
+      - else
+        | IlluminatiNeonにようこそ！美しいイルミネーションと、幻想的なネオンを共有するサイトです。
