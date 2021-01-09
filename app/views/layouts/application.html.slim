@@ -12,12 +12,12 @@ html
     = render 'devise/shared/header_top'
     .container
       = render 'devise/shared/header_bottom'
-      .notifications
-        - flash.each do |key, value|
-          = content_tag(:div, value, class: key)
       .row
-        .col-2.5
+        .col-sm-3.border
           = render 'devise/shared/left_column'
-        .col-7
+        .col-sm-6
+          .notifications
+            - flash.each do |key, value|
+              = content_tag(:div, value, class: key)
           = yield
-        .col-2.5
+        .col-sm-3.border

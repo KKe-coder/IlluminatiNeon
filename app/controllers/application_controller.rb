@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   def header_column_action
     @header_user = current_user
     @header_murmur = Murmur.new
+    @left_posts = Post.order(avgrate: :DESC).first(3)
   end
 
   def check_guest

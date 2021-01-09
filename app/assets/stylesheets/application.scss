@@ -16,3 +16,9 @@
 @import "bootstrap";
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
+
+span[id*="star-rank-ave"]{
+  img{
+    width: 1rem;
+  }
+}
