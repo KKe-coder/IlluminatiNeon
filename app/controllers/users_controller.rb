@@ -21,15 +21,19 @@ class UsersController < ApplicationController
 
   def edit
     if User.find(params[:id]).email == 'guest@example.com'
-      redirect_to request.referer, alert: 'ゲストユーザーの変更・削除はできません。'
+      redirect_to user_path(params[:id]), alert: 'ゲストユーザーの変更・削除はできません。'
     end
     @user = User.find(params[:id])
   end
 
   def update
     @user = User.find(params[:id])
+    if current_user.email == 'guest@example.com'
+      redirect_to user_path(@user.id), alert: 'ゲストユーザーの変更・削除はできません。'
+    else
     @user.update(user_params)
     redirect_to user_path(@user.id)
+    end
   end
 
   def unsubscribe
@@ -37,11 +41,15 @@ class UsersController < ApplicationController
 
   def withdraw
     @user = current_user
-    @user.is_deleted = true
-    @user.update(user_is_deleted)
-    UnsubscribeMailer.unsubscribe_mail(@user).deliver_now
-    reset_session
-    redirect_to root_path
+    if @user.email == 'guest@example.com'
+      redirect_to user_path(@user.id), alert: 'ゲストユーザーの変更・削除はできません。'
+    else
+      @user.is_deleted = true
+      @user.update(user_is_deleted)
+      UnsubscribeMailer.unsubscribe_mail(@user).deliver_now
+      reset_session
+      redirect_to root_path
+    end
   end
 
   private

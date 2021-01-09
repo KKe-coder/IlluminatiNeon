@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
     @header_user = current_user
     @header_murmur = Murmur.new
     @left_posts = Post.order(avgrate: :DESC).first(3)
+    @right_posts = Post.order(created_at: :DESC).last(3)
   end
 
   def check_guest

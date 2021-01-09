@@ -13,11 +13,16 @@
             = f.submit "つぶやく", class: "align-top"
         .d-flex.justify-content-between.align-self-center
             - @header_user.murmurs.last(3).reverse.each do |murmur|
-              b.text-truncate style="width:130px"
+              b.text-truncate style="width:120px"
                 = murmur.body
               | &nbsp;
               u
-                = ((Time.now - murmur.created_at) / 60 ).round(0)
-                | 分前
+                - if ((Time.now - murmur.created_at) / 60 ) >= 60
+                  = ((Time.now - murmur.created_at) / 3600 ).round(0)
+                  | 時間前
+                - else
+                  = ((Time.now - murmur.created_at) / 60 ).round(0)
+                  | 分前
+              | &nbsp;
     - else
       | IlluminatiNeonにようこそ！美しいイルミネーションと、幻想的なネオンを共有するサイトです。

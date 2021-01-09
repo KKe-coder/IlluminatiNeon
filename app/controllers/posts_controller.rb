@@ -34,7 +34,7 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    @post.avgrate = (@post.reviews.sum(:rate) + @post.rate / @post.reviews.count + 1)
+    @post.avgrate = ((@post.reviews.sum(:rate) + @post.rate) / (@post.reviews.count + 1))
     @post.update(post_params)
     redirect_to post_path(@post.id)
   end
