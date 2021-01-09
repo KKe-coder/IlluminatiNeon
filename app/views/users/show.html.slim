@@ -1,56 +1,45 @@
 h1 Users#show
 p Find me in app/views/users/show.html.slim
 
-p welcome #{@user.name} !
+- if @user == current_user
+  h4
+    |welcome #{current_user.name} !
 
-= attachment_image_tag @user, :profile_image, :fill, 60, 60
+  = attachment_image_tag current_user, :profile_image, :fill, 30, 30
 
+  = link_to "プロフィールを編集する", edit_user_path(@user.id), class: "btn btn-success btn-sm"
 br
 
-= link_to "プロフィールを編集する", edit_user_path(@user.id), class: "btn btn-success"
-
-h2
-  - if User.find(params[:id]) == current_user
-    |Your page.
-  - else
-    |now in &nbsp;
-    strong #{User.find(params[:id]).name}
-    |'s page.
-
-- if User.find(params[:id]) == current_user
-  table.table
-    thead
-      tr
-        th your name
-        th your residence
-        th your following
-        th your follower
-    tbody
-      tr
-        td #{@user.name}
-        td #{@user.residence}
-        td
-          - @user.followings.reverse.each do |following|
-            | #{following.name}
-            br
-        td
-          - @user.followers.reverse.each do |follower|
-            | #{follower.name}
-            br
+table.table
+  thead
+    tr
+      th pic
+      th name
+      th residence
+      th
+        |
+        = link_to "following count:#{@user.followings.count}", followings_path(@user.id)
+      th
+        |
+        = link_to "follower count:#{@user.followers.count}", followers_path(@user.id)
+  tbody
+    tr
+      td
+        = attachment_image_tag @user, :profile_image, :fill, 20, 20
+      td #{@user.name}
+      td #{@user.residence}
+      td
+        - @user.followings.reverse.each do |following|
+          | #{following.name}
+          br
+      td
+        - @user.followers.reverse.each do |follower|
+          | #{follower.name}
+          br
+- if current_user.following?(@user)
+  = link_to "フォロー解除", user_relationships_path(@user.id), method: :delete, class: "btn btn-primary"
 - else
-  table.table
-    thead
-      tr
-        th #{User.find(params[:id]).name}'s name
-        th #{User.find(params[:id]).name}'s residence
-    tbody
-      tr
-        td #{User.find(params[:id]).name}
-        td #{User.find(params[:id]).residence}
-  - if current_user.following?(User.find(params[:id]))
-    = link_to "フォロー解除", user_relationships_path(User.find(params[:id]).id), method: :delete, class: "btn btn-primary"
-  - else
-    = link_to "フォローする", user_relationships_path(User.find(params[:id]).id), method: :post, class: "btn btn-success"
+  = link_to "フォローする", user_relationships_path(@user.id), method: :post, class: "btn btn-success"
 
 
 p other User page...
