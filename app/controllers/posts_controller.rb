@@ -1,7 +1,14 @@
 class PostsController < ApplicationController
 
   def index
-    @posts = Post.all
+    case params[:posts_category]
+    when "Illumination"
+      @posts = Post.where(category: "Illumination")
+    when "Neon"
+      @posts = Post.where(category: "Neon")
+    else
+      @posts = Post.all
+    end
   end
 
   def show
