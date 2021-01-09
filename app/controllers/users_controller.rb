@@ -20,6 +20,9 @@ class UsersController < ApplicationController
   end
 
   def edit
+    if User.find(params[:id]).email == 'guest@example.com'
+      redirect_to request.referer, alert: 'ゲストユーザーの変更・削除はできません。'
+    end
     @user = User.find(params[:id])
   end
 

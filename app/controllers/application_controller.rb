@@ -7,6 +7,13 @@ class ApplicationController < ActionController::Base
     @header_murmur = Murmur.new
   end
 
+  def check_guest
+    email = resource&.email || params[:user][:email].downcase
+    if email == 'guest@example.com'
+      redirect_to root_path, alert: 'ゲストユーザーの変更・削除はできません。'
+    end
+  end
+
   protected
 
   def configure_permitted_parameters
