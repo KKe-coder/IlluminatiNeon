@@ -1,10 +1,9 @@
 Rails.application.routes.draw do
-  get 'homes/top'
-  get 'homes/about'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
   root to: 'homes#top'
+  get '/about', to: 'homes#about'
   devise_for :users, :controllers => {
     :registrations => 'users/registrations',
     :sessions => 'users/sessions'
