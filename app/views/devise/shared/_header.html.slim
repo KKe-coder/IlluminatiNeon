@@ -1,0 +1,17 @@
+- if user_signed_in?
+  = link_to 'マイページ', user_path(current_user.id)
+  span
+    | &nbsp;
+  = link_to 'ログアウト', destroy_user_session_path, method: :delete
+- else
+  = link_to '新規登録', new_user_registration_path
+  span
+    | &nbsp;
+  = link_to 'ログイン', new_user_session_path
+| &nbsp;
+= link_to '問合わせ', new_contacts_path
+
+.container
+  .row
+    .col-3
+      span test
