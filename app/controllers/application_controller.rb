@@ -1,10 +1,11 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :murmur_post
+  before_action :header_column_action
 
-  def murmur_post
+  def header_column_action
     @header_user = current_user
     @header_murmur = Murmur.new
+    @left_posts = Post.order(avgrate: :DESC).first(3)
   end
 
   def check_guest

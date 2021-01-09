@@ -1,0 +1,28 @@
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+  = link_to "IlluminatiNeon", root_path, class: "navbar-brand border border-dark"
+  ul.navbar-nav
+    - if user_signed_in?
+      li.nav-item
+        = link_to 'マイページ', user_path(current_user.id)
+        |　&nbsp;
+      li.nav-item
+        = link_to 'Illumination', posts_path(posts_category: "Illumination")
+        |　&nbsp;
+      li.nav-item
+        = link_to 'Neon', posts_path(posts_category: "Neon")
+        |　&nbsp;
+      li.nav-item
+        = link_to 'ログアウト', destroy_user_session_path, method: :delete
+        |　&nbsp;
+    - else
+      li.nav-item
+        = link_to 'About', about_path, style:"text-decoration: none;color: white;"
+        |　&nbsp;
+      li.nav-item
+        = link_to '新規登録', new_user_registration_path, style:"text-decoration: none;color: white;"
+        |　&nbsp;
+      li.nav-item
+        = link_to 'ログイン', new_user_session_path
+        |　&nbsp;
+    li.nav-item
+      = link_to '問い合わせ', new_contacts_path

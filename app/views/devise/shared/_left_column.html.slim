@@ -1,0 +1,43 @@
+- left_count = 0
+- @left_posts.each do |post|
+  - left_count += 1
+  .row
+    .mt-3.mx-1.mx-auto
+      .d-flex.justify-content-between
+        span #{left_count}位
+        .d-flex.justify-content-between
+          span.border
+            | #{post.place}
+          span #{post.category}
+      = link_to(post_path(post.id)) do
+        = attachment_image_tag post, :image, size: "260x165", fallback: "no_image_post.jpg"
+  .row.justify-content-between
+    .col-sm-3
+      = attachment_image_tag post.user, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class: "border"
+    .col-sm-9.text-right style="font-size:0.9rem"
+      span
+        | #{post.user.residence}&nbsp;&nbsp;
+        u
+          = link_to post.user.name, user_path(post.user_id)
+        | さん
+      br
+      span id="star-rank-ave-#{left_count}" style="width:50%"
+      br
+      strong
+        = link_to post.title, post_path(post.id)
+
+  javascript:
+    $('#star-rank-ave-#{left_count}').raty({
+      size: 36,
+      starOff: "#{asset_path('star-off.png')}",
+      starOn: "#{asset_path('star-on.png')}",
+      starHalf: "#{asset_path('star-half.png')}",
+      half: true,
+      readOnly: true,
+      score: "#{post.avgrate}",
+    });
+
+javascript:
+  window.addEventListener('popstate', function(e) {
+    location.reload();
+  });
