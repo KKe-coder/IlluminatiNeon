@@ -99,5 +99,5 @@ javascript:
      starHalf: "#{asset_path('star-half.png')}",
      half: true,
      readOnly: true,
-     score: "#{@post.reviews.average(:rate).to_f}",
+     score: "#{@post.avgrate}",
    });

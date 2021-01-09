@@ -23,6 +23,7 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user_id = current_user.id
+    @post.avgrate = @post.rate
     @post.save
     redirect_to post_path(@post.id)
   end
@@ -33,6 +34,7 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
+    @post.avgrate = (@post.reviews.sum(:rate) + @post.rate / @post.reviews.count + 1)
     @post.update(post_params)
     redirect_to post_path(@post.id)
   end
@@ -46,7 +48,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :image, :category, :color, :place, :rate, :impression)
+    params.require(:post).permit(:title, :image, :category, :color, :place, :rate, :impression, :avgrate)
   end
 
 end
