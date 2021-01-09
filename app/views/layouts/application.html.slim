@@ -9,15 +9,17 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    = render 'devise/shared/header_top'
+    .container
+      = render 'devise/shared/header_top'
     .container
       = render 'devise/shared/header_bottom'
-      .row
+      .row.mx-auto
         .col-sm-3.border
-          = render 'devise/shared/left_column'
+          = render 'devise/shared/column', objects: @left_posts, count: @left_count
         .col-sm-6
           .notifications
             - flash.each do |key, value|
               = content_tag(:div, value, class: key)
           = yield
         .col-sm-3.border
+          = render 'devise/shared/column', objects: @right_posts, count: @right_count
