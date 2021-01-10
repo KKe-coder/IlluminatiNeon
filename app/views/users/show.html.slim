@@ -17,8 +17,15 @@ h3.text-center.mt-3
       | &nbsp;お住まい：#{@user.residence}
       br
       | &nbsp;
-      u
-        = link_to ">>#{@user.residence}の投稿を探す", posts_path(posts_category: "#{@user.residence}")
+      - if @user.residence == "---"
+        = link_to edit_user_path(@user.id) do
+          u
+            | お住まいが未登録です。
+            br
+            | 登録はこちら
+      - else
+        u
+          = link_to ">>#{@user.residence}の投稿を探す", posts_path(posts_category: "#{@user.residence}")
 
   .col-sm-4
     .align-self-start
@@ -49,6 +56,9 @@ h3.text-center.mt-3
               | 分前
           - if @user == current_user
             = link_to "削除", user_murmur_path(@user.id, murmur.id), method: :delete, class:"btn btn-danger btn-sm"
+    - if @user.murmurs.blank?
+      u.text-justify
+        | まだつぶやきがないみたいです。
   .col-sm-6
     .border-bottom
       - @user.posts.reverse.each do |post|
@@ -71,7 +81,8 @@ h3.text-center.mt-3
             span id="star-usershow-ave-#{post.id}"
         .row.border-bottom.justify-content-end
             strong.mr-3
-              = link_to post.title, post_path(post.id)
+              u
+                = link_to post.title, post_path(post.id)
             javascript:
               $(function() {
                 if((document.getElementById('star-usershow-ave-#{post.id}').getElementsByTagName("img").length == 0 )){
@@ -88,6 +99,15 @@ h3.text-center.mt-3
                   });
                 }
               });
+      - if @user.posts.blank?
+        .border
+          - if @user == current_user
+            u
+              = link_to "まだ投稿がないみたいです。投稿してみませんか？", new_post_path
+          - else
+            u
+              | まだ投稿がないみたいです。
+
 
 p other User page...
 

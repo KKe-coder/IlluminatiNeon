@@ -25,7 +25,6 @@ p Find me in app/views/posts/edit.html.slim
   = f.text_field :impression
   br
   = f.submit 'Save'
-= render 'shared/star'
 
 javascript:
   $(function() {
@@ -37,6 +36,7 @@ javascript:
         starHalf: "#{asset_path('star-half.png')}",
         scoreName: 'post[rate]',
         half: true,
+        score: "#{@post.rate}",
       });
     }
   });
