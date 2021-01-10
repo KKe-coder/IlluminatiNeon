@@ -35,10 +35,8 @@ h3.text-center.mt-3
       - if @user == current_user
         = link_to "会員情報編集", edit_user_path(@user.id), class: "btn btn-success btn-sm mt-2 btn-block"
       - else
-        - if current_user.following?(@user)
-          = link_to "フォロー解除", user_relationships_path(@user.id), method: :delete, class: "btn btn-primary btn-sm mt-2 btn-block"
-        - else
-          = link_to "フォローする", user_relationships_path(@user.id), method: :post, class: "btn btn-success btn-sm mt-2 btn-block"
+        #follow
+          = render 'shared/follow', user: @user
 .row.mt-3
   .col-sm-6.border
     - @user.murmurs.reverse.each do |murmur|
@@ -107,16 +105,3 @@ h3.text-center.mt-3
           - else
             u
               | まだ投稿がないみたいです。
-
-
-p other User page...
-
-- User.all.each do |user|
-  = link_to user.name, user_path(user.id)
-  br
-
-p Posts
-
-- @user.posts.each do |post|
-  = link_to post.title, post_path(post.id)
-  br
