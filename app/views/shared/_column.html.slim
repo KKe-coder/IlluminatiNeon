@@ -9,6 +9,13 @@
       .d-flex.justify-content-between
         - if objects == @left_posts
           span #{count}位
+        - else
+          - if ((Time.now - post.created_at) / 60 ) >= 60
+            = ((Time.now - post.created_at) / 3600 ).round(0)
+            | 時間前
+          - else
+            = ((Time.now - post.created_at) / 60 ).round(0)
+            | 分前
         .d-flex.justify-content-between
           span.border
             | #{post.place}
