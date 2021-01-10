@@ -1,0 +1,30 @@
+- if @post.present?
+  javascript:
+    $(function() {
+      if((document.getElementById('starave').getElementsByTagName("img").length == 0 )){
+        $('#starave').raty({
+         size: 36,
+         starOff: "#{asset_path('star-off.png')}",
+         starOn: "#{asset_path('star-on.png')}",
+         starHalf: "#{asset_path('star-half.png')}",
+         half: true,
+         readOnly: true,
+         score: "#{@post.avgrate}",
+       });
+      }
+    });
+
+/show-review
+javascript:
+  $(function() {
+    if((document.getElementById('starreview').getElementsByTagName("img").length == 0 )){
+      $('#starreview').raty({
+       size: 20,
+       starOff: "#{asset_path('star-off.png')}",
+       starOn: "#{asset_path('star-on.png')}",
+       starHalf: "#{asset_path('star-half.png')}",
+       scoreName: 'review[rate]',
+       half: true,
+     });
+    }
+  });

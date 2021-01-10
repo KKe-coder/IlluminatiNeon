@@ -25,13 +25,18 @@ p Find me in app/views/posts/new.html.slim
   = f.text_field :impression
   br
   = f.submit 'Go'
+= render 'shared/star'
 
 javascript:
- $('#star').raty({
-   size: 36,
-   starOff: "#{asset_path('star-off.png')}",
-   starOn: "#{asset_path('star-on.png')}",
-   starHalf: "#{asset_path('star-half.png')}",
-   scoreName: 'post[rate]',
-   half: true,
- });
+  $(function() {
+    if((document.getElementById('star').getElementsByTagName("img").length == 0 )){
+      $('#star').raty({
+        size: 36,
+        starOff: "#{asset_path('star-off.png')}",
+        starOn: "#{asset_path('star-on.png')}",
+        starHalf: "#{asset_path('star-half.png')}",
+        scoreName: 'post[rate]',
+        half: true,
+      });
+    }
+  });

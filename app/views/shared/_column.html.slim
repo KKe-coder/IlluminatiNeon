@@ -29,19 +29,19 @@
       br
       strong
         = link_to post.title, post_path(post.id)
-
-  javascript:
-    $('#star-rank-ave-#{count}').raty({
-      size: 36,
-      starOff: "#{asset_path('star-off.png')}",
-      starOn: "#{asset_path('star-on.png')}",
-      starHalf: "#{asset_path('star-half.png')}",
-      half: true,
-      readOnly: true,
-      score: "#{post.avgrate}",
-    });
-
-javascript:
-  window.addEventListener('popstate', function(e) {
-    location.reload();
-  });
+      javascript:
+        $(function() {
+          if((document.getElementById('star-rank-ave-#{count}').getElementsByTagName("img").length == 0 )){
+            // htmlのid="star-rank-ave-#{count}"の部分を探し、その中のimgタグ(星の個数)を配列で返す => 配列の長さが0の場合、raty.jsを実行する。
+            // 星の個数が0のときのみraty.jsが実行されるため、星が6個以上にはならなくなりレイアウトが崩れなくなる。
+            $('#star-rank-ave-#{count}').raty({
+              size: 36,
+              starOff: "#{asset_path('star-off.png')}",
+              starOn: "#{asset_path('star-on.png')}",
+              starHalf: "#{asset_path('star-half.png')}",
+              half: true,
+              readOnly: true,
+              score: "#{post.avgrate}",
+            });
+          }
+        });
