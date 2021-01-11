@@ -1,0 +1,28 @@
+.row.mx-auto.border.mt-2
+  .col.text-center
+    - if user_signed_in?
+      .d-flex.justify-content-start
+        = attachment_image_tag current_user, :profile_image, size: "50x50", fallback: "no_image_user.jpg"
+        span.align-self-center
+          = link_to @header_user.name, user_path(@header_user.id)
+          |さん、ようこそ！
+        .align-self-center
+          = form_with(model:[@header_user, @header_murmur], url: user_murmurs_path(@header_user.id),method: :post, local:true) do |f|
+            = f.text_area :body, placeholder: "つぶやいてみる", size: "20x1"
+            | &nbsp;
+            = f.submit "つぶやく", class: "align-top"
+        .d-flex.justify-content-between.align-self-center
+            - @header_user.murmurs.last(3).reverse.each do |murmur|
+              b.text-truncate style="width:120px"
+                = murmur.body
+              | &nbsp;
+              u
+                - if ((Time.now - murmur.created_at) / 60 ) >= 60
+                  = ((Time.now - murmur.created_at) / 3600 ).round(0)
+                  | 時間前
+                - else
+                  = ((Time.now - murmur.created_at) / 60 ).round(0)
+                  | 分前
+              | &nbsp;
+    - else
+      | IlluminatiNeonにようこそ！美しいイルミネーションと、幻想的なネオンを共有するサイトです。

@@ -1,0 +1,78 @@
+h1 Posts#show
+p Find me in app/views/posts/show.html.slim
+
+= link_to '一覧に戻る', posts_path
+br
+br
+- if @post.favorited_by?(current_user)
+  p
+    = link_to post_favorites_path(@post), method: :delete do
+      | ♥ #{@post.favorites.count} いいね
+- else
+  p
+    = link_to post_favorites_path(@post), method: :post do
+      | ♡ #{@post.favorites.count} いいね
+p
+  |画像
+  = attachment_image_tag @post, :image, :fill, 40, 40
+p
+  |タイトル
+  strong  #{@post.title}
+p
+  |投稿者
+  strong  #{@post.user.name}
+p
+  |投稿日時
+  strong  #{@post.created_at.strftime('%Y/%m/%d %H:%M')}
+p
+  |居住地
+  strong  #{@post.user.residence}
+p
+  |カテゴリ
+  strong  #{@post.category}
+p
+  |カラー
+  strong  #{@post.color}
+p
+  |場所
+  strong  #{@post.place}
+
+p
+  |評価
+  <span id="star-rate-#{@post.id}"></span>
+  = render 'shared/starids', object: @post
+
+p
+  |レビューの平均評価
+  #starave
+
+p
+  | レビュー件数: #{@post.reviews.count}
+- @post.reviews.each do |review|
+  p
+    = attachment_image_tag review.user, :profile_image, :fill, 20, 20
+    | #{review.user.name} #{review.comment}
+    <span id="star-rate-#{review.id}"></span>
+    = render 'shared/starids', object: review
+    - if review.user == current_user
+      = link_to "Delete", post_review_path(review.post, review), method: :delete, class: "btn btn-danger"
+
+br
+= form_with(model:[@post, @review], local: true) do |f|
+  = f.text_area :comment, placeholder: "Comment Please"
+  br
+  span#starreview
+    = render 'shared/star'
+    = f.label :rate
+    = f.hidden_field :rate, id: :review_star
+  br
+  = f.submit "Create Review"
+br
+
+p
+  |
+  = link_to "編集する", edit_post_path(@post.id)
+p
+  |
+  = link_to "削除する", post_path(@post.id), method: :delete, "data-confirm" => "本当に削除しますか?"
+h1 ---

@@ -1,0 +1,27 @@
+h1 Users#edit
+p Find me in app/views/users/edit.html.slim
+
+= form_with model: @user, url: user_path(@user.id), local: true do |f|
+
+  .field
+    = f.label :profile_image
+    br
+    = f.attachment_field :profile_image
+  .field
+    = f.label :name
+    br
+    = f.text_field :name, autofocus: true, autocomplete: "name"
+  .field
+    = f.label :email
+    br
+    = f.email_field :email, autofocus: true, autocomplete: "email"
+  .field
+    = f.label :residence
+    br
+    = f.select :residence, options_for_select(User.residences.keys, selected: @user.residence)
+  .actions
+    = f.submit "Finish Edit"
+
+= link_to "パスワード変更", edit_user_registration_path
+
+= link_to "退会をご希望ですか？", unsubscribe_path

@@ -1,0 +1,107 @@
+h3.text-center.mt-3
+  - if @user == current_user
+    | マイページ
+  - else
+    | #{@user.name}さんのページ
+.row.mt-3
+  .col-sm-8.d-flex.justify-content-center.border
+    .align-self-center
+      = attachment_image_tag current_user, :profile_image, size: "80x80", fallback: "no_image_user.jpg", class: "border"
+    p.ml-3.align-self-center
+      b style="font-size:1.5rem"
+        | #{@user.name}
+      | さん
+      br
+      | &nbsp;登録日：#{@user.created_at.strftime("%Y/%m/%d")}
+      br
+      | &nbsp;お住まい：#{@user.residence}
+      br
+      | &nbsp;
+      - if @user.residence == "---"
+        = link_to edit_user_path(@user.id) do
+          u
+            | お住まいが未登録です。
+            br
+            | 登録はこちら
+      - else
+        u
+          = link_to ">>#{@user.residence}の投稿を探す", posts_path(posts_category: "#{@user.residence}")
+
+  .col-sm-4
+    .align-self-start
+      = link_to "フォロー数：#{@user.followings.count}", followings_path(@user.id), class: "btn btn-primary btn-sm btn-block"
+      = link_to "フォロワー数：#{@user.followers.count}", followers_path(@user.id), class: "btn btn-info btn-sm mt-2 btn-block"
+      = link_to "♡いいね数：#{@user.favorites.count}", posts_path(posts_category: "user-favorite"), class: "btn btn-danger btn-sm mt-2 btn-block"
+      - if @user == current_user
+        = link_to "会員情報編集", edit_user_path(@user.id), class: "btn btn-success btn-sm mt-2 btn-block"
+      - else
+        #follow
+          = render 'shared/follow', user: @user
+.row.mt-3
+  .col-sm-6.border
+    - @user.murmurs.reverse.each do |murmur|
+      .border-bottom.text-break
+        = murmur.body
+        | &nbsp;
+        br
+        .d-flex.justify-content-between
+          u
+            - if ((Time.now - murmur.created_at) / 60 ) >= 60
+              = ((Time.now - murmur.created_at) / 3600 ).round(0)
+              | 時間前
+            - else
+              = ((Time.now - murmur.created_at) / 60 ).round(0)
+              | 分前
+          - if @user == current_user
+            = link_to "削除", user_murmur_path(@user.id, murmur.id), method: :delete, class:"btn btn-danger btn-sm"
+    - if @user.murmurs.blank?
+      u.text-justify
+        | まだつぶやきがないみたいです。
+  .col-sm-6
+    .border-bottom
+      - @user.posts.reverse.each do |post|
+        .row
+          .mt-3.mx-1.mx-auto
+            .d-flex.justify-content-between
+              - if ((Time.now - post.created_at) / 60 ) >= 60
+                = ((Time.now - post.created_at) / 3600 ).round(0)
+                | 時間前
+              - else
+                = ((Time.now - post.created_at) / 60 ).round(0)
+                | 分前
+              .d-flex.justify-content-between
+                span.border
+                  | #{post.place}
+                span #{post.category}
+            = link_to(post_path(post.id)) do
+              = attachment_image_tag post, :image, width: "100%", fallback: "no_image_post.jpg"
+        .row
+            span id="star-usershow-ave-#{post.id}"
+        .row.border-bottom.justify-content-end
+            strong.mr-3
+              u
+                = link_to post.title, post_path(post.id)
+            javascript:
+              $(function() {
+                if((document.getElementById('star-usershow-ave-#{post.id}').getElementsByTagName("img").length == 0 )){
+                  // htmlのid="star-usershow-ave-#{post.id}"の部分を探し、その中のimgタグ(星の個数)を配列で返す => 配列の長さが0の場合、raty.jsを実行する。
+                  // 星の個数が0のときのみraty.jsが実行されるため、星が6個以上にはならなくなりレイアウトが崩れなくなる。
+                  $('#star-usershow-ave-#{post.id}').raty({
+                    size: 36,
+                    starOff: "#{asset_path('star-off.png')}",
+                    starOn: "#{asset_path('star-on.png')}",
+                    starHalf: "#{asset_path('star-half.png')}",
+                    half: true,
+                    readOnly: true,
+                    score: "#{post.avgrate}",
+                  });
+                }
+              });
+      - if @user.posts.blank?
+        .border
+          - if @user == current_user
+            u
+              = link_to "まだ投稿がないみたいです。投稿してみませんか？", new_post_path
+          - else
+            u
+              | まだ投稿がないみたいです。

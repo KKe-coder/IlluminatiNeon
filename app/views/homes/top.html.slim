@@ -1,0 +1,11 @@
+h1 Homes#top
+
+- if user_signed_in?
+
+  p hello!!!#{@header_user.name}
+
+- else
+
+  p hello!!!Please login.
+
+  = link_to 'Guest login', users_guest_sign_in_path, method: :post

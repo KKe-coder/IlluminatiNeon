@@ -1,0 +1,54 @@
+- if objects == @left_posts
+  - count = 0
+- else
+  - count = 3
+- objects.each do |post|
+  - count += 1
+  .row
+    .mt-3.mx-1.mx-auto
+      .d-flex.justify-content-between
+        - if objects == @left_posts
+          span #{count}位
+        - else
+          - if ((Time.now - post.created_at) / 60 ) >= 60
+            = ((Time.now - post.created_at) / 3600 ).round(0)
+            | 時間前
+          - else
+            = ((Time.now - post.created_at) / 60 ).round(0)
+            | 分前
+        .d-flex.justify-content-between
+          span.border
+            | #{post.place}
+          span #{post.category}
+      = link_to(post_path(post.id)) do
+        = attachment_image_tag post, :image, width: "100%", fallback: "no_image_post.jpg"
+  .row.justify-content-between
+    .col-sm-3
+      = attachment_image_tag post.user, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class: "border"
+    .col-sm-9.text-right style="font-size:0.9rem"
+      span
+        | #{post.user.residence}&nbsp;&nbsp;
+        u
+          = link_to post.user.name, user_path(post.user_id)
+        | さん
+      br
+      span id="star-rank-ave-#{count}" style="width:50%"
+      br
+      strong
+        = link_to post.title, post_path(post.id)
+      javascript:
+        $(function() {
+          if((document.getElementById('star-rank-ave-#{count}').getElementsByTagName("img").length == 0 )){
+            // htmlのid="star-rank-ave-#{count}"の部分を探し、その中のimgタグ(星の個数)を配列で返す => 配列の長さが0の場合、raty.jsを実行する。
+            // 星の個数が0のときのみraty.jsが実行されるため、星が6個以上にはならなくなりレイアウトが崩れなくなる。
+            $('#star-rank-ave-#{count}').raty({
+              size: 36,
+              starOff: "#{asset_path('star-off.png')}",
+              starOn: "#{asset_path('star-on.png')}",
+              starHalf: "#{asset_path('star-half.png')}",
+              half: true,
+              readOnly: true,
+              score: "#{post.avgrate}",
+            });
+          }
+        });
