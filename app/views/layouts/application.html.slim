@@ -9,17 +9,15 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    .container
-      = render 'shared/header_top'
-    .container
-      = render 'shared/header_bottom'
-      .row.mx-auto
-        .col-sm-3.border
-          = render 'shared/column', objects: @left_posts, count: @left_count
-        .col-sm-6
-          .notifications
-            - flash.each do |key, value|
-              = content_tag(:div, value, class: key)
-          = yield
-        .col-sm-3.border
-          = render 'shared/column', objects: @right_posts, count: @right_count
+    = render 'shared/header_top'
+    = render 'shared/header_bottom'
+    .row.mx-auto
+      .col-sm-3.border
+        = render 'shared/column', objects: @left_posts, count: @left_count
+      .col-sm-6
+        .notifications
+          - flash.each do |key, value|
+            = content_tag(:div, value, class: key)
+        = yield
+      .col-sm-3.border
+        = render 'shared/column', objects: @right_posts, count: @right_count

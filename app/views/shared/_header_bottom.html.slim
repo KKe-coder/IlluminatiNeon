@@ -1,28 +1,29 @@
 .row.mx-auto.border.mt-2
   .col.text-center
     - if user_signed_in?
-      .d-flex.justify-content-start
-        = attachment_image_tag current_user, :profile_image, size: "50x50", fallback: "no_image_user.jpg"
-        span.align-self-center
+      .d-flex.justify-content-between
+        = attachment_image_tag current_user, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class:"align-self-center"
+        span.align-self-center.
           = link_to @header_user.name, user_path(@header_user.id)
           |さん、ようこそ！
-        .align-self-center
+        .align-self-center.form-inline
           = form_with(model:[@header_user, @header_murmur], url: user_murmurs_path(@header_user.id),method: :post, local:true) do |f|
-            = f.text_area :body, placeholder: "つぶやいてみる", size: "20x1"
-            | &nbsp;
-            = f.submit "つぶやく", class: "align-top"
-        .d-flex.justify-content-between.align-self-center
+            = f.text_area :body, placeholder: "つぶやいてみる", size: "20x1", class: "form-control"
+            = button_tag type: "submit", class: "align-top btn btn-info" do
+              i.fas.fa-pen-nib
+        .d-flex.justify-content-start.align-self-center style="width:50%"
             - @header_user.murmurs.last(3).reverse.each do |murmur|
-              b.text-truncate style="width:120px"
-                = murmur.body
-              | &nbsp;
-              u
-                - if ((Time.now - murmur.created_at) / 60 ) >= 60
-                  = ((Time.now - murmur.created_at) / 3600 ).round(0)
-                  | 時間前
-                - else
-                  = ((Time.now - murmur.created_at) / 60 ).round(0)
-                  | 分前
-              | &nbsp;
+              .text-truncate style="width:33%"
+                b
+                  = murmur.body
+                br
+                u
+                  - if ((Time.now - murmur.created_at) / 60 ) >= 60
+                    = ((Time.now - murmur.created_at) / 3600 ).round(0)
+                    | 時間前
+                  - else
+                    = ((Time.now - murmur.created_at) / 60 ).round(0)
+                    | 分前
+                | &nbsp;
     - else
       | IlluminatiNeonにようこそ！美しいイルミネーションと、幻想的なネオンを共有するサイトです。
