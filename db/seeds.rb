@@ -38,3 +38,13 @@ end
   )
   Faker::Config.locale = :ja
 end
+
+30.times do |n|
+  Faker::Config.locale = :en
+  title = Faker::Lorem.sentence
+  Post.create!(
+  user: User.find(rand(1..20)),
+  title: title
+  )
+  Faker::Config.locale = :ja
+end
