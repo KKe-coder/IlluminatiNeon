@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 AdminUser.create!(email: ENV['ADMIN_ID'],
                   password: ENV['ADMIN_PW'],
-                  password_confirmation: ENV['ADMIN_PW']) if Rails.env.development?
+                  password_confirmation: ENV['ADMIN_PW'])
 
 20.times do |n|
   name = Faker::Name.last_name
@@ -35,6 +35,16 @@ end
   impression: impression,
   rate: 3,
   avgrate: 3
+  )
+  Faker::Config.locale = :ja
+end
+
+30.times do |n|
+  Faker::Config.locale = :en
+  title = Faker::Lorem.sentence
+  Post.create!(
+  user: User.find(rand(1..20)),
+  title: title
   )
   Faker::Config.locale = :ja
 end
