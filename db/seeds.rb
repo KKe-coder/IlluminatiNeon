@@ -41,10 +41,10 @@ end
 
 30.times do |n|
   Faker::Config.locale = :en
-  title = Faker::Lorem.sentence
-  Post.create!(
+  body = Faker::Lorem.sentence
+  Murmur.create!(
   user: User.find(rand(1..20)),
-  title: title
+  body: body
   )
   Faker::Config.locale = :ja
 end
