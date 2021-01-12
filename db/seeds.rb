@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 AdminUser.create!(email: ENV['ADMIN_ID'],
                   password: ENV['ADMIN_PW'],
-                  password_confirmation: ENV['ADMIN_PW']) if Rails.env.development?
+                  password_confirmation: ENV['ADMIN_PW'])
 
 20.times do |n|
   name = Faker::Name.last_name
