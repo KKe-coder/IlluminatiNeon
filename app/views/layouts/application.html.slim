@@ -2,24 +2,29 @@ doctype html
 html
   head
     title
-      | IlluminatiNeon
+      | IlluminatioNeon
     = csrf_meta_tags
     = csp_meta_tag
     meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    .container
-      = render 'shared/header_top'
-    .container
-      = render 'shared/header_bottom'
-      .row.mx-auto
-        .col-sm-3.border
-          = render 'shared/column', objects: @left_posts, count: @left_count
-        .col-sm-6
-          .notifications
-            - flash.each do |key, value|
-              = content_tag(:div, value, class: key)
-          = yield
-        .col-sm-3.border
-          = render 'shared/column', objects: @right_posts, count: @right_count
+    = render 'shared/header_top'
+    = render 'shared/header_bottom'
+    .row.mx-auto
+      .col-sm-3.border
+        = render 'shared/column', objects: @left_posts, count: @left_count
+      .col-sm-6
+        .notifications
+          - flash.each do |key, value|
+            = content_tag(:div, value, class: key)
+        - unless user_signed_in?
+          .border.text-center
+            | 閲覧はログインせずに行えますが、
+            br
+            |投稿等には
+            = link_to 'ログイン', new_user_session_path
+            | が必要になります。
+        = yield
+      .col-sm-3.border
+        = render 'shared/column', objects: @right_posts, count: @right_count
