@@ -4,14 +4,15 @@ p Find me in app/views/posts/show.html.slim
 = link_to '一覧に戻る', posts_path
 br
 br
-- if @post.favorited_by?(current_user)
-  p
-    = link_to post_favorites_path(@post), method: :delete do
-      | ♥ #{@post.favorites.count} いいね
-- else
-  p
-    = link_to post_favorites_path(@post), method: :post do
-      | ♡ #{@post.favorites.count} いいね
+- if user_signed_in?
+  - if @post.favorited_by?(current_user)
+    p
+      = link_to post_favorites_path(@post), method: :delete do
+        | ♥ #{@post.favorites.count} いいね
+  - else
+    p
+      = link_to post_favorites_path(@post), method: :post do
+        | ♡ #{@post.favorites.count} いいね
 p
   |画像
   = attachment_image_tag @post, :image, :fill, 40, 40
