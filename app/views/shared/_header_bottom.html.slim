@@ -3,7 +3,7 @@
     - if user_signed_in?
       .d-flex.justify-content-between
         = attachment_image_tag current_user, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class:"align-self-center"
-        span.align-self-center.
+        span.align-self-center
           = link_to @header_user.name, user_path(@header_user.id)
           |さん、ようこそ！
         .align-self-center.form-inline

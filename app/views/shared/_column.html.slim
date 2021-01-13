@@ -24,15 +24,16 @@
         = attachment_image_tag post, :image, width: "100%", fallback: "no_image_post.jpg"
   .row.justify-content-between
     .col-sm-3
-      = attachment_image_tag post.user, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class: "border"
-    .col-sm-9.text-right style="font-size:0.9rem"
+      = link_to user_path(post.user_id) do
+        = attachment_image_tag post.user, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class: "border"
+    .col-sm-9 style="font-size:0.9rem"
       span
-        | #{post.user.residence}&nbsp;&nbsp;
+        | by #{post.user.residence}&nbsp;&nbsp;
         u
           = link_to post.user.name, user_path(post.user_id)
         | さん
       br
-      span id="star-rank-ave-#{count}" style="width:50%"
+      span id="star-rank-ave-#{count}"
       br
       strong
         = link_to post.title, post_path(post.id)
