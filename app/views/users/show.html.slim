@@ -113,7 +113,7 @@ h3.text-center.mt-3
             - else
               = ((Time.now - murmur.created_at) / 60 ).round(0)
               | m
-      - if murmur.user == current_user && params[:showing] != "current_user_posts"
+      - if murmur.user == current_user
         .d-flex.justify-content-end
           = button_to user_murmur_path(@user.id, murmur.id), method: :delete, class:"btn btn-danger btn-sm", id:"destroy_murmurs" do
             i.fas.fa-trash-alt
