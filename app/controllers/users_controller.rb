@@ -2,7 +2,12 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-
+    @murmurs = (Murmur.where(user_id: @user.id)).reverse
+    @posts = (Post.where(user_id: @user.id)).reverse
+    if user_signed_in? && @user == current_user
+      @murmurs = (Murmur.where(user_id: @user.followings.ids) + Murmur.where(user_id: @user.id)).sort.reverse
+      @posts = (Post.where(user_id: @user.followings.ids) + Post.where(user_id: @user.id)).sort.reverse
+    end
   end
 
   def followings

@@ -18,11 +18,12 @@ h3.text-center.mt-3
       br
       | &nbsp;
       - if @user.residence == "---"
-        = link_to edit_user_path(@user.id) do
-          u
-            | お住まいが未登録です。
-            br
-            | 登録はこちら
+        - if @user == current_user
+          = link_to edit_user_path(@user.id) do
+            u
+              | お住まいが未登録です。
+              br
+              | 登録はこちら
       - else
         u
           = link_to ">>#{@user.residence}の投稿を探す", posts_path(posts_category: "#{@user.residence}")
@@ -38,31 +39,46 @@ h3.text-center.mt-3
         - if user_signed_in?
           #follow
             = render 'shared/follow', user: @user
+h3.text-center.mt-3
+  - if @user == current_user
+    | マイタイムライン
+  - else
+    | #{@user.name}さんのつぶやき・投稿
 .row.mt-3
   .col-sm-6.border
-    - @user.murmurs.reverse.each do |murmur|
+    - @murmurs.each do |murmur|
       .border-bottom.text-break
         = murmur.body
         | &nbsp;
         br
-        .d-flex.justify-content-between
-          u
+        .d-flex.justify-content-end
+          - if @user == current_user
+            .align-self-end
+              | by
+            .d-flex.align-items-end
+              = link_to user_path(murmur.user_id) do
+                .d-flex.align-items-end
+                  = attachment_image_tag murmur.user, :profile_image, size: "40x40", fallback: "no_image_user.jpg", class: "border"
+                  |#{murmur.user.name}
+              | さん...
+          u.align-self-end
             - if ((Time.now - murmur.created_at) / 60 ) >= 60
               = ((Time.now - murmur.created_at) / 3600 ).round(0)
               | 時間前
             - else
               = ((Time.now - murmur.created_at) / 60 ).round(0)
               | 分前
-          - if @user == current_user
-            = link_to "削除", user_murmur_path(@user.id, murmur.id), method: :delete, class:"btn btn-danger btn-sm"
-    - if @user.murmurs.blank?
-      u.text-justify
-        | まだつぶやきがないみたいです。
+          - if murmur.user == current_user
+              = link_to "削除", user_murmur_path(@user.id, murmur.id), method: :delete, class:"btn btn-danger btn-sm"
+    - unless @user == current_user
+      - if @user.murmurs.blank?
+        u.text-justify
+          | まだつぶやきがないみたいです。
   .col-sm-6
     .border-bottom
-      - @user.posts.reverse.each do |post|
+      - @posts.each do |post|
         .row
-          .mt-3.mx-1.mx-auto
+          .mx-1.mx-auto
             .d-flex.justify-content-between
               - if ((Time.now - post.created_at) / 60 ) >= 60
                 = ((Time.now - post.created_at) / 3600 ).round(0)
@@ -78,8 +94,7 @@ h3.text-center.mt-3
               = attachment_image_tag post, :image, width: "100%", fallback: "no_image_post.jpg"
         .row
             span id="star-usershow-ave-#{post.id}"
-        .row.border-bottom.justify-content-end
-            strong.mr-3
+            strong.ml-3
               u
                 = link_to post.title, post_path(post.id)
             javascript:
@@ -98,6 +113,16 @@ h3.text-center.mt-3
                   });
                 }
               });
+        .d-flex.justify-content-end.mt-2.mb-2
+          - if @user == current_user
+            .align-self-end
+              | by
+            .d-flex.align-items-end
+              = link_to user_path(post.user_id) do
+                .d-flex.align-items-end
+                  = attachment_image_tag post.user, :profile_image, size: "40x40", fallback: "no_image_user.jpg", class: "border"
+                  |#{post.user.name}
+              | さん
       - if @user.posts.blank?
         .border
           - if @user == current_user
