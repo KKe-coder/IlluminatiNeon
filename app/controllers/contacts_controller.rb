@@ -4,7 +4,9 @@ class ContactsController < ApplicationController
     @contact = Contact.new
     if user_signed_in?
       @contact.name = current_user.name
-      @contact.email = current_user.email
+      unless current_user.email == 'guest@example.com'
+        @contact.email = current_user.email
+      end
     end
   end
 
