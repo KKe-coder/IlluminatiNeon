@@ -32,7 +32,5 @@ Rails.application.routes.draw do
   get '/unsubscribe', to: 'users#unsubscribe', as: 'unsubscribe'
   patch '/withdraw', to: 'users#withdraw', as: 'withdraw'
   get '/withdraw', to: 'homes#top'
-  get '/users/:id/followings', to: 'users#followings', as: 'followings'
-  get '/users/:id/followers', to: 'users#followers', as: 'followers'
 
 end
