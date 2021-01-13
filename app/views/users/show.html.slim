@@ -92,40 +92,8 @@ h3.text-center.mt-3
   - else
     | #{@user.name}さんのつぶやき・投稿
 .row.mt-3.border
-  .col-sm-6
-    - @murmurs.each do |murmur|
-      .text-break
-        = murmur.body
-        | &nbsp;
-        br
-        .d-flex.justify-content-end
-          - if @user == current_user && params[:showing] != "current_user_posts"
-            .d-flex.align-items-end
-              = link_to user_path(murmur.user_id) do
-                .d-flex.align-items-end
-                  = attachment_image_tag murmur.user, :profile_image, size: "40x40", fallback: "no_image_user.jpg", class: "border"
-                  |#{murmur.user.name}
-              | さん...
-          u.align-self-end
-            - if ((Time.now - murmur.created_at) / 60 ) >= 60
-              = ((Time.now - murmur.created_at) / 3600 ).round(0)
-              | h
-            - else
-              = ((Time.now - murmur.created_at) / 60 ).round(0)
-              | m
-      - if murmur.user == current_user
-        .d-flex.justify-content-end
-          = button_to user_murmur_path(@user.id, murmur.id), method: :delete, class:"btn btn-danger btn-sm", id:"loading" do
-            i.fas.fa-trash-alt
-            = render 'shared/loading_button'
-    - if @user.murmurs.blank?
-      - if @user == current_user && params[:showing] == "current_user_posts"
-        u
-          | まだつぶやきがないみたいです。
-      - elsif @user == current_user && params[:showing] != "current_user_posts"
-      - else
-        u
-          | まだつぶやきがないみたいです。
+  .col-sm-6.murmurs_usershow
+    = render 'shared/murmurs_usershow'
   .col-sm-6
     .border-bottom
       - @posts.each do |post|

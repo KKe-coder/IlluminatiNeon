@@ -1,0 +1,13 @@
+- @header_user.murmurs.last(3).reverse.each do |murmur|
+  .text-truncate style="width:33%"
+    b
+      = murmur.body
+    br
+    u
+      - if ((Time.now - murmur.created_at) / 60 ) >= 60
+        = ((Time.now - murmur.created_at) / 3600 ).round(0)
+        | 時間前
+      - else
+        = ((Time.now - murmur.created_at) / 60 ).round(0)
+        | 分前
+    | &nbsp;

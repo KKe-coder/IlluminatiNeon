@@ -7,28 +7,19 @@
           = link_to @header_user.name, user_path(@header_user.id)
           |さん、ようこそ！
         .align-self-center.form-inline
-          = form_with(model:[@header_user, @header_murmur], url: user_murmurs_path(@header_user.id),method: :post, local:true) do |f|
+          = form_with(model:[@header_user, @header_murmur], url: user_murmurs_path(@header_user.id),method: :post) do |f|
             = f.text_area :body, placeholder: "つぶやいてみる", size: "20x1", class: "form-control"
+            = f.hidden_field :id, value: params[:id]
+            - if params[:showing] == "current_user_posts"
+              = f.hidden_field :showing, value: "current_user_posts"
             = button_tag type: "submit", class: "align-top btn btn-info", id: "create_murmur" do
-              i.fas.fa-pen-nib#mark
-              javascript:
-                $('#create_murmur').on('click', function() {
-                  $('#create_murmur').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
-                });
-        .d-flex.justify-content-start.align-self-center style="width:50%"
-            - @header_user.murmurs.last(3).reverse.each do |murmur|
-              .text-truncate style="width:33%"
-                b
-                  = murmur.body
-                br
-                u
-                  - if ((Time.now - murmur.created_at) / 60 ) >= 60
-                    = ((Time.now - murmur.created_at) / 3600 ).round(0)
-                    | 時間前
-                  - else
-                    = ((Time.now - murmur.created_at) / 60 ).round(0)
-                    | 分前
-                | &nbsp;
+              i.fas.fa-pen-nib
+        .d-flex.justify-content-start.align-self-center.murmurs_header style="width:50%"
+          = render 'shared/create_murmur'
     - else
       | IlluminatioNeonにようこそ！美しいイルミネーションと、幻想的なネオンを共有するサイトです。
 
+javascript:
+  $('#create_murmur').on('click', function() {
+    $('#create_murmur').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+  });

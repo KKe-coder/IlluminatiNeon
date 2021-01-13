@@ -5,7 +5,15 @@ class MurmursController < ApplicationController
     murmur = Murmur.new(murmur_params)
     murmur.user_id = user.id
     murmur.save
-    redirect_to request.referer
+    @user = User.find(params[:murmur][:id])
+    @murmurs = (Murmur.where(user_id: @user.id)).reverse
+      if user_signed_in? && @user == current_user
+        @murmurs = (Murmur.where(user_id: @user.followings.ids) + Murmur.where(user_id: @user.id)).sort.reverse
+        case params[:murmur][:showing]
+        when "current_user_posts"
+        @murmurs = (Murmur.where(user_id: @user.id)).reverse
+        end
+      end
   end
 
   def destroy
