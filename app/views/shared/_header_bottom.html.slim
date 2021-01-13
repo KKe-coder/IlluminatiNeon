@@ -11,10 +11,7 @@
             = f.text_area :body, placeholder: "つぶやいてみる", size: "20x1", class: "form-control"
             = button_tag type: "submit", class: "align-top btn btn-info", id: "loading" do
               i.fas.fa-pen-nib#mark
-              javascript:
-                $('#loading').on('click', function() {
-                  $('#loading').html('#{render :partial => 'shared/loading_button'}');
-                  });
+              = render 'shared/loading_button'
         .d-flex.justify-content-start.align-self-center style="width:50%"
             - @header_user.murmurs.last(3).reverse.each do |murmur|
               .text-truncate style="width:33%"
