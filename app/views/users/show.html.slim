@@ -115,12 +115,9 @@ h3.text-center.mt-3
               | m
       - if murmur.user == current_user
         .d-flex.justify-content-end
-          = button_to user_murmur_path(@user.id, murmur.id), method: :delete, class:"btn btn-danger btn-sm", id:"destroy_murmurs" do
+          = button_to user_murmur_path(@user.id, murmur.id), method: :delete, class:"btn btn-danger btn-sm", id:"loading" do
             i.fas.fa-trash-alt
-            javascript:
-              $('#destroy_murmurs').on('click', function() {
-                $('#destroy_murmurs').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
-              });
+            = render 'shared/loading_button'
     - if @user.murmurs.blank?
       - if @user == current_user && params[:showing] == "current_user_posts"
         u
