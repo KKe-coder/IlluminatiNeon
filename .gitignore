@@ -31,4 +31,3 @@
 /config/master.key
 /config/credentials.yml.enc
 /.env
-.github/workflows/rails.yml

@@ -35,8 +35,9 @@ h3.text-center.mt-3
       - if @user == current_user
         = link_to "会員情報編集", edit_user_path(@user.id), class: "btn btn-success btn-sm mt-2 btn-block"
       - else
-        #follow
-          = render 'shared/follow', user: @user
+        - if user_signed_in?
+          #follow
+            = render 'shared/follow', user: @user
 .row.mt-3
   .col-sm-6.border
     - @user.murmurs.reverse.each do |murmur|
