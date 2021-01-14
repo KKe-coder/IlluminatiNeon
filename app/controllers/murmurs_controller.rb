@@ -6,14 +6,14 @@ class MurmursController < ApplicationController
     murmur.user_id = user.id
     murmur.save
     @user = User.find(params[:user_id])
-    if params[:murmur][:id]
+    unless params[:murmur][:id].blank?
       @user = User.find(params[:murmur][:id])
     end
     @murmurs = (Murmur.where(user_id: @user.id)).reverse
       if user_signed_in? && @user == current_user
         @murmurs = (Murmur.where(user_id: @user.followings.ids) + Murmur.where(user_id: @user.id)).sort.reverse
-        case params[:murmur][:showing]
-        when "current_user_posts"
+        case params[:murmur][:mypagemode]
+        when "on"
         @murmurs = (Murmur.where(user_id: @user.id)).reverse
         end
       end
@@ -23,7 +23,7 @@ class MurmursController < ApplicationController
     Murmur.find_by(user_id: params[:user_id], id: params[:id]).destroy
     @user = User.find(params[:user_id])
     @murmurs = (Murmur.where(user_id: @user.followings.ids) + Murmur.where(user_id: @user.id)).sort.reverse # ログイン中Userのフォロワータイムライン
-    case params[:mypageview]
+    case params[:del_mur]
     when "on"
       @murmurs = (Murmur.where(user_id: @user.id)).reverse
     end

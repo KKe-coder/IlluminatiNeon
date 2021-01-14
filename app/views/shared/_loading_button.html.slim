@@ -1,4 +1,8 @@
 javascript:
-    $('#loading').on('click', function() {
-        $('#loading').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
-    });
+    if($('#loading').length != 0 ){
+        var test = document.getElementById("loading");
+        var myfunk = function(){
+            $('#loading').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+        }
+        test.addEventListener("click",myfunk);
+    }
