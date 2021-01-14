@@ -1,0 +1,4 @@
+$(".murmurs_header").html("<%= j(render 'shared/create_murmur') %>").hide().fadeIn('slow');
+$("#murmur_body").val("")
+$('.murmurs_usershow').html("<%= j(render 'shared/murmurs_usershow') %>").hide().fadeIn('slow');
+$('#create_murmur').html('<i class="fas fa-check"></i>');

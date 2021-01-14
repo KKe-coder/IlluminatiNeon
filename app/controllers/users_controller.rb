@@ -15,20 +15,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def followings
-    @user = User.find(params[:id])
-    @users = @user.followings
-    @murmurs = Murmur.where(user_id: @users.ids)
-    @posts = Post.where(user_id: @users.ids)
-  end
-
-  def followers
-    @user = User.find(params[:id])
-    @users = @user.followers
-    @murmurs = Murmur.where(user_id: @users.ids)
-    @posts = Post.where(user_id: @users.ids)
-  end
-
   def edit
     if User.find(params[:id]).email == 'guest@example.com'
       redirect_to user_path(params[:id]), alert: 'ゲストユーザーの変更・削除はできません。'
