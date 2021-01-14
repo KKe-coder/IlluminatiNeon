@@ -15,23 +15,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit
-    if User.find(params[:id]).email == 'guest@example.com'
-      redirect_to user_path(params[:id]), alert: 'ゲストユーザーの変更・削除はできません。'
-    end
-    @user = User.find(params[:id])
-  end
-
-  def update
-    @user = User.find(params[:id])
-    if current_user.email == 'guest@example.com'
-      redirect_to user_path(@user.id), alert: 'ゲストユーザーの変更・削除はできません。'
-    else
-    @user.update(user_params)
-    redirect_to user_path(@user.id)
-    end
-  end
-
   def unsubscribe
   end
 

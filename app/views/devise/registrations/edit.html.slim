@@ -26,14 +26,14 @@ p.text-right style="color:red;"
             |お住まいの
             br
             |都道府県
-        td
+        td.align-self-center
           = f.select :residence, options_for_select(User.residences.keys, selected:current_user.residence)
       tr
         td 変更後パスワード
         td
           = f.password_field :password
       tr
-        td 変更後パスワード再入力
+        td 変更後パスワード(再入力)
         td
           = f.password_field :password_confirmation, autocomplete: "new-password"
       tr
@@ -44,7 +44,8 @@ p.text-right style="color:red;"
         td
         td
           = link_to "退会をご希望ですか？", unsubscribe_path
-  = f.submit "Update"
+  .row.justify-content-center
+    = f.submit "Update", class: "btn btn-bg btn-primary"
 br
 = link_to "Back", user_path(current_user)
 
