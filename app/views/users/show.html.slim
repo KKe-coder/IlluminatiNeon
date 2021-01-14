@@ -3,7 +3,7 @@ h3.text-center.mt-3
     | マイページ
   - else
     | #{@user.name}さんのページ
-.overflow-auto#followings-trigger style="display:none;height:10%"
+.overflow-auto#followings-trigger style="display:none;height:140px"
   button.followings type="button" class="close" aria-label="Close"
     span aria-hidden="true"
       | &times;
@@ -20,7 +20,7 @@ h3.text-center.mt-3
             | #{following.name}
             br
             | さん
-#followers-trigger style="display:none"
+.overflow-auto#followers-trigger style="display:none;height:140px"
   button.followers type="button" class="close" aria-label="Close"
     span aria-hidden="true"
       | &times;
