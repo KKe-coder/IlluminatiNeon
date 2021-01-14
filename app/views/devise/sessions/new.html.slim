@@ -1,3 +1,4 @@
+= flash[:danger]
 h2
   | Log in
 = form_with model: @user, url: user_session_path, local: true  do |f|
@@ -16,7 +17,4 @@ h2
   .actions
     = f.submit "Log in"
 
-p
-  |
-  = flash[:danger]
 = render "devise/shared/links"

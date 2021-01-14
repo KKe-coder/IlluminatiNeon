@@ -1,8 +1,20 @@
-h1 Users#unsubscribe
-p Find me in app/views/users/unsubscribe.html.slim
+h2.text-center.mt-3
+  | 退会確認
 
-h2
-  |
-  退会を実行しますか？
-  | &nbsp;
-  = link_to "SUBMIT", withdraw_path, method: :patch
+p.text-center.mt-3
+  |退会すると、会員登録情報や
+  br
+  |これまでの自身の投稿が閲覧できなくなります。
+  br
+  |本当に退会する場合は、「退会する」をクリックしてください。
+
+.row.justify-content-start
+  = link_to edit_user_registration_path, id:"loading", class:"btn btn-info" do
+    i.fas.fa-arrow-circle-left
+    | 前のページに戻る
+.row.justify-content-center.mt-5
+  = link_to withdraw_path, method: :patch, id:"loading", class:"btn btn-lg btn-danger" do
+    i.fas.fa-user-slash
+    | 退会
+
+= render 'shared/loading_button'

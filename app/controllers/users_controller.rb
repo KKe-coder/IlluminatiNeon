@@ -16,6 +16,9 @@ class UsersController < ApplicationController
   end
 
   def unsubscribe
+    if current_user.email == 'guest@example.com'
+      redirect_to user_path(current_user.id), alert: 'ゲストユーザーの変更・削除はできません。'
+    end
   end
 
   def withdraw
