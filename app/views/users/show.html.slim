@@ -148,8 +148,8 @@ h3.text-center.mt-3
           u
             | まだ投稿がないみたいです。
         - elsif @user == current_user && params[:showing] != "current_user_posts"
-          - unless @user.posts.nil?
-            | まだ投稿がないみたいです。
+          - if @user.followings.blank?
+            | まだ投稿がないみたいです。フォローまたは投稿してみませんか？
         - else
           u
             | まだ投稿がないみたいです。
