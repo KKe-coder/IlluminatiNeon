@@ -15,8 +15,6 @@ Rails.application.routes.draw do
     get "sign_in", :to => "users/sessions#new"
     get "sign_out", :to => "users/sessions#destroy"
     post "users/guest_sign_in", to: "users/sessions#new_guest"
-    get 'profile_edit', to: 'users/registrations#profile_edit', as: 'profile_edit'
-    patch 'profile_update', to: 'users/registrations#profile_update', as: 'profile_update'
   end
 
   resources :users, only: [:show] do

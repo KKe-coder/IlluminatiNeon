@@ -1,50 +1,51 @@
-h2
-  | Edit
-  = resource_name.to_s.humanize
-= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
-  = render "devise/shared/error_messages", resource: resource
-  .field
-    = f.label :profile_image
+h2.text-center.mt-3
+  | 会員情報編集
+p.text-right style="color:red;"
+  | ※印のところは入力必須項目です。
+= form_with model: current_user, url: user_registration_path, local: true do |f|
+  = render "devise/shared/error_messages", resource: current_user
+  .text-center
+    = f.label :profile_image, "プロフィール画像"
     br
-    = f.attachment_field :profile_image
-  .field
-    = f.label :name
-    br
-    = f.text_field :name, autofocus: true, autocomplete: "name"
-  .field
-    = f.label :email
-    br
-    = f.email_field :email, autofocus: true, autocomplete: "email"
-  - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-    div
-      | Currently waiting confirmation for:
-      = resource.unconfirmed_email
-  .field
-    = f.label :password
-    i
-      | (leave blank if you don't want to change it)
-    br
-    = f.password_field :password, autocomplete: "new-password"
-    - if @minimum_password_length
-      br
-      em
-        = @minimum_password_length
-        |  characters minimum
-  .field
-    = f.label :password_confirmation
-    br
-    = f.password_field :password_confirmation, autocomplete: "new-password"
-  .field
-    = f.label :current_password
-    i
-      | (we need your current password to confirm your changes)
-    br
-    = f.password_field :current_password, autocomplete: "current-password"
-  .actions
-    = f.submit "Update"
-h3
-  | Cancel my account
-p
-  | Unhappy?
-  = button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete
-= link_to "Back", :back
+    = attachment_image_tag current_user, :profile_image, size: "100x100", fallback: "no_image_user.jpg", class: "inputimage border"
+    .align-self-bottom.mt-1
+      = f.attachment_field :profile_image, class:"text-truncate"
+  table.table.mt-3
+    tbody
+      tr
+        td ユーザーネーム
+        td
+          = f.text_field :name, autofocus: true, autocomplete: "name"
+      tr
+        td メールアドレス
+        td
+          = f.email_field :email, autofocus: true, autocomplete: "email"
+      tr
+        td
+          span
+            |お住まいの
+            br
+            |都道府県
+        td
+          = f.select :residence, options_for_select(User.residences.keys, selected:current_user.residence)
+      tr
+        td 変更後パスワード
+        td
+          = f.password_field :password
+      tr
+        td 変更後パスワード再入力
+        td
+          = f.password_field :password_confirmation, autocomplete: "new-password"
+      tr
+        td 現在のパスワード
+        td
+          = f.password_field :current_password, autocomplete: "current-password"
+      tr
+        td
+        td
+          = link_to "退会をご希望ですか？", unsubscribe_path
+  = f.submit "Update"
+br
+= link_to "Back", user_path(current_user)
+
+= render 'shared/img_preview'
