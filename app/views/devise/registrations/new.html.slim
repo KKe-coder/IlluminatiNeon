@@ -1,37 +1,43 @@
-h2
-  | Sign up
+h2.text-center.mt-3
+  | 新規会員登録
+p.text-right style="color:red;"
+  | ※印のところは入力必須項目です。
 = form_with model: @user, url: user_registration_path, id: 'new_user', class: 'new_user', local: true do |f|
-  = render "devise/shared/error_messages", resource: resource
+  .text-center
+    = f.label :profile_image, "プロフィール画像"
+    br
+    = attachment_image_tag @user, :profile_image, size: "100x100", fallback: "no_image_user.jpg", class: "inputimage border"
+    .align-self-bottom.mt-1
+      = f.attachment_field :profile_image, class:"text-truncate"
+  table.table.mt-3
+    tbody
+      tr
+        td ユーザーネーム
+        td
+          = f.text_field :name, autofocus: true, autocomplete: "name"
+      tr
+        td メールアドレス
+        td
+          = f.email_field :email, autofocus: true, autocomplete: "email"
+      tr
+        td
+          span
+            |お住まいの
+            br
+            |都道府県
+        td.align-self-center
+          = f.select :residence, options_for_select(User.residences.keys)
+      tr
+        td パスワード
+        td
+          = f.password_field :password
+      tr
+        td パスワード(再入力)
+        td
+          = f.password_field :password_confirmation, autocomplete: "new-password"
+  .row.justify-content-center
+    = f.submit "会員登録", class: "btn btn-bg btn-success"
+br
+= link_to "Back", root_path
 
-  .field
-    = f.label :profile_image
-    br
-    = f.attachment_field :profile_image
-  .field
-    = f.label :name
-    br
-    = f.text_field :name, autofocus: true, autocomplete: "name"
-  .field
-    = f.label :email
-    br
-    = f.email_field :email, autofocus: true, autocomplete: "email"
-  .field
-    = f.label :residence
-    br
-    = f.select :residence, options_for_select(User.residences.keys)
-  .field
-    = f.label :password
-    - if @minimum_password_length
-      em
-        | (
-        = @minimum_password_length
-        |  characters minimum)
-    br
-    = f.password_field :password, autocomplete: "new-password"
-  .field
-    = f.label :password_confirmation
-    br
-    = f.password_field :password_confirmation, autocomplete: "new-password"
-  .actions
-    = f.submit "Sign up"
-= render "devise/shared/links"
+= render 'shared/img_preview'
