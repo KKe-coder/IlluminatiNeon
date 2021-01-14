@@ -3,7 +3,7 @@ h3.text-center.mt-3
     | マイページ
   - else
     | #{@user.name}さんのページ
-.overflow-auto#followings-trigger style="display:none;height:3%"
+.overflow-auto#followings-trigger style="display:none;height:10%"
   button.followings type="button" class="close" aria-label="Close"
     span aria-hidden="true"
       | &times;
@@ -53,7 +53,7 @@ h3.text-center.mt-3
       | &nbsp;
       - if @user.residence == "---"
         - if @user == current_user && params[:showing] != "current_user_posts"
-          = link_to edit_user_path(@user.id) do
+          = link_to user_registration_path(@user.id) do
             u
               | お住まいが未登録です。
               br
@@ -78,7 +78,7 @@ h3.text-center.mt-3
         });
       = link_to "♡いいね数：#{@user.favorites.count}", posts_path(posts_category: "user-favorite"), class: "btn btn-danger btn-sm mt-2 btn-block"
       - if @user == current_user && params[:showing] != "current_user_posts"
-        = link_to "会員情報編集", edit_user_path(@user.id), class: "btn btn-success btn-sm mt-2 btn-block"
+        = link_to "会員情報編集", edit_user_registration_path, class: "btn btn-success btn-sm mt-2 btn-block"
       - elsif params[:showing] == "current_user_posts"
       - else
         - if user_signed_in?
@@ -148,6 +148,8 @@ h3.text-center.mt-3
           u
             | まだ投稿がないみたいです。
         - elsif @user == current_user && params[:showing] != "current_user_posts"
+          - unless @user.posts.nil?
+            | まだ投稿がないみたいです。
         - else
           u
             | まだ投稿がないみたいです。
