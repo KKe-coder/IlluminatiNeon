@@ -53,7 +53,7 @@ h3.text-center.mt-3
       | &nbsp;
       - if @user.residence == "---"
         - if @user == current_user && params[:showing] != "current_user_posts"
-          = link_to edit_user_path(@user.id) do
+          = link_to user_registration_path(@user.id) do
             u
               | お住まいが未登録です。
               br
