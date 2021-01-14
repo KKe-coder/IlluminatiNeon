@@ -3,7 +3,7 @@ h3.text-center.mt-3
     | マイページ
   - else
     | #{@user.name}さんのページ
-.overflow-auto#followings-trigger style="display:none;height:3%"
+.overflow-auto#followings-trigger style="display:none;height:10%"
   button.followings type="button" class="close" aria-label="Close"
     span aria-hidden="true"
       | &times;
@@ -148,6 +148,8 @@ h3.text-center.mt-3
           u
             | まだ投稿がないみたいです。
         - elsif @user == current_user && params[:showing] != "current_user_posts"
+          - unless @user.posts.nil?
+            | まだ投稿がないみたいです。
         - else
           u
             | まだ投稿がないみたいです。

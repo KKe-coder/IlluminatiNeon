@@ -46,8 +46,12 @@
   - if @user == current_user
     - if params[:showing] == "current_user_posts" || params[:del_mur] == "on" # マイページプレビューモードがON中
       u
-        | まだ投稿がないみたいです。
+        | まだつぶやきがないみたいです。
+    - else
+      - if @user.followings.blank?
+        u
+          | まだつぶやきがないみたいです。フォローまたはつぶやいてみませんか？
   - else
     u
-      | まだ投稿がないみたいです。
+      | まだつぶやきがないみたいです。
 = render 'shared/loading_button'
