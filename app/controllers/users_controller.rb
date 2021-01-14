@@ -2,21 +2,17 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-
-  end
-
-  def followings
-    @user = User.find(params[:id])
-    @users = @user.followings
-    @murmurs = Murmur.where(user_id: @users.ids)
-    @posts = Post.where(user_id: @users.ids)
-  end
-
-  def followers
-    @user = User.find(params[:id])
-    @users = @user.followers
-    @murmurs = Murmur.where(user_id: @users.ids)
-    @posts = Post.where(user_id: @users.ids)
+    @murmurs = (Murmur.where(user_id: @user.id)).reverse
+    @posts = (Post.where(user_id: @user.id)).reverse
+    if user_signed_in? && @user == current_user
+      @murmurs = (Murmur.where(user_id: @user.followings.ids) + Murmur.where(user_id: @user.id)).sort.reverse
+      @posts = (Post.where(user_id: @user.followings.ids) + Post.where(user_id: @user.id)).sort.reverse
+      case params[:showing]
+      when "current_user_posts"
+        @murmurs = (Murmur.where(user_id: @user.id)).reverse
+        @posts = (Post.where(user_id: @user.id)).reverse
+      end
+    end
   end
 
   def edit
