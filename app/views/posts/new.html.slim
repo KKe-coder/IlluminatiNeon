@@ -1,6 +1,6 @@
 h2.text-center.mt-3
   | 新　規　投　稿
-p.text-right style="color:red;"
+p.text-right.text-danger
   | ※印のところは入力必須項目です。
 = form_with model: @post, local:true do |f|
   table.table.mt-3
@@ -9,12 +9,12 @@ p.text-right style="color:red;"
         td  【投稿タイトル】
         td
           = f.text_field :title, placeholder:"タイトル"
+          span.text-danger.align-bottom ※
       tr
         td  【投稿画像】
-        td style="width:160px"
-          img.inputimage style="width:160px;height:80px;display:none;"
-
-          = f.attachment_field :image
+        td style="width:200px"
+          img.inputimage style="width:200px;height:120px;display:none;"
+          = f.attachment_field :image, class:"text-truncate"
       tr
         td  【カテゴリー】
         td
@@ -47,6 +47,7 @@ javascript:
         starOn: "#{asset_path('star-on.png')}",
         starHalf: "#{asset_path('star-half.png')}",
         scoreName: 'post[rate]',
+        score: 3,
         half: true,
       });
     }
@@ -58,7 +59,7 @@ javascript:
       var reader = new FileReader();
       reader.onload = function (e) {
           $(".inputimage").attr('src', e.target.result);
-          $(".inputimage").fadeToggle(500);
+          $(".inputimage").fadeIn(500);
       }
       reader.readAsDataURL(e.target.files[0]);
       });
