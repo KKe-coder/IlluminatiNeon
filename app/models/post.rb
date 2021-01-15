@@ -6,6 +6,12 @@ class Post < ApplicationRecord
 
   attachment :image
   validates :rate, presence: true, numericality: { greater_than_or_equal_to: 0.5, less_than_or_equal_to: 5}
+  validates :title, presence: true
+  validates :image, presence: true
+  validates :color, presence: true
+  validates :place, presence: true
+  validates :impression, presence: true
+
 
   enum category: {Illumination:0, Neon:1}
   enum color:{Red:1, Orange:2, Yellow:3, Green:4, Blue:5, Indigo:6, Purple:7}

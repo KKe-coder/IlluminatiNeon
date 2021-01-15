@@ -1,0 +1,20 @@
+ja:
+  activerecord:
+    errors:
+      models:
+        post:
+          attributes:
+            image:
+              blank: が選択されていません
+            color:
+              blank: が選択されていません
+            place:
+              blank: が選択されていません
+    attributes:
+      post:
+        title: タイトル
+        image: 画像
+        color: カラー
+        place: 場所
+        impression: 感想
+
