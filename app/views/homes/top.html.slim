@@ -1,11 +1,31 @@
-h1 Homes#top
+.jumbotron style="height:100vh"
+  h1.display-4
+    |IlluminatineoNeoNへようこそ!
+  p.lead
+    |美しいイルミネーションと、幻惑的なネオンを共有するサイトです。
+  hr.my-4
+  .text-center.mt-5
+    - if user_signed_in?
+      h2
+        | ようこそ、#{current_user.name}さん
+      = button_to user_path(current_user.id), method: :get, class:"btn btn-lg btn-success mt-3", id:"loading"
+        | マイページへ
+    - else
+      div
+        = button_to users_guest_sign_in_path, method: :post, class:"btn btn-lg btn-info", id:"loading"
+          | ゲストとしてログインする
+        = button_to new_user_registration_path, method: :get, class:"btn btn-lg btn-primary mt-2", id:"loading2"
+          | 新規登録を行う
+        = button_to posts_path, method: :get, class:"btn btn-lg btn-warning btn-info mt-2", id:"loading3"
+          | ログインせずに使用する
 
-- if user_signed_in?
+= render 'shared/loading_button'
 
-  p hello!!!#{@header_user.name}
-
-- else
-
-  p hello!!!Please login.
-
-  = link_to 'Guest login', users_guest_sign_in_path, method: :post
+javascript:
+  $('#loading2').on('click', function() {
+    $('#loading2').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+  });
+javascript:
+  $('#loading3').on('click', function() {
+    $('#loading3').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+  });

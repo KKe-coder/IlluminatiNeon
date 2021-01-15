@@ -3,7 +3,6 @@ h2.text-center.mt-3
 p.text-right style="color:red;"
   | ※印のところは入力必須項目です。
 = form_with model: current_user, url: user_registration_path, local: true do |f|
-  = render "devise/shared/error_messages", resource: current_user
   .text-center
     = f.label :profile_image, "プロフィール画像"
     br
