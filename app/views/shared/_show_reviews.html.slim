@@ -12,7 +12,7 @@ input.avgrate_form type="hidden" name="avgrate" value="#{@post.avgrate}"
       - if review.user == current_user
         = link_to "Delete", post_review_path(review.post, review), method: :delete, remote: :true, class: "btn btn-sm btn-danger"
   tr.border-bottom
-    td colspan="4"
+    td colspan="3"
       h5
         |#{review.comment}
 

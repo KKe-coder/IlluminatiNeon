@@ -1,15 +1,14 @@
-avgrate = ($(".avgrate_form")).val()
 onstar = ($(".onstar")).val()
 offstar = ($(".offstar")).val()
-halfstar = ($(".halfstar")).val()
+halfstar = ($(".halfstar")).val() <%# hiddenされているinputタグよりratyの3種画像URLを変数に代入 %>
 $(".reviews").html("<%= j(render 'shared/show_reviews') %>").hide().fadeIn('slow');
+avgrate = ($(".avgrate_form")).val() <%# 再描画されたhiddenされているinputタグより@post.avgrateの値を変数に代入 %>
 $(".reviewcounter").html("<span>現在のレビュー件数: <%= @post.reviews.count %>件</span>").hide().fadeIn('slow');
 $("#review_comment").val("");
-$('#starreview input').val("");
-$("#starreview img").attr("src", offstar);
+$('#starreview input').val(""); <%# 評価入力部分(内部値)を削除 %>
+$("#starreview img").attr("src", offstar); <%# 評価入力部分(表示img)を表示offで上書き %>
 $("#starreview").hide().fadeIn('slow');
-$(".testsougou").html("<span id=\"starave\"></span><span><%= @post.avgrate.round(2) %>点</span>");
-$("#starreview img").attr("src")
+$(".testsougou").html("<span id=\"starave\"></span><p class=\"text-center\"><%= @post.avgrate.round(2) %>点</p>");
 $(function() {
   if((document.getElementById('starave').getElementsByTagName("img").length == 0 )){
     $('#starave').raty({
@@ -19,7 +18,7 @@ $(function() {
      starHalf: halfstar,
      half: true,
      readOnly: true,
-     score: avgrate,
+     score: avgrate, <%# 全変数を代入する(URLが他のraty.jsと違いパラメータ渡すか直接指定のみ可) %>
    });
   }
 });

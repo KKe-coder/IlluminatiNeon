@@ -28,13 +28,8 @@ h2.text-center.mt-3
       li.favorites.text-center
         = render 'shared/favorites', post: @post
       li
-        span.align-middle  総合評価&emsp;
-        span.testsougou
-          span#starave
-          br
-          u.text-right #{@post.avgrate.round(2)}点
-      li.text-center.mt-2
-        |#{@post.category}&emsp;#{@post.color}
+        h5.text-center
+         |#{@post.category}&emsp;#{@post.color}
       li.text-center
         strong #{@post.place}&emsp;
         span 現在&nbsp;
@@ -42,8 +37,14 @@ h2.text-center.mt-3
         span ℃／
         img#opwicon
       li
+        span.align-middle  総合評価&emsp;
+        span.text-center.testsougou
+          span#starave
+          p.text-center #{@post.avgrate.round(2)}点
+      li
         span.align-middle 個人評価&emsp;
         <span id="star-rate-#{@post.id}"></span>
+        p.text-center #{@post.rate.round(2)}点
       li
         span 感想
         p #{@post.impression}
