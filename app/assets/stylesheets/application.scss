@@ -22,3 +22,14 @@ span[id*="star-rank-ave"]{
     width: 1rem;
   }
 }
+
+td[id*="starave"]{
+  img{
+    width: 1.2rem;
+  }
+}
+
+ul {
+  list-style: none;
+  padding-inline-start: 0;
+}
