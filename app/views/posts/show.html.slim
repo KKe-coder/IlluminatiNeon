@@ -1,79 +1,90 @@
-h1 Posts#show
-p Find me in app/views/posts/show.html.slim
+h2.text-center.mt-3
+  | 投　稿　詳　細
+.row.mt-3
+  = link_to posts_path, id:"loading", class:"btn btn-info" do
+    i.fas.fa-arrow-circle-left
+    | 投稿一覧に戻る
 
-= link_to '一覧に戻る', posts_path
-br
-br
-- if user_signed_in?
-  - if @post.favorited_by?(current_user)
-    p
-      = link_to post_favorites_path(@post), method: :delete do
-        | ♥ #{@post.favorites.count} いいね
-  - else
-    p
-      = link_to post_favorites_path(@post), method: :post do
-        | ♡ #{@post.favorites.count} いいね
-p
-  |画像
-  = attachment_image_tag @post, :image, :fill, 40, 40
-p
-  |タイトル
-  strong  #{@post.title}
-p
-  |投稿者
-  strong  #{@post.user.name}
-p
-  |投稿日時
-  strong  #{@post.created_at.strftime('%Y/%m/%d %H:%M')}
-p
-  |居住地
-  strong  #{@post.user.residence}
-p
-  |カテゴリ
-  strong  #{@post.category}
-p
-  |カラー
-  strong  #{@post.color}
-p
-  |場所
-  strong  #{@post.place}
+.row.mt-3
+  .col-sm-6.text-center
+    h4  #{@post.title}
+    = attachment_image_tag @post, :image, style:"width:100%;height:200px;", fallback: "no_image_post.jpg"
+    strong  #{@post.created_at.strftime('%Y年%m月%d日 %H:%M')}
+    .row.mx-auto style="width:90%"
+      = link_to user_path(@post.user_id) do
+        = attachment_image_tag @post.user, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class: "border"
+      span.align-self-end
+        | by #{@post.user.residence}&nbsp;&nbsp;
+        u
+          = link_to @post.user.name, user_path(@post.user_id)
+        | さん
+    - if @post.user == current_user
+      .mx-auto.mt-1
+        = link_to "編集する", edit_post_path(@post.id), class:"btn btn-sm btn-info"
+        |&emsp;
+        = link_to "削除する", post_path(@post.id), class:"btn btn-sm btn-danger", method: :delete, "data-confirm" => "本当に削除しますか?"
+  .col-sm-6
+    ul
+      li.favorites.text-center
+        = render 'shared/favorites', post: @post
+      li
+        h5.text-center
+         |#{@post.category}&emsp;#{@post.color}
+      li.text-center
+        strong #{@post.place}&emsp;
+        span 現在&nbsp;
+        span#temp
+        span ℃／
+        img#opwicon
+      li
+        span.align-middle  総合評価&emsp;
+        span.text-center.testsougou
+          span#starave
+          p.text-center #{@post.avgrate.round(2)}点
+      li
+        span.align-middle 個人評価&emsp;
+        <span id="star-rate-#{@post.id}"></span>
+        p.text-center #{@post.rate.round(2)}点
+      li
+        span 感想
+        p #{@post.impression}
+.row.mt-3
+  u.mx-auto
+    | レビューしてみましょう!
+  span.mx-auto.reviewcounter
+    | 現在のレビュー件数: #{@post.reviews.count}件
+.mt-2.border-bottom
+  = form_with(model:[@post, @review]) do |f|
+    = f.text_area :comment, placeholder: "レビュー", size:"20x1", class:"form-control"
+    .d-flex.justify-content-center
+      span.mt-1#starreview
+        = render 'shared/star'
+        = f.label :rate, "評価(5段階)", class:"mr-1 mt-2"
+        = f.hidden_field :rate, id: :review_star
+      = f.submit "送信する", class:"btn btn-success ml-3 mt-1 mb-1"
 
-p
-  |評価
-  <span id="star-rate-#{@post.id}"></span>
-  = render 'shared/starids', object: @post
+.col-sm-11.mx-auto
+  table.table.table-borderless.table-sm
+    tbody.reviews
+      = render 'shared/show_reviews', post: @post
+input.onstar type="hidden" name="avgrate" value="#{asset_path('star-on.png')}"
+input.offstar type="hidden" name="avgrate" value="#{asset_path('star-off.png')}"
+input.halfstar type="hidden" name="avgrate" value="#{asset_path('star-half.png')}"
 
-p
-  |レビューの平均評価
-  #starave
 
-p
-  | レビュー件数: #{@post.reviews.count}
-- @post.reviews.each do |review|
-  p
-    = attachment_image_tag review.user, :profile_image, :fill, 20, 20
-    | #{review.user.name} #{review.comment}
-    <span id="star-rate-#{review.id}"></span>
-    = render 'shared/starids', object: review
-    - if review.user == current_user
-      = link_to "Delete", post_review_path(review.post, review), method: :delete, class: "btn btn-danger"
+= render 'shared/loading_button'
+= render 'shared/starids', object: @post
 
-br
-= form_with(model:[@post, @review], local: true) do |f|
-  = f.text_area :comment, placeholder: "Comment Please"
-  br
-  span#starreview
-    = render 'shared/star'
-    = f.label :rate
-    = f.hidden_field :rate, id: :review_star
-  br
-  = f.submit "Create Review"
-br
-
-p
-  |
-  = link_to "編集する", edit_post_path(@post.id)
-p
-  |
-  = link_to "削除する", post_path(@post.id), method: :delete, "data-confirm" => "本当に削除しますか?"
-h1 ---
+/javascript:
+  $(function(){
+      $.ajax({
+        url: "https://api.openweathermap.org/data/2.5/weather?q=" + "#{@post.place}" + "&units=metric&appid=" + "#{ENV['OPW_API']}",
+        dataType : 'jsonp',
+      }).done(function (data){
+        $('#temp').text(data.main.temp);
+        $('#opwicon').attr("src","https://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
+        $('#opwicon').attr("alt",data.weather[0].main);
+      }).fail(function (data){
+        console.log("opw error!")
+      });
+  });
