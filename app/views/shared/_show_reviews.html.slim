@@ -1,0 +1,17 @@
+- @post.reviews.reverse.each do |review|
+  tr
+    td.align-middle.border-bottom rowspan="2"
+      = attachment_image_tag review.user, :profile_image, size:"50x50", fallback: "no_image_user.jpg"
+    td.align-middle
+      | #{review.user.name}さん
+    td.align-middle
+      <span id="star-rate-#{review.id}"></span>
+      = render 'shared/starids', object: review
+    td.align-middle
+      - if review.user == current_user
+        = link_to "Delete", post_review_path(review.post, review), method: :delete, remote: :true, class: "btn btn-sm btn-danger"
+  tr.border-bottom
+    td colspan="4"
+      h5
+        |#{review.comment}
+= render 'shared/starids', object: @post

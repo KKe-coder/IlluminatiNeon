@@ -1,0 +1,6 @@
+$(".reviews").html("<%= j(render 'shared/show_reviews') %>").hide().fadeIn('slow');
+$(".reviewcounter").html("<span>現在のレビュー件数: <%= @post.reviews.count %>件</span>").hide().fadeIn('slow');
+$("#review_comment").val("");
+$('img[name="review[rate]"]').val("");
+$("#starreview img").attr("src", "/assets/star-off-cf9b07584547d5d561dfac9cdbf7b6a530cb72a1b7a1096411966036c4017d38.png")
+$("#starreview").hide().fadeIn('slow');

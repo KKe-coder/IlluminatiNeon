@@ -1,0 +1,2 @@
+$(".reviews").html("<%= j(render 'shared/show_reviews') %>").hide().fadeIn('slow');
+$(".reviewcounter").html("<span>現在のレビュー件数: <%= @post.reviews.count %>件</span>").hide().fadeIn('slow');

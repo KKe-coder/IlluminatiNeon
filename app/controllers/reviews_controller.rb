@@ -7,15 +7,13 @@ class ReviewsController < ApplicationController
     review.save
     @post.avgrate = ((@post.reviews.sum(:rate) + @post.rate) / (@post.reviews.count + 1))
     @post.update(post_params)
-    redirect_to post_path(@post)
   end
 
   def destroy
     Review.find_by(id: params[:id], post_id: params[:post_id]).destroy
     @post = Post.find(params[:post_id])
     @post.avgrate = ((@post.reviews.sum(:rate) + @post.rate) / (@post.reviews.count + 1))
-    @post.update(post_params)
-    redirect_to post_path(params[:post_id])
+    @post.update!(post_params)
   end
 
   private

@@ -28,18 +28,18 @@ h2.text-center.mt-3
       li.favorites.text-center
         = render 'shared/favorites', post: @post
       li
-        span.align-middle  総合評価
+        span.align-middle  総合評価&emsp;
         span#starave
       li.text-center.mt-2
         |#{@post.category}&emsp;#{@post.color}
       li.text-center
         strong #{@post.place}&emsp;
-        span 現在&emsp;
+        span 現在&nbsp;
         span#temp
         span ℃／
         img#opwicon
       li
-        span.align-middle 個人評価
+        span.align-middle 個人評価&emsp;
         <span id="star-rate-#{@post.id}"></span>
       li
         span 感想
@@ -47,10 +47,10 @@ h2.text-center.mt-3
 .row.mt-3
   u.mx-auto
     | レビューしてみましょう!
-  span.mx-auto
+  span.mx-auto.reviewcounter
     | 現在のレビュー件数: #{@post.reviews.count}件
 .mt-2.border-bottom
-  = form_with(model:[@post, @review], local: true) do |f|
+  = form_with(model:[@post, @review]) do |f|
     = f.text_area :comment, placeholder: "レビュー", size:"20x1", class:"form-control"
     .d-flex.justify-content-center
       span.mt-1#starreview
@@ -61,32 +61,16 @@ h2.text-center.mt-3
 
 .col-sm-11.mx-auto
   table.table.table-borderless.table-sm
-    tbody
-      - @post.reviews.reverse.each do |review|
-        tr
-          td.align-middle.border-bottom rowspan="2"
-            = attachment_image_tag review.user, :profile_image, size:"50x50", fallback: "no_image_user.jpg"
-          td.align-middle
-            | #{review.user.name}さん
-          td.align-middle
-            <span id="star-rate-#{review.id}"></span>
-            = render 'shared/starids', object: review
-          td.align-middle
-            - if review.user == current_user
-              = link_to "Delete", post_review_path(review.post, review), method: :delete, class: "btn btn-sm btn-danger"
-        tr.border-bottom
-          td colspan="4"
-            h5
-              |#{review.comment}
+    tbody.reviews
+      = render 'shared/show_reviews', post: @post
+
 
 
 = render 'shared/loading_button'
 = render 'shared/starids', object: @post
 
-/javascript:
+javascript:
   $(function(){
-    window.onload = function() {
-      console.log("https://api.openweathermap.org/data/2.5/weather?q=" + "#{@post.place}" + "&units=metric&appid=" + "#{ENV['OPW_API']}")
       $.ajax({
         url: "https://api.openweathermap.org/data/2.5/weather?q=" + "#{@post.place}" + "&units=metric&appid=" + "#{ENV['OPW_API']}",
         dataType : 'jsonp',
@@ -97,5 +81,4 @@ h2.text-center.mt-3
       }).fail(function (data){
         console.log("opw error!")
       });
-    }
   });
