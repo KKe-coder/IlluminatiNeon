@@ -1,22 +1,14 @@
 h2.text-center.mt-3
   | 投　稿　詳　細
-.row.justify-content-start
+.row.mt-3
   = link_to posts_path, id:"loading", class:"btn btn-info" do
     i.fas.fa-arrow-circle-left
     | 投稿一覧に戻る
-- if user_signed_in?
-  - if @post.favorited_by?(current_user)
-    p
-      = link_to post_favorites_path(@post), method: :delete do
-        | ♥ #{@post.favorites.count} いいね
-  - else
-    p
-      = link_to post_favorites_path(@post), method: :post do
-        | ♡ #{@post.favorites.count} いいね
-.row
+
+.row.mt-3
   .col-sm-6.text-center
     h4  #{@post.title}
-    = attachment_image_tag @post, :image, style:"width:100%", fallback: "no_image_post.jpg"
+    = attachment_image_tag @post, :image, style:"width:100%;height:200px;", fallback: "no_image_post.jpg"
     strong  #{@post.created_at.strftime('%Y年%m月%d日 %H:%M')}
     .row.mx-auto style="width:90%"
       = link_to user_path(@post.user_id) do
@@ -26,8 +18,15 @@ h2.text-center.mt-3
         u
           = link_to @post.user.name, user_path(@post.user_id)
         | さん
-  .col-sm-6.align-self-center
+    - if @post.user == current_user
+      .mx-auto.mt-1
+        = link_to "編集する", edit_post_path(@post.id), class:"btn btn-sm btn-info"
+        |&emsp;
+        = link_to "削除する", post_path(@post.id), class:"btn btn-sm btn-danger", method: :delete, "data-confirm" => "本当に削除しますか?"
+  .col-sm-6
     ul
+      li.favorites.text-center
+        = render 'shared/favorites', post: @post
       li
         span.align-middle  総合評価
         span#starave
@@ -42,35 +41,44 @@ h2.text-center.mt-3
       li
         span.align-middle 個人評価
         <span id="star-rate-#{@post.id}"></span>
-p
-  | レビュー件数: #{@post.reviews.count}
-- @post.reviews.each do |review|
-  p
-    = attachment_image_tag review.user, :profile_image, :fill, 20, 20
-    | #{review.user.name} #{review.comment}
-    <span id="star-rate-#{review.id}"></span>
-    = render 'shared/starids', object: review
-    - if review.user == current_user
-      = link_to "Delete", post_review_path(review.post, review), method: :delete, class: "btn btn-danger"
+      li
+        span 感想
+        p #{@post.impression}
+.row.mt-3
+  u.mx-auto
+    | レビューしてみましょう!
+  span.mx-auto
+    | 現在のレビュー件数: #{@post.reviews.count}件
+.mt-2.border-bottom
+  = form_with(model:[@post, @review], local: true) do |f|
+    = f.text_area :comment, placeholder: "レビュー", size:"20x1", class:"form-control"
+    .d-flex.justify-content-center
+      span.mt-1#starreview
+        = render 'shared/star'
+        = f.label :rate, "評価(5段階)", class:"mr-1 mt-2"
+        = f.hidden_field :rate, id: :review_star
+      = f.submit "送信する", class:"btn btn-success ml-3 mt-1 mb-1"
 
-br
-= form_with(model:[@post, @review], local: true) do |f|
-  = f.text_area :comment, placeholder: "Comment Please"
-  br
-  span#starreview
-    = render 'shared/star'
-    = f.label :rate
-    = f.hidden_field :rate, id: :review_star
-  br
-  = f.submit "Create Review"
-br
+.col-sm-11.mx-auto
+  table.table.table-borderless.table-sm
+    tbody
+      - @post.reviews.reverse.each do |review|
+        tr
+          td.align-middle.border-bottom rowspan="2"
+            = attachment_image_tag review.user, :profile_image, size:"50x50", fallback: "no_image_user.jpg"
+          td.align-middle
+            | #{review.user.name}さん
+          td.align-middle
+            <span id="star-rate-#{review.id}"></span>
+            = render 'shared/starids', object: review
+          td.align-middle
+            - if review.user == current_user
+              = link_to "Delete", post_review_path(review.post, review), method: :delete, class: "btn btn-sm btn-danger"
+        tr.border-bottom
+          td colspan="4"
+            h5
+              |#{review.comment}
 
-p
-  |
-  = link_to "編集する", edit_post_path(@post.id)
-p
-  |
-  = link_to "削除する", post_path(@post.id), method: :delete, "data-confirm" => "本当に削除しますか?"
 
 = render 'shared/loading_button'
 = render 'shared/starids', object: @post
