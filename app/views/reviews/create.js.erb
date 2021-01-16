@@ -1,6 +1,26 @@
+avgrate = ($(".avgrate_form")).val()
+onstar = ($(".onstar")).val()
+offstar = ($(".offstar")).val()
+halfstar = ($(".halfstar")).val()
 $(".reviews").html("<%= j(render 'shared/show_reviews') %>").hide().fadeIn('slow');
 $(".reviewcounter").html("<span>現在のレビュー件数: <%= @post.reviews.count %>件</span>").hide().fadeIn('slow');
 $("#review_comment").val("");
-$('img[name="review[rate]"]').val("");
-$("#starreview img").attr("src", "/assets/star-off-cf9b07584547d5d561dfac9cdbf7b6a530cb72a1b7a1096411966036c4017d38.png")
+$('#starreview input').val("");
+$("#starreview img").attr("src", offstar);
 $("#starreview").hide().fadeIn('slow');
+$(".testsougou").html("<span id=\"starave\"></span><span><%= @post.avgrate.round(2) %>点</span>");
+$("#starreview img").attr("src")
+$(function() {
+  if((document.getElementById('starave').getElementsByTagName("img").length == 0 )){
+    $('#starave').raty({
+     size: 36,
+     starOff: offstar,
+     starOn: onstar,
+     starHalf: halfstar,
+     half: true,
+     readOnly: true,
+     score: avgrate,
+   });
+  }
+});
+$(".testsougou").hide().fadeIn('slow');

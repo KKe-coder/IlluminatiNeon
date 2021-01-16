@@ -29,7 +29,10 @@ h2.text-center.mt-3
         = render 'shared/favorites', post: @post
       li
         span.align-middle  総合評価&emsp;
-        span#starave
+        span.testsougou
+          span#starave
+          br
+          u.text-right #{@post.avgrate.round(2)}点
       li.text-center.mt-2
         |#{@post.category}&emsp;#{@post.color}
       li.text-center
@@ -63,13 +66,15 @@ h2.text-center.mt-3
   table.table.table-borderless.table-sm
     tbody.reviews
       = render 'shared/show_reviews', post: @post
-
+input.onstar type="hidden" name="avgrate" value="#{asset_path('star-on.png')}"
+input.offstar type="hidden" name="avgrate" value="#{asset_path('star-off.png')}"
+input.halfstar type="hidden" name="avgrate" value="#{asset_path('star-half.png')}"
 
 
 = render 'shared/loading_button'
 = render 'shared/starids', object: @post
 
-javascript:
+/javascript:
   $(function(){
       $.ajax({
         url: "https://api.openweathermap.org/data/2.5/weather?q=" + "#{@post.place}" + "&units=metric&appid=" + "#{ENV['OPW_API']}",

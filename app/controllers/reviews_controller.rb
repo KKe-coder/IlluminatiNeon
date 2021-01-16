@@ -13,7 +13,7 @@ class ReviewsController < ApplicationController
     Review.find_by(id: params[:id], post_id: params[:post_id]).destroy
     @post = Post.find(params[:post_id])
     @post.avgrate = ((@post.reviews.sum(:rate) + @post.rate) / (@post.reviews.count + 1))
-    @post.update!(post_params)
+    @post.update(post_params)
   end
 
   private
