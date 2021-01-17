@@ -53,15 +53,18 @@ h2.text-center.mt-3
     | レビューしてみましょう!
   span.mx-auto.reviewcounter
     | 現在のレビュー件数: #{@post.reviews.count}件
-.mt-2.border-bottom
-  = form_with(model:[@post, @review]) do |f|
-    = f.text_area :comment, placeholder: "レビュー", size:"20x1", class:"form-control"
-    .d-flex.justify-content-center
-      span.mt-1#starreview
-        = render 'shared/star'
-        = f.label :rate, "評価(5段階)", class:"mr-1 mt-2"
-        = f.hidden_field :rate, id: :review_star
-      = f.submit "送信する", class:"btn btn-success ml-3 mt-1 mb-1"
+- if user_signed_in?
+  .mt-2.border-bottom
+    = form_with(model:[@post, @review]) do |f|
+      = f.text_area :comment, placeholder: "レビュー", size:"20x1", class:"form-control"
+      .d-flex.justify-content-center
+        span.mt-1#starreview
+          = render 'shared/star'
+          = f.label :rate, "評価(5段階)", class:"mr-1 mt-2"
+          = f.hidden_field :rate, id: :review_star
+        = f.submit "送信する", class:"btn btn-success ml-3 mt-1 mb-1"
+- else
+  h5.mt-2.text-center レビューにはログインが必要です。
 
 .col-sm-11.mx-auto
   table.table.table-borderless.table-sm
