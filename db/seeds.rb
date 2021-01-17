@@ -19,22 +19,42 @@ AdminUser.create!(email: ENV['ADMIN_ID'],
   residence: User.residences.keys.sample,
   password: password,
   password_confirmation: password,
- )
+  profile_image: open("./db/profile_image/profile_image#{n}.jpg")
+  )
 end
 
-30.times do |n|
+10.times do |n|
   Faker::Config.locale = :en
   title = Faker::Lorem.word
   impression = Faker::Lorem.sentence
   Post.create!(
   user: User.find(rand(1..20)),
   title: title,
-  category: Post.categories.keys.sample,
+  category: "Illumination",
   color: Post.colors.keys.sample,
   place: Post.places.keys.sample,
   impression: impression,
   rate: 3,
-  avgrate: 3
+  avgrate: 3,
+  image: open("./db/post_image_ill/post_image_ill#{n}.jpg")
+  )
+  Faker::Config.locale = :ja
+end
+
+10.times do |n|
+  Faker::Config.locale = :en
+  title = Faker::Lorem.word
+  impression = Faker::Lorem.sentence
+  Post.create!(
+  user: User.find(rand(1..20)),
+  title: title,
+  category: "Neon",
+  color: Post.colors.keys.sample,
+  place: Post.places.keys.sample,
+  impression: impression,
+  rate: 3,
+  avgrate: 3,
+  image: open("./db/post_image_neo/post_image_neo#{n}.jpg")
   )
   Faker::Config.locale = :ja
 end
