@@ -40,8 +40,9 @@
 ## 使用素材
 
 - [Canva](https://www.canva.com/) (ロゴ作成に使用)
-- [ICOOON MONO](https://icooon-mono.com/about-icoon-mono/) (ユーザー生成に使用)
-- [ぱくたそ](https://www.pakutaso.com/) (サンプルデータ作成に使用)
+- [ICOOON MONO](https://icooon-mono.com/about-icoon-mono/) (サンプルユーザーのプロフ画像として使用)
+- [ぱくたそ](https://www.pakutaso.com/) (サンプル投稿用写真として使用)
+- [O-DAN](https://o-dan.net/ja/) (背景用写真として使用)
 
 ## 使用API
 
