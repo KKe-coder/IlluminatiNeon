@@ -27,7 +27,7 @@
           = link_to "新規登録", new_user_registration_path, class:"btn btn-lg btn-outline-warning"
           = link_to "ログイン", new_user_session_path, class:"btn btn-lg btn-outline-light ml-4"
           = link_to "ゲストログイン", users_guest_sign_in_path, method: :post, class:"btn btn-lg btn-outline-danger ml-4"
-          = link_to "ログインせず閲覧", posts_path, class:"btn btn-lg btn-outline-success ml-4"
+          = link_to "About?", about_path, class:"btn btn-lg btn-outline-success ml-4"
       - else
         span.lead.text-warning
           |#{current_user.name}

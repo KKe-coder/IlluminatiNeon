@@ -1,0 +1,11 @@
+.navbar {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  position: fixed;
+  padding-left: 0.5rem;
+  .logo  {
+    background-image: image-url("logo.jpg");
+    background-size: cover;
+    width: 155px;
+    height: 60px;
+  }
+}

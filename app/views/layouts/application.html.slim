@@ -14,9 +14,9 @@ html
       = render 'shared/header_top'
       = render 'shared/header_bottom'
       .row.mx-auto
-        .col-sm-3.border
+        .col-sm-2.border
           = render 'shared/column', objects: @left_posts, count: @left_count
-        .col-sm-6
+        .col-sm-8
           .notifications
             - flash.each do |key, value|
               = content_tag(:div, value, class: key)
@@ -28,7 +28,7 @@ html
               = link_to 'ログイン', new_user_session_path
               | が必要になります。
           = yield
-        .col-sm-3.border
+        .col-sm-2.border
           = render 'shared/column', objects: @right_posts, count: @right_count
     - else
       = yield

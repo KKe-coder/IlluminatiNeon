@@ -1,8 +1,9 @@
-nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
-  = link_to "IlluminatioNeoN", root_path, class: "navbar-brand border border-dark"
+nav.navbar.navbar-expand-lg.fixed-top
+  = link_to root_path
+    img.logo
   ul.navbar-nav
     - if user_signed_in?
-      li.nav-item
+      li.nav-item.text-light
         = link_to 'マイページ', user_path(current_user.id)
         |　&nbsp;
       li.nav-item
