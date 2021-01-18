@@ -1,0 +1,35 @@
+.navbar {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  position: fixed;
+  padding-left: 0.5rem;
+  background-color: #060817;
+  z-index: 1;
+  .logo  {
+    background-image: image-url("logo.jpg");
+    background-position: center;
+    background-size: cover;
+    width: 200px;
+    height: 60px;
+    transition: all 0.5s;
+  }
+  .logo:hover {
+    transform: scale(1.2);
+  }
+  .logo:active {
+    transform: scale(3.0);
+  }
+  .btn {
+    padding: 5px;
+    transition: all 0.5s;
+  }
+  .btn:hover {
+    transform: scale(1.2);
+  }
+  .btn:active {
+    transform: scale(3.0);
+  }
+
+  a {
+    transform: rotate(0.05deg);
+  }
+}

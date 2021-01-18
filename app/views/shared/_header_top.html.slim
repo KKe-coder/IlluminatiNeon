@@ -1,29 +1,24 @@
-nav.navbar.navbar-expand-lg.fixed-top
-  = link_to root_path
-    img.logo
-  ul.navbar-nav
+nav.navbar.navbar-expand-lg.fixed-top.d-flex
+  = link_to root_path, class:"navbar-brand"
+    img.logo.ml-1.rounded-lg
+  ul.navbar-nav.mx-auto
     - if user_signed_in?
-      li.nav-item.text-light
-        = link_to 'マイページ', user_path(current_user.id)
-        |　&nbsp;
       li.nav-item
-        = link_to 'イルミネーション', posts_path(posts_category: "Illumination")
-        |　&nbsp;
+        = link_to "マイページ", user_path(current_user.id) , class:"btn btn-lg btn-outline-warning"
       li.nav-item
-        = link_to 'ネオン', posts_path(posts_category: "Neon")
-        |　&nbsp;
+        = link_to "投稿一覧", posts_path, class:"btn btn-lg btn-outline-light ml-5"
       li.nav-item
-        = link_to 'ログアウト', destroy_user_session_path, method: :delete
-        |　&nbsp;
+        = link_to "新規投稿", new_post_path, class:"btn btn-lg btn-outline-danger ml-5"
+      li.nav-item
+        = link_to "ログアウト", destroy_user_session_path, method: :delete, class:"btn btn-lg btn-outline-success ml-5"
     - else
       li.nav-item
-        = link_to 'About', about_path, style:"text-decoration: none;color: white;"
-        |　&nbsp;
+        = link_to "新規登録", new_user_registration_path, class:"btn btn-lg btn-outline-warning"
       li.nav-item
-        = link_to '新規登録', new_user_registration_path, style:"text-decoration: none;color: white;"
-        |　&nbsp;
+        = link_to "ログイン", new_user_session_path, class:"btn btn-lg btn-outline-light ml-5"
       li.nav-item
-        = link_to 'ログイン', new_user_session_path
-        |　&nbsp;
+        = link_to "ゲストログイン", users_guest_sign_in_path, method: :post, class:"btn btn-lg btn-outline-danger ml-5"
+      li.nav-item
+        = link_to "About", about_path, method: :delete, class:"btn btn-lg btn-outline-success ml-5"
     li.nav-item
-      = link_to '問い合わせ', new_contacts_path
+      = link_to '問い合わせ', new_contacts_path, class:"btn btn-lg btn-outline-info ml-5"
