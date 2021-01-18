@@ -5,7 +5,7 @@
         .bottom-login
           = link_to user_path(@header_user.id) do
             = attachment_image_tag current_user, :profile_image, size: "45x45", fallback: "no_image_user.jpg", class:"align-self-center rounded-circle"
-            span.font-weight-bold.text-light.user-name
+            span.font-weight-bold.text-success.user-name
               |#{@header_user.name}
           span.welcome.text-light
             | さん、ようこそ！
