@@ -40,7 +40,10 @@
 ## 使用素材
 
 - [Canva](https://www.canva.com/) (ロゴ作成に使用)
+- [ICOOON MONO](https://icooon-mono.com/about-icoon-mono/) (サンプルユーザーのプロフ画像として使用)
+- [ぱくたそ](https://www.pakutaso.com/) (サンプル投稿用写真として使用)
+- [O-DAN](https://o-dan.net/ja/) (背景用写真として使用)
 
 ## 使用API
 
-- [OpenWeatherMap](https://openweathermap.org/)(投稿の現在天気表示に使用)
+- [OpenWeatherMap](https://openweathermap.org/) (投稿の現在天気表示に使用)

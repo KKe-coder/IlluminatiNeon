@@ -1,31 +1,44 @@
-.jumbotron style="height:100vh"
-  h1.display-4
-    |IlluminatineoNeoNへようこそ!
-  p.lead
-    |美しいイルミネーションと、幻惑的なネオンを共有するサイトです。
-  hr.my-4
-  .text-center.mt-5
-    - if user_signed_in?
-      h2
-        | ようこそ、#{current_user.name}さん
-      = button_to user_path(current_user.id), method: :get, class:"btn btn-lg btn-success mt-3", id:"loading"
-        | マイページへ
-    - else
-      div
-        = button_to users_guest_sign_in_path, method: :post, class:"btn btn-lg btn-info", id:"loading"
-          | ゲストとしてログインする
-        = button_to new_user_registration_path, method: :get, class:"btn btn-lg btn-primary mt-2", id:"loading2"
-          | 新規登録を行う
-        = button_to posts_path, method: :get, class:"btn btn-lg btn-warning btn-info mt-2", id:"loading3"
-          | ログインせずに使用する
-
-= render 'shared/loading_button'
-
-javascript:
-  $('#loading2').on('click', function() {
-    $('#loading2').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
-  });
-javascript:
-  $('#loading3').on('click', function() {
-    $('#loading3').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
-  });
+.toppage
+  .jumbotron.mb-0
+    h1.display-4.text-light
+      span.text-warning
+        |I
+      |lluminatio
+      span.text-danger
+        |N
+      |eo
+      span.text-success
+        |N
+      |へようこそ!
+    p.lead.text-light
+      |美しい
+      span.text-warning
+        |イルミネーション
+      |と、幻惑的な
+      span.text-danger
+        |ネオン
+      |を共有する
+      span.text-success
+        |サイト
+      |です。
+    .text-center.mt-5
+      - unless user_signed_in?
+        .mt-2
+          = link_to "新規登録", new_user_registration_path, class:"btn btn-lg btn-outline-warning"
+          = link_to "ログイン", new_user_session_path, class:"btn btn-lg btn-outline-light ml-4"
+          = link_to "ゲストログイン", users_guest_sign_in_path, method: :post, class:"btn btn-lg btn-outline-danger ml-4"
+          = link_to "About", about_path, class:"btn btn-lg btn-outline-success ml-4"
+      - else
+        span.lead.text-warning
+          |#{current_user.name}
+        span.text-danger
+          |さん
+        span.text-light
+          |、
+        span.text-success
+          |お帰りなさい。
+        .mt-2
+          = link_to "マイページ", user_path(current_user.id) , class:"btn btn-lg btn-outline-warning"
+          = link_to "投稿一覧", posts_path, class:"btn btn-lg btn-outline-light ml-4"
+          = link_to "新規投稿", new_post_path, class:"btn btn-lg btn-outline-danger ml-4"
+          = link_to "ログアウト", destroy_user_session_path, method: :delete, class:"btn btn-lg btn-outline-success ml-4"

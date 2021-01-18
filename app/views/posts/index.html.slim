@@ -6,7 +6,7 @@ p Find me in app/views/posts/index.html.slim
 - @posts.each do |post|
   p
     |画像
-  = attachment_image_tag post, :image, :fill, 40, 40
+  = attachment_image_tag post, :image, size:"40x40"
   p
     |タイトル
     strong
