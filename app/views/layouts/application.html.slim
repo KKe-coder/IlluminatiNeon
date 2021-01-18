@@ -20,13 +20,6 @@ html
           .notifications
             - flash.each do |key, value|
               = content_tag(:div, value, class: key)
-          - unless user_signed_in?
-            .border.text-center
-              | 閲覧はログインせずに行えますが、
-              br
-              |投稿等には
-              = link_to 'ログイン', new_user_session_path
-              | が必要になります。
           = yield
         .col-sm-2.border.right-column
           = render 'shared/column', objects: @right_posts, count: @right_count

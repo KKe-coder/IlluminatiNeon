@@ -20,8 +20,32 @@
         .d-flex.justify-content-start.align-self-center.murmurs_header style="width:50%"
           = render 'shared/create_murmur'
     - else
-      span.bottom-nologin
-        IlluminatioNeonにようこそ！美しいイルミネーションと、幻想的なネオンを共有するサイトです。
+      p.text-light.bottom-nologin
+        span.font-weight-bold
+          span.text-warning
+            |I
+          |lluminatio
+          span.text-danger
+            |N
+          |eo
+          span.text-success
+            |N
+        |にようこそ！美しい
+        span.text-warning
+          |イルミネーション
+        |と、幻惑的な
+        span.text-danger
+          |ネオン
+        |を共有する
+        span.text-success
+          |サイト
+        |です。
+      p.text-light.bottom-nologin
+        | 閲覧はログインせずに行えますが、投稿やレビュー等には
+        = link_to 'ログイン', new_user_session_path, class:"text-info font-weight-bold"
+        |や
+        = link_to '新規登録', new_user_registration_path, class:"text-info font-weight-bold"
+        | が必要になります。
 
 javascript:
   $('#create_murmur').on('click', function() {
