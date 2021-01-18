@@ -2,6 +2,18 @@
   top: 86px;
   width: 100%;
   height: 50px;
-  z-index: 1;
-  background-color: #060817;
+  background-color: #0E1126;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  z-index: 2;
+
+  .bottom-login {
+    margin-top: 2px;
+    transform: rotate(0.05deg);
+    .welcome {
+      font-size: 0.8rem;
+    }
+  }
+  .bottom-nologin {
+  }
 }
+
