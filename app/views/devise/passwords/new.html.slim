@@ -5,7 +5,7 @@
     | パスワードをお忘れですか？
     br
     | 登録したメールアドレスにパスワード再発行メールをお送りします。
-  = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+  = form_with model: @user, url: user_password_path, local: true do |f|
     table.table.table-borderless.mt-3
       tbody
         tr
