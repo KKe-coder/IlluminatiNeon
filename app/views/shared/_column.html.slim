@@ -1,55 +1,72 @@
 - if objects == @left_posts
   - count = 0
+/左カラム(@left_posts)の場合 count1~3として稼働。人気記事1~3位のナンバー、平均評価の表示を行う。
 - else
   - count = 3
+/右カラム(@right_posts)の場合 count4~6として稼働。最新記事の時間表示、平均評価の表示を行う。
 - objects.each do |post|
   - count += 1
   .row
-    .mt-3.mx-1.mx-auto
-      .d-flex.justify-content-between
-        - if objects == @left_posts
-          span #{count}位
-        - else
+    .mx-auto
+      - if objects == @left_posts
+        - if count == 1
+          h4.mt-1.text-center.text-warning.rounded-pill.border.border-warning.left-title 人気投稿
+        h5.text-center.text-light
+          i.fas.fa-crown
+          |&nbsp;#{count}位
+        span.ml-1 id="star-rank-ave-#{count}"
+        span.text-light.ml-1
+          |(#{post.avgrate.round(2)}点)
+      - else
+        - if count == 4
+          h4.mt-1.text-center.text-danger.rounded-pill.border.border-danger.right-title 最新投稿
+        h5.text-center.text-light
           - if ((Time.now - post.created_at) / 60 ) >= 60
-            = ((Time.now - post.created_at) / 3600 ).round(0)
-            | 時間前
+            span.text-danger
+              i.far.fa-clock
+              |&nbsp;
+              = ((Time.now - post.created_at) / 3600 ).round(0)
+              | 時間前
           - else
-            = ((Time.now - post.created_at) / 60 ).round(0)
-            | 分前
-        .d-flex.justify-content-between
-          span.border
-            | #{post.place}
-          span #{post.category}
+            span.text-warning
+              i.far.fa-clock
+              |&nbsp;
+              = ((Time.now - post.created_at) / 60 ).round(0)
+              | 分前
+        span.ml-1 id="star-rank-ave-#{count}"
+        span.text-light.ml-1
+          |(#{post.avgrate.round(2)}点)
+      .d-flex.justify-content-between
+        span.ml-1.border.text-light.rounded-lg #{post.place}
+        - if post.category == "Illumination"
+          span.text-warning #{post.category}
+        - else
+          span.text-danger #{post.category}
       = link_to(post_path(post.id)) do
-        = attachment_image_tag post, :image, width: "100%", fallback: "no_image_post.jpg"
-  .row.justify-content-between
-    .col-sm-3
-      = link_to user_path(post.user_id) do
-        = attachment_image_tag post.user, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class: "border"
-    .col-sm-9 style="font-size:0.9rem"
-      span
-        | by #{post.user.residence}&nbsp;&nbsp;
-        u
-          = link_to post.user.name, user_path(post.user_id)
+        = attachment_image_tag post, :image, width: "100%", height: "114px", fallback: "no_image_post.jpg", class:"mt-1 rounded"
+  .row.mt-1.mb-1.d-flex.border-bottom.border-light.rounded-bottom
+    = link_to user_path(post.user_id) do
+      = attachment_image_tag post.user, :profile_image, size: "45x45", fallback: "no_image_user.jpg", class: "rounded-circle ml-1 border border-light"
+    span.text-light.ml-1.mb-1
+      = link_to post.title, post_path(post.id), class:"text-light font-weight-bold"
+      br
+      = link_to post.user.name, user_path(post.user_id), class:"posts-creater text-success"
+      span style="font-size:0.7rem"
         | さん
-      br
-      span id="star-rank-ave-#{count}"
-      br
-      strong
-        = link_to post.title, post_path(post.id)
-      javascript:
-        $(function() {
-          if((document.getElementById('star-rank-ave-#{count}').getElementsByTagName("img").length == 0 )){
-            // htmlのid="star-rank-ave-#{count}"の部分を探し、その中のimgタグ(星の個数)を配列で返す => 配列の長さが0の場合、raty.jsを実行する。
-            // 星の個数が0のときのみraty.jsが実行されるため、星が6個以上にはならなくなりレイアウトが崩れなくなる。
-            $('#star-rank-ave-#{count}').raty({
-              size: 36,
-              starOff: "#{asset_path('star-off.png')}",
-              starOn: "#{asset_path('star-on.png')}",
-              starHalf: "#{asset_path('star-half.png')}",
-              half: true,
-              readOnly: true,
-              score: "#{post.avgrate}",
-            });
-          }
+
+  javascript:
+    $(function() {
+      if((document.getElementById('star-rank-ave-#{count}').getElementsByTagName("img").length == 0 )){
+        // htmlのid="star-rank-ave-#{count}"の部分を探し、その中のimgタグ(星の個数)を配列で返す => 配列の長さが0の場合、raty.jsを実行する。
+        // 星の個数が0のときのみraty.jsが実行されるため、星が6個以上にはならなくなりレイアウトが崩れなくなる。
+        $('#star-rank-ave-#{count}').raty({
+          size: 36,
+          starOff: "#{asset_path('star-off.png')}",
+          starOn: "#{asset_path('star-on.png')}",
+          starHalf: "#{asset_path('star-half.png')}",
+          half: true,
+          readOnly: true,
+          score: "#{post.avgrate}",
         });
+      }
+    });

@@ -1,4 +1,4 @@
-nav.navbar.navbar-expand-lg.fixed-top.d-flex
+nav.navbar.navbar-expand.fixed-top
   = link_to root_path, class:"navbar-brand"
     img.logo.ml-1.rounded-lg
   ul.navbar-nav.mx-auto
@@ -19,6 +19,6 @@ nav.navbar.navbar-expand-lg.fixed-top.d-flex
       li.nav-item
         = link_to "ゲストログイン", users_guest_sign_in_path, method: :post, class:"btn btn-lg btn-outline-danger ml-5"
       li.nav-item
-        = link_to "About", about_path, method: :delete, class:"btn btn-lg btn-outline-success ml-5"
+        = link_to "About", about_path, class:"btn btn-lg btn-outline-success ml-5"
     li.nav-item
       = link_to '問い合わせ', new_contacts_path, class:"btn btn-lg btn-outline-info ml-5"

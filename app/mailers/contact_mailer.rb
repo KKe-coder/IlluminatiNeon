@@ -3,7 +3,7 @@ class ContactMailer < ApplicationMailer
     @contact = contact
     mail(
       to:  ENV['GMAIL_ID'],
-      subject: 'お問い合わせ通知'
+      subject: "【IlluminatioNeon】問い合わせ通知"
     )
   end
 end

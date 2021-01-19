@@ -25,8 +25,9 @@ module IlluminatiNeon
       else
         class_name = instance.object.class.name.underscore
         method_name = instance.instance_variable_get(:@method_name)
-        "<div class=\"has-error\">#{html_tag}<br>
-          <span class=\"help-block\">
+        "<div class=\"has-error\">#{html_tag}
+          <span class=\"alert alert-info align-middle\">
+            <i class=\"fas fa-exclamation-triangle\"></i>
             #{I18n.t("activerecord.attributes.#{class_name}.#{method_name}")}
             #{instance.error_message.first}
           </span>

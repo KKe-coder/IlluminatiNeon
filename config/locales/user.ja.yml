@@ -1,0 +1,16 @@
+ja:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            name:
+              blank: が入力されていません
+            color:
+              blank: が選択されていません
+            place:
+              blank: が選択されていません
+    attributes:
+      user:
+        name: ユーザーネーム
+

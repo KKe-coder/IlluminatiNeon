@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   root to: 'homes#top'
   get '/about', to: 'homes#about'
+  get '/users' => redirect("/")
+  #user/registrationsでリロードすると/usersに行ってしまう際リダイレクト
 
   devise_for :users, :controllers => {
     :registrations => 'users/registrations',

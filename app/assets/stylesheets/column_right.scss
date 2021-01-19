@@ -2,5 +2,38 @@
   position: fixed !important;
   top: 136px;
   left: calc(16.6666666667% + 66.6666666667%);
-  height: 500px;
+  height: 100%;
+  background-color: #060817;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  .right-title {
+    background-color: #1C1F39;
+    transform: rotate(0.05deg);
+    width: 80%;
+    margin: 0 auto;
+  }
+  h5 {
+    transform: rotate(0.05deg);
+    margin-bottom: 0;
+  }
+  span {
+    transform: rotate(0.05deg);
+  }
+  a {
+    z-index: 1;
+    transform: rotate(0.05deg);
+  }
+  .posts-creater{
+    z-index: 0;
+    font-size: 0.9rem;
+  }
+  img {
+    transition: all 0.5s;
+  }
+  img:hover{
+    z-index: 1;
+    transform: translateX(-20px) scale(1.2);
+  }
+  img:active{
+    transform: scale(3.0);
+  }
 }
