@@ -38,3 +38,20 @@ ul {
 .main-background {
   background-color: #241D2D;
 }
+
+.alert {
+  padding: 2px;
+  font-size: 0.9rem;
+}
+
+.has-error {
+  input {
+    background-color: #FAC7C1;
+  }
+}
+
+select {
+  width: 100%;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}

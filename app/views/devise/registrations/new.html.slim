@@ -1,43 +1,52 @@
-h2.text-center.mt-3
-  | 新規会員登録
-p.text-right style="color:red;"
-  | ※印のところは入力必須項目です。
-= form_with model: @user, url: user_registration_path, id: 'new_user', class: 'new_user', local: true do |f|
-  .text-center
-    = f.label :profile_image, "プロフィール画像"
-    br
-    = attachment_image_tag @user, :profile_image, size: "100x100", fallback: "no_image_user.jpg", class: "inputimage border"
-    .align-self-bottom.mt-1
-      = f.attachment_field :profile_image, class:"text-truncate"
-  table.table.mt-3
-    tbody
-      tr
-        td ユーザーネーム
-        td
-          = f.text_field :name, autofocus: true, autocomplete: "name"
-      tr
-        td メールアドレス
-        td
-          = f.email_field :email, autofocus: true, autocomplete: "email"
-      tr
-        td
-          span
-            |お住まいの
-            br
-            |都道府県
-        td.align-self-center
-          = f.select :residence, options_for_select(User.residences.keys)
-      tr
-        td パスワード
-        td
-          = f.password_field :password
-      tr
-        td パスワード(再入力)
-        td
-          = f.password_field :password_confirmation, autocomplete: "new-password"
-  .row.justify-content-center
-    = f.submit "会員登録", class: "btn btn-bg btn-success"
-br
-= link_to "Back", root_path
+.user-new-registration
+  h2.mt-3.text-center.text-light.rounded-pill.border.border-light
+    | 新規会員登録
+  p.mt-2.text-right.text-danger
+    | ※印のところは入力必須項目です。
+  = form_with model: @user, url: user_registration_path, id: 'new_user', class: 'new_user', local: true do |f|
+    table.table.table-borderless.mt-3
+      tbody
+        tr
+          td.align-middle
+            span.text-light
+              |プロフィール画像
+          td.text-center
+            = attachment_image_tag @user, :profile_image, size: "100x100", fallback: "no_image_user.jpg", class: "inputimage rounded-circle border border-light"
+            .align-self-bottom.mt-1
+              = f.attachment_field :profile_image, class:"text-truncate text-light", format: 'jpg'
+        tr
+          td.align-middle
+            span.text-light
+              |ユーザーネーム(6文字以内)
+            span.text-danger  ※
+          td
+            = f.text_field :name, autofocus: true, autocomplete: "name", class:"form-control"
+        tr
+          td.align-middle
+            span.text-light
+              |メールアドレス
+            span.text-danger  ※
+          td
+            = f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control"
+        tr
+          td.align-middle.text-light お住まいの都道府県
+          td.align-self-center
+            = f.select :residence, options_for_select(User.residences.keys), class:"form-control"
+        tr
+          td.align-middle
+            span.text-light
+              |パスワード(6文字以上)
+            span.text-danger  ※
+          td
+            = f.password_field :password, class:"form-control"
+        tr
+          td.align-middle
+            span.text-light
+              |パスワード(再入力)
+            span.text-danger  ※
+          td
+            = f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control"
+    .row.justify-content-center
+      = f.submit "会員登録", class: "btn btn-bg btn-success"
 
 = render 'shared/img_preview'
