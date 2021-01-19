@@ -13,7 +13,7 @@
           td.text-center
             = attachment_image_tag @user, :profile_image, size: "100x100", fallback: "no_image_user.jpg", class: "inputimage rounded-circle border border-light"
             .align-self-bottom.mt-1
-              = f.attachment_field :profile_image, class:"text-truncate text-light"
+              = f.attachment_field :profile_image, class:"text-truncate text-light", format: 'jpg'
         tr
           td.align-middle
             span.text-light
@@ -48,7 +48,5 @@
             = f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control"
     .row.justify-content-center
       = f.submit "会員登録", class: "btn btn-bg btn-success"
-  br
-  = link_to "Back", root_path
 
 = render 'shared/img_preview'
