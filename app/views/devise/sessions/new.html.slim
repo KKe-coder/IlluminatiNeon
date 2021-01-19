@@ -21,5 +21,6 @@
         p.alert-info
           i.fas.fa-exclamation-triangle
           |#{flash[:alert]}
+          |#{flash[:error]}
     .row.justify-content-center
       = f.submit "ログイン", class: "btn btn-lg btn-outline-light"
