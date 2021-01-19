@@ -16,11 +16,14 @@
               |パスワード
           td
             = f.password_field :password, autocomplete: "current-password", class:"form-control"
+        tr
+          td
+          td.text-right
+            = link_to "パスワードをお忘れですか？", new_user_password_path, class:"text-info"
     .row.justify-content-center
       - if flash[:alert]
         p.alert-info
           i.fas.fa-exclamation-triangle
           |#{flash[:alert]}
-          |#{flash[:error]}
     .row.justify-content-center
       = f.submit "ログイン", class: "btn btn-lg btn-outline-light"

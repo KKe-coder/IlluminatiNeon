@@ -104,4 +104,6 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
+  # devise mailer settings
+  config.action_mailer.default_url_options = { host: "https://illuminationeon.com/" }
 end
