@@ -17,9 +17,6 @@ html
         .col-sm-2.left-column
           = render 'shared/column', objects: @left_posts, count: @left_count
         .col-sm-8.main-column.position-absolute
-          .notifications
-            - flash.each do |key, value|
-              = content_tag(:div, value, class: key)
           = yield
         .col-sm-2.right-column
           = render 'shared/column', objects: @right_posts, count: @right_count

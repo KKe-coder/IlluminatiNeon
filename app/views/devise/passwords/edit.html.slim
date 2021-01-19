@@ -1,22 +1,29 @@
-h2
-  | Change your password
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
-  = render "devise/shared/error_messages", resource: resource
-  = f.hidden_field :reset_password_token
-  .field
-    = f.label :password, "New password"
-    br
-    - if @minimum_password_length
-      em
-        | (
-        = @minimum_password_length
-        |  characters minimum)
-      br
-    = f.password_field :password, autofocus: true, autocomplete: "new-password"
-  .field
-    = f.label :password_confirmation, "Confirm new password"
-    br
-    = f.password_field :password_confirmation, autocomplete: "new-password"
-  .actions
-    = f.submit "Change my password"
-= render "devise/shared/links"
+.user-password-resetedit
+  h2.mt-3.text-center.text-light.rounded-pill.border.border-light
+    | パスワード再発行画面
+  p.mt-2.text-center.text-light
+    | お手数おかけしますが、
+    | 新しいパスワードを入力して下さい。
+  = form_with model: @user, url: user_password_path, method: :put, local: true do |f|
+    table.table.table-borderless.mt-3
+      tbody
+        tr
+          td.align-middle
+            span.text-light
+              |新しいパスワード(6文字以上)
+          td
+            = f.password_field :password, autofocus: true, autocomplete: "new-password", class:"form-control"
+        tr
+          td.align-middle
+            span.text-light
+              |新しいパスワード(再入力)
+          td
+            = f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control"
+    .row.justify-content-center
+      - if flash[:alert]
+        p.alert-info
+          i.fas.fa-exclamation-triangle
+          |#{flash[:alert]}
+    .row.justify-content-center
+      = f.hidden_field :reset_password_token
+      = f.submit "パスワード変更完了", class: "btn btn-lg btn-outline-light"
