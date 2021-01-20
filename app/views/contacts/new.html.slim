@@ -3,8 +3,12 @@
     | お問い合わせ
   p.mt-2.text-right.text-danger
     | ※印のところは入力必須項目です。
-
-  = form_with model: @contact do |f|
+  .row.justify-content-center
+    - if flash[:notice]
+      p.alert-success
+        i.fas.fa-check
+        |#{flash[:notice]}
+  = form_with model: @contact, local:true do |f|
     table.table.table-borderless.mt-3
       tbody
         tr
@@ -12,21 +16,21 @@
             span.text-light
               |お名前
             span.text-danger  ※
-          td.text-center
+          td
             = f.text_field :name, autofocus: true, autocomplete: "name", class:"form-control"
         tr
           td.align-middle.text-right
             span.text-light
               |メールアドレス
             span.text-danger  ※
-          td.text-center
-            = f.text_field :email, autofocus: true, autocomplete: "email", class:"form-control"
+          td
+            = f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control"
         tr
           td.align-middle.text-right
             span.text-light
               |お問い合わせ内容
             span.text-danger  ※
-          td.text-center
-            = f.text_field :message, autofocus: true, autocomplete: "message", class:"form-control"
+          td
+            = f.text_area :message, autofocus: true, autocomplete: "message", class:"form-control", size:"20x10"
     .row.justify-content-center
       = f.submit "管理者にメールを送信", class: "btn btn-lg btn-outline-light"
