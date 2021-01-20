@@ -117,10 +117,14 @@
         |さんの
         br
         |つぶやき・投稿
-  .row.mt-3.border
+  .row.mt-3
     .col-sm-6.murmurs_usershow
+      h5.mt-1.text-center.text-light.rounded-sm.border.border-light
+        |フォロワーのつぶやき
       = render 'shared/murmurs_usershow'
     .col-sm-6
+      h5.mt-1.text-center.text-light.rounded-sm.border.border-light
+        |フォロワーの投稿
       .border-bottom
         - @posts.each do |post|
           .row
