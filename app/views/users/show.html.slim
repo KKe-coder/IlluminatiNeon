@@ -118,68 +118,86 @@
         br
         |つぶやき・投稿
   .row.mt-3
-    .col-sm-6.murmurs_usershow
-      h5.mt-1.text-center.text-light.rounded-sm.border.border-light
-        |フォロワーのつぶやき
-      = render 'shared/murmurs_usershow'
     .col-sm-6
-      h5.mt-1.text-center.text-light.rounded-sm.border.border-light
-        |フォロワーの投稿
-      .border-bottom
-        - @posts.each do |post|
-          .row
-            .mx-1.mx-auto
-              .d-flex.justify-content-between
+      - if @user == current_user && params[:showing] == "current_user_posts"
+        h5.mt-1.text-center.text-light.rounded-sm.border.border-light
+          |#{@user.name}さんのつぶやき
+      - elsif @user == current_user && params[:showing] != "current_user_posts"
+        h5.mt-1.text-center.text-light.rounded-sm.border.border-light
+          |フォロワーのつぶやき
+      - else
+        h5.mt-1.text-center.text-light.rounded-sm.border.border-light
+          |#{@user.name}さんのつぶやき
+      .murmurs_usershow
+        = render 'shared/murmurs_usershow'
+    .col-sm-6
+      - if @user == current_user && params[:showing] == "current_user_posts"
+        h5.mt-1.text-center.text-light.rounded-sm.border.border-light
+          |#{@user.name}さんの投稿
+      - elsif @user == current_user && params[:showing] != "current_user_posts"
+        h5.mt-1.text-center.text-light.rounded-sm.border.border-light
+          |フォロワーの投稿
+      - else
+        h5.mt-1.text-center.text-light.rounded-sm.border.border-light
+          |#{@user.name}さんの投稿
+      - @posts.each do |post|
+        .row
+          .mx-1.mx-auto
+            .d-flex.justify-content-between
+              span.text-light
                 - if ((Time.now - post.created_at) / 60 ) >= 60
                   = ((Time.now - post.created_at) / 3600 ).round(0)
-                  | 時間前
+                  |時間前
                 - else
                   = ((Time.now - post.created_at) / 60 ).round(0)
-                  | 分前
-                .d-flex.justify-content-between
-                  span.border
-                    | #{post.place}
-                  span #{post.category}
-              = link_to(post_path(post.id)) do
-                = attachment_image_tag post, :image, width: "100%", fallback: "no_image_post.jpg"
-          .row
-              span id="star-usershow-ave-#{post.id}"
-              strong.ml-3
-                u
-                  = link_to post.title, post_path(post.id)
-              javascript:
-                $(function() {
-                  if((document.getElementById('star-usershow-ave-#{post.id}').getElementsByTagName("img").length == 0 )){
-                    // htmlのid="star-usershow-ave-#{post.id}"の部分を探し、その中のimgタグ(星の個数)を配列で返す => 配列の長さが0の場合、raty.jsを実行する。
-                    // 星の個数が0のときのみraty.jsが実行されるため、星が6個以上にはならなくなりレイアウトが崩れなくなる。
-                    $('#star-usershow-ave-#{post.id}').raty({
-                      size: 36,
-                      starOff: "#{asset_path('star-off.png')}",
-                      starOn: "#{asset_path('star-on.png')}",
-                      starHalf: "#{asset_path('star-half.png')}",
-                      half: true,
-                      readOnly: true,
-                      score: "#{post.avgrate}",
-                    });
-                  }
-                });
-          .d-flex.justify-content-end.mt-2.mb-2
-            - if @user == current_user && params[:showing] != "current_user_posts"
-              .align-self-end
-                | by
-              .d-flex.align-items-end
-                = link_to user_path(post.user_id) do
-                  .d-flex.align-items-end
-                    = attachment_image_tag post.user, :profile_image, size: "40x40", fallback: "no_image_user.jpg", class: "border"
-                    |#{post.user.name}
-                | さん
-        - if @user.posts.blank?
-          - if @user == current_user && params[:showing] == "current_user_posts"
-            u
+                  |分前
+              .d-flex.justify-content-between
+                span.border.text-light.rounded-lg
+                  | #{post.place}
+                - if post.category == "Illumination"
+                  span.text-warning.ml-1 #{post.category}
+                - else
+                  span.text-danger.ml-1 #{post.category}
+            = link_to(post_path(post.id)) do
+              = attachment_image_tag post, :image, width: "100%", fallback: "no_image_post.jpg", class:"mt-1 rounded", width:"256px", height:"150px"
+        .row.align-items-center.ml-5.mt-1
+            span.ml-2 id="star-usershow-ave-#{post.id}"
+            span.text-light.ml-2
+              |(#{post.avgrate.round(2)}点)
+            javascript:
+              $(function() {
+                if((document.getElementById('star-usershow-ave-#{post.id}').getElementsByTagName("img").length == 0 )){
+                  // htmlのid="star-usershow-ave-#{post.id}"の部分を探し、その中のimgタグ(星の個数)を配列で返す => 配列の長さが0の場合、raty.jsを実行する。
+                  // 星の個数が0のときのみraty.jsが実行されるため、星が6個以上にはならなくなりレイアウトが崩れなくなる。
+                  $('#star-usershow-ave-#{post.id}').raty({
+                    size: 36,
+                    starOff: "#{asset_path('star-off.png')}",
+                    starOn: "#{asset_path('star-on.png')}",
+                    starHalf: "#{asset_path('star-half.png')}",
+                    half: true,
+                    readOnly: true,
+                    score: "#{post.avgrate}",
+                  });
+                }
+              });
+        h5.mt-1.text-center.font-weight-bold
+          = link_to post.title, post_path(post.id), class:"text-light"
+        .text-center.mb-2.border-bottom
+          - if @user == current_user && params[:showing] != "current_user_posts"
+            = link_to user_path(post.user_id) do
+              = attachment_image_tag post.user, :profile_image, size: "40x40", fallback: "no_image_user.jpg", class: "border rounded-circle"
+              b.ml-2.text-success #{post.user.name}
+            span.text-light さん
+      - if @user.posts.blank?
+        - if @user == current_user && params[:showing] == "current_user_posts"
+          p.text-center.text-white.border-bottom
+            | まだ投稿がないみたいです。
+        - elsif @user == current_user && params[:showing] != "current_user_posts"
+          - unless @user.posts.nil?
+            p.text-center.text-white.border-bottom
               | まだ投稿がないみたいです。
-          - elsif @user == current_user && params[:showing] != "current_user_posts"
-            - unless @user.posts.nil?
-              | まだ投稿がないみたいです。
-          - else
-            u
-              | まだ投稿がないみたいです。
+              br
+              | フォローまたは投稿してみませんか？
+        - else
+          p.text-center.text-white.border-bottom
+            | まだ投稿がないみたいです。
