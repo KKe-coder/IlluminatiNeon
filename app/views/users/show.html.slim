@@ -193,7 +193,7 @@
           p.text-center.text-white.border-bottom
             | まだ投稿がないみたいです。
         - elsif @user == current_user && params[:showing] != "current_user_posts"
-          - unless @user.posts.nil?
+          - if @user.followings.blank?
             p.text-center.text-white.border-bottom
               | まだ投稿がないみたいです。
               br

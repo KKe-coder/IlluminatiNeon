@@ -12,8 +12,8 @@
               = link_to user_path(murmur.user_id) do
                 .d-flex.align-items-end
                   = attachment_image_tag murmur.user, :profile_image, size: "40x40", fallback: "no_image_user.jpg", class:"border rounded-circle mb-1"
-                  b #{murmur.user.name}
-                  span さん…
+                  b.text-success #{murmur.user.name}
+                  span.text-light さん…
         - elsif params[:del_mur] == "on"
         - else
          .d-flex.align-items-end
