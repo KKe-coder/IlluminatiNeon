@@ -4,7 +4,8 @@
       / ログイン中ユーザーであり、マイページプレビューモードがOFFのとき
       | マ　イ　ペ　ー　ジ
     - else
-      | #{@user.name}
+      b
+        | #{@user.name}
       span.non-user-name
         |さんのページ
   .row.justify-content-center.mt-2
@@ -103,13 +104,19 @@
           - if user_signed_in?
             #follow
               = render 'shared/follow', user: @user
+  - if @user == current_user && params[:showing] != "current_user_posts"
+      h5.text-center.mt-3
+          = link_to "他のユーザーから見た時のプレビューモード", user_path(@user.id, showing: "current_user_posts"), class:"btn btn-light"
   h3.mt-3.text-center.text-light.rounded-pill.border.border-light
     - if @user == current_user && params[:showing] != "current_user_posts"
-      | マイタイムライン
-      .text-right
-        = link_to "自分の投稿を見る", user_path(@user.id, showing: "current_user_posts")
+        span マイタイムライン
     - else
-      | #{@user.name}さんのつぶやき・投稿
+      b
+        | #{@user.name}
+      span style="font-size:1.4rem"
+        |さんの
+        br
+        |つぶやき・投稿
   .row.mt-3.border
     .col-sm-6.murmurs_usershow
       = render 'shared/murmurs_usershow'

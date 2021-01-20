@@ -1,12 +1,15 @@
 .user-show {
   height: 100vh;
   h2 {
-    transform: rotate(0.05deg);
     width: 65%;
     margin: 0 auto;
     .non-user-name {
       font-size: 1.5rem;
     }
+  }
+  h3 {
+    width: 65%;
+    margin: 0 auto;
   }
   h2, h3, h5, p, td, span, a, .btn {
     font-family: 'M PLUS Rounded 1c', sans-serif;
