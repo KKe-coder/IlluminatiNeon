@@ -1,155 +1,157 @@
-h3.text-center.mt-3
-  - if @user == current_user && params[:showing] != "current_user_posts"
-    | マイページ
-  - else
-    | #{@user.name}さんのページ
-.overflow-auto#followings-trigger style="display:none;height:140px"
-  button.followings type="button" class="close" aria-label="Close"
-    span aria-hidden="true"
-      | &times;
-  - if @user == current_user && params[:showing] != "current_user_posts"
-    h5 あなたのフォロー一覧
-  - else
-    h5 #{@user.name}さんのフォロー一覧
-  .d-flex.justify-content-start.overflow-auto
-    - @user.followings.each do |following|
-      .text-center.ml-2
-        = link_to user_path(following.id) do
-          = attachment_image_tag following, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class: "border"
-          p style="width:100px;font-size:0.8rem"
-            | #{following.name}
-            br
-            | さん
-.overflow-auto#followers-trigger style="display:none;height:140px"
-  button.followers type="button" class="close" aria-label="Close"
-    span aria-hidden="true"
-      | &times;
-  - if @user == current_user && params[:showing] != "current_user_posts"
-    h5 あなたのフォロワー一覧
-  - else
-    h5 #{@user.name}さんのフォロワー一覧
-  .d-flex.justify-content-start.overflow-auto
-    - @user.followers.each do |follower|
-      .text-center.ml-2
-        = link_to user_path(follower.id) do
-          = attachment_image_tag follower, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class: "border"
-          p style="width:100px;font-size:0.8rem"
-            | #{follower.name}
-            br
-            | さん
-.row.mt-3
-  .col-sm-8.d-flex.justify-content-center.border
-    .align-self-center
-      = attachment_image_tag @user, :profile_image, size: "80x80", fallback: "no_image_user.jpg", class: "border"
-    p.ml-3.align-self-center
-      b style="font-size:1.5rem"
-        | #{@user.name}
-      | さん
-      br
-      | &nbsp;登録日：#{@user.created_at.strftime("%Y/%m/%d")}
-      br
-      | &nbsp;お住まい：#{@user.residence}
-      br
-      | &nbsp;
-      - if @user.residence == "---"
-        - if @user == current_user && params[:showing] != "current_user_posts"
-          = link_to user_registration_path(@user.id) do
-            u
-              | お住まいが未登録です。
+.user-show
+  h2.mt-3.text-center.text-light.rounded-pill.border.border-light
+    - if @user == current_user && params[:showing] != "current_user_posts"
+      / ログイン中ユーザーであり、マイページプレビューモードがOFFのとき
+      | マ　イ　ペ　ー　ジ
+    - else
+      | #{@user.name}さんのページ
+  .overflow-auto#followings-trigger style="display:none;height:140px"
+    button.followings type="button" class="close" aria-label="Close"
+      span aria-hidden="true"
+        | &times;
+    - if @user == current_user && params[:showing] != "current_user_posts"
+      h5 あなたのフォロー一覧
+    - else
+      h5 #{@user.name}さんのフォロー一覧
+    .d-flex.justify-content-start.overflow-auto
+      - @user.followings.each do |following|
+        .text-center.ml-2
+          = link_to user_path(following.id) do
+            = attachment_image_tag following, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class: "border"
+            p style="width:100px;font-size:0.8rem"
+              | #{following.name}
               br
-              | 登録はこちら
-      - else
-        u
-          = link_to ">>#{@user.residence}の投稿を探す", posts_path(posts_category: "#{@user.residence}")
-
-  .col-sm-4
-    .align-self-between
-      .btn.btn-primary.btn-sm.btn-block.followings
-       |フォロー数：#{@user.followings.count}
-      javascript:
-        $('.followings').on('click', function() {
-          $('#followings-trigger').fadeToggle(500);
-        });
-      .btn.btn-info.btn-sm.btn-block.followers.mt-2
-       |フォロワー数：#{@user.followers.count}
-      javascript:
-        $('.followers').on('click', function() {
-          $('#followers-trigger').fadeToggle(500);
-        });
-      = link_to "♡いいね数：#{@user.favorites.count}", posts_path(posts_category: "user-favorite"), class: "btn btn-danger btn-sm mt-2 btn-block"
-      - if @user == current_user && params[:showing] != "current_user_posts"
-        = link_to "会員情報編集", edit_user_registration_path, class: "btn btn-success btn-sm mt-2 btn-block"
-      - elsif params[:showing] == "current_user_posts"
-      - else
-        - if user_signed_in?
-          #follow
-            = render 'shared/follow', user: @user
-h3.text-center.mt-3
-  - if @user == current_user && params[:showing] != "current_user_posts"
-    | マイタイムライン
-    .text-right
-      = link_to "自分の投稿を見る", user_path(@user.id, showing: "current_user_posts")
-  - else
-    | #{@user.name}さんのつぶやき・投稿
-.row.mt-3.border
-  .col-sm-6.murmurs_usershow
-    = render 'shared/murmurs_usershow'
-  .col-sm-6
-    .border-bottom
-      - @posts.each do |post|
-        .row
-          .mx-1.mx-auto
-            .d-flex.justify-content-between
-              - if ((Time.now - post.created_at) / 60 ) >= 60
-                = ((Time.now - post.created_at) / 3600 ).round(0)
-                | 時間前
-              - else
-                = ((Time.now - post.created_at) / 60 ).round(0)
-                | 分前
-              .d-flex.justify-content-between
-                span.border
-                  | #{post.place}
-                span #{post.category}
-            = link_to(post_path(post.id)) do
-              = attachment_image_tag post, :image, width: "100%", fallback: "no_image_post.jpg"
-        .row
-            span id="star-usershow-ave-#{post.id}"
-            strong.ml-3
-              u
-                = link_to post.title, post_path(post.id)
-            javascript:
-              $(function() {
-                if((document.getElementById('star-usershow-ave-#{post.id}').getElementsByTagName("img").length == 0 )){
-                  // htmlのid="star-usershow-ave-#{post.id}"の部分を探し、その中のimgタグ(星の個数)を配列で返す => 配列の長さが0の場合、raty.jsを実行する。
-                  // 星の個数が0のときのみraty.jsが実行されるため、星が6個以上にはならなくなりレイアウトが崩れなくなる。
-                  $('#star-usershow-ave-#{post.id}').raty({
-                    size: 36,
-                    starOff: "#{asset_path('star-off.png')}",
-                    starOn: "#{asset_path('star-on.png')}",
-                    starHalf: "#{asset_path('star-half.png')}",
-                    half: true,
-                    readOnly: true,
-                    score: "#{post.avgrate}",
-                  });
-                }
-              });
-        .d-flex.justify-content-end.mt-2.mb-2
-          - if @user == current_user && params[:showing] != "current_user_posts"
-            .align-self-end
-              | by
-            .d-flex.align-items-end
-              = link_to user_path(post.user_id) do
-                .d-flex.align-items-end
-                  = attachment_image_tag post.user, :profile_image, size: "40x40", fallback: "no_image_user.jpg", class: "border"
-                  |#{post.user.name}
               | さん
-      - if @user.posts.blank?
-        - if @user == current_user && params[:showing] == "current_user_posts"
-          u
-            | まだ投稿がないみたいです。
-        - elsif @user == current_user && params[:showing] != "current_user_posts"
-          - unless @user.posts.nil?
-            | まだ投稿がないみたいです。
+  .overflow-auto#followers-trigger style="display:none;height:140px"
+    button.followers type="button" class="close" aria-label="Close"
+      span aria-hidden="true"
+        | &times;
+    - if @user == current_user && params[:showing] != "current_user_posts"
+      h5 あなたのフォロワー一覧
+    - else
+      h5 #{@user.name}さんのフォロワー一覧
+    .d-flex.justify-content-start.overflow-auto
+      - @user.followers.each do |follower|
+        .text-center.ml-2
+          = link_to user_path(follower.id) do
+            = attachment_image_tag follower, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class: "border"
+            p style="width:100px;font-size:0.8rem"
+              | #{follower.name}
+              br
+              | さん
+  .row.mt-3
+    .col-sm-8.d-flex.justify-content-center.border
+      .align-self-center
+        = attachment_image_tag @user, :profile_image, size: "80x80", fallback: "no_image_user.jpg", class: "border"
+      p.ml-3.align-self-center
+        b style="font-size:1.5rem"
+          | #{@user.name}
+        | さん
+        br
+        | &nbsp;登録日：#{@user.created_at.strftime("%Y/%m/%d")}
+        br
+        | &nbsp;お住まい：#{@user.residence}
+        br
+        | &nbsp;
+        - if @user.residence == "---"
+          - if @user == current_user && params[:showing] != "current_user_posts"
+            = link_to user_registration_path(@user.id) do
+              u
+                | お住まいが未登録です。
+                br
+                | 登録はこちら
         - else
           u
-            | まだ投稿がないみたいです。
+            = link_to ">>#{@user.residence}の投稿を探す", posts_path(posts_category: "#{@user.residence}")
+
+    .col-sm-4
+      .align-self-between
+        .btn.btn-primary.btn-sm.btn-block.followings
+         |フォロー数：#{@user.followings.count}
+        javascript:
+          $('.followings').on('click', function() {
+            $('#followings-trigger').fadeToggle(500);
+          });
+        .btn.btn-info.btn-sm.btn-block.followers.mt-2
+         |フォロワー数：#{@user.followers.count}
+        javascript:
+          $('.followers').on('click', function() {
+            $('#followers-trigger').fadeToggle(500);
+          });
+        = link_to "♡いいね数：#{@user.favorites.count}", posts_path(posts_category: "user-favorite"), class: "btn btn-danger btn-sm mt-2 btn-block"
+        - if @user == current_user && params[:showing] != "current_user_posts"
+          = link_to "会員情報編集", edit_user_registration_path, class: "btn btn-success btn-sm mt-2 btn-block"
+        - elsif params[:showing] == "current_user_posts"
+        - else
+          - if user_signed_in?
+            #follow
+              = render 'shared/follow', user: @user
+  h3.text-center.mt-3
+    - if @user == current_user && params[:showing] != "current_user_posts"
+      | マイタイムライン
+      .text-right
+        = link_to "自分の投稿を見る", user_path(@user.id, showing: "current_user_posts")
+    - else
+      | #{@user.name}さんのつぶやき・投稿
+  .row.mt-3.border
+    .col-sm-6.murmurs_usershow
+      = render 'shared/murmurs_usershow'
+    .col-sm-6
+      .border-bottom
+        - @posts.each do |post|
+          .row
+            .mx-1.mx-auto
+              .d-flex.justify-content-between
+                - if ((Time.now - post.created_at) / 60 ) >= 60
+                  = ((Time.now - post.created_at) / 3600 ).round(0)
+                  | 時間前
+                - else
+                  = ((Time.now - post.created_at) / 60 ).round(0)
+                  | 分前
+                .d-flex.justify-content-between
+                  span.border
+                    | #{post.place}
+                  span #{post.category}
+              = link_to(post_path(post.id)) do
+                = attachment_image_tag post, :image, width: "100%", fallback: "no_image_post.jpg"
+          .row
+              span id="star-usershow-ave-#{post.id}"
+              strong.ml-3
+                u
+                  = link_to post.title, post_path(post.id)
+              javascript:
+                $(function() {
+                  if((document.getElementById('star-usershow-ave-#{post.id}').getElementsByTagName("img").length == 0 )){
+                    // htmlのid="star-usershow-ave-#{post.id}"の部分を探し、その中のimgタグ(星の個数)を配列で返す => 配列の長さが0の場合、raty.jsを実行する。
+                    // 星の個数が0のときのみraty.jsが実行されるため、星が6個以上にはならなくなりレイアウトが崩れなくなる。
+                    $('#star-usershow-ave-#{post.id}').raty({
+                      size: 36,
+                      starOff: "#{asset_path('star-off.png')}",
+                      starOn: "#{asset_path('star-on.png')}",
+                      starHalf: "#{asset_path('star-half.png')}",
+                      half: true,
+                      readOnly: true,
+                      score: "#{post.avgrate}",
+                    });
+                  }
+                });
+          .d-flex.justify-content-end.mt-2.mb-2
+            - if @user == current_user && params[:showing] != "current_user_posts"
+              .align-self-end
+                | by
+              .d-flex.align-items-end
+                = link_to user_path(post.user_id) do
+                  .d-flex.align-items-end
+                    = attachment_image_tag post.user, :profile_image, size: "40x40", fallback: "no_image_user.jpg", class: "border"
+                    |#{post.user.name}
+                | さん
+        - if @user.posts.blank?
+          - if @user == current_user && params[:showing] == "current_user_posts"
+            u
+              | まだ投稿がないみたいです。
+          - elsif @user == current_user && params[:showing] != "current_user_posts"
+            - unless @user.posts.nil?
+              | まだ投稿がないみたいです。
+          - else
+            u
+              | まだ投稿がないみたいです。
