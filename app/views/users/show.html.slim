@@ -57,10 +57,10 @@
               span
                 | さん
   .row.mt-3
-    .col-sm-8.d-flex.justify-content-center.border
-      .align-self-center
-        = attachment_image_tag @user, :profile_image, size: "80x80", fallback: "no_image_user.jpg", class: "border"
-      p.ml-3.align-self-center
+    .col-sm-8.d-flex.justify-content-start
+      .align-self-center.ml-5
+        = attachment_image_tag @user, :profile_image, size: "100x100", fallback: "no_image_user.jpg", class: "border rounded-circle"
+      p.align-self-center.text-light.ml-5
         b style="font-size:1.5rem"
           | #{@user.name}
         | さん
@@ -72,7 +72,7 @@
         | &nbsp;
         - if @user.residence == "---"
           - if @user == current_user && params[:showing] != "current_user_posts"
-            = link_to user_registration_path(@user.id) do
+            = link_to edit_user_registration_path do
               u
                 | お住まいが未登録です。
                 br
@@ -103,7 +103,7 @@
           - if user_signed_in?
             #follow
               = render 'shared/follow', user: @user
-  h3.text-center.mt-3
+  h3.mt-3.text-center.text-light.rounded-pill.border.border-light
     - if @user == current_user && params[:showing] != "current_user_posts"
       | マイタイムライン
       .text-right
