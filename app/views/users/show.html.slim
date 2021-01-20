@@ -4,41 +4,58 @@
       / ログイン中ユーザーであり、マイページプレビューモードがOFFのとき
       | マ　イ　ペ　ー　ジ
     - else
-      | #{@user.name}さんのページ
-  .overflow-auto#followings-trigger style="display:none;height:140px"
-    button.followings type="button" class="close" aria-label="Close"
-      span aria-hidden="true"
+      | #{@user.name}
+      span.non-user-name
+        |さんのページ
+  .row.justify-content-center.mt-2
+    - if flash[:alert]
+      p.alert-info
+        i.fas.fa-exclamation-triangle
+        |#{flash[:alert]}
+  .overflow-auto.f-popup#followings-trigger
+    button type="button" class="close followings" aria-label="Close"
+      span.text-primary aria-hidden="true"
         | &times;
     - if @user == current_user && params[:showing] != "current_user_posts"
-      h5 あなたのフォロー一覧
+      h5.text-primary.text-center.mx-auto あなたのフォロー一覧
     - else
-      h5 #{@user.name}さんのフォロー一覧
-    .d-flex.justify-content-start.overflow-auto
+      h5.text-primary.text-center.mx-auto
+        | #{@user.name}
+        span.non-user-name
+          |さんのフォロー一覧
+    .d-flex.justify-content-start.overflow-auto.bg-primary.rounded.f-objects
       - @user.followings.each do |following|
         .text-center.ml-2
           = link_to user_path(following.id) do
-            = attachment_image_tag following, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class: "border"
-            p style="width:100px;font-size:0.8rem"
-              | #{following.name}
+            = attachment_image_tag following, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class: "border border-dark rounded-circle"
+            p.text-dark
+              span.font-weight-bold
+                | #{following.name}
               br
-              | さん
-  .overflow-auto#followers-trigger style="display:none;height:140px"
-    button.followers type="button" class="close" aria-label="Close"
-      span aria-hidden="true"
+              span
+                | さん
+  .overflow-auto.f-popup.mt-1#followers-trigger
+    button type="button" class="close followers" aria-label="Close"
+      span.text-info aria-hidden="true"
         | &times;
     - if @user == current_user && params[:showing] != "current_user_posts"
-      h5 あなたのフォロワー一覧
+      h5.text-info.text-center.mx-auto  あなたのフォロワー一覧
     - else
-      h5 #{@user.name}さんのフォロワー一覧
-    .d-flex.justify-content-start.overflow-auto
+      h5.text-info.text-center.mx-auto
+        | #{@user.name}
+        span.non-user-name
+          |さんのフォロワー一覧
+    .d-flex.justify-content-start.overflow-auto.bg-info.rounded.f-objects
       - @user.followers.each do |follower|
         .text-center.ml-2
           = link_to user_path(follower.id) do
-            = attachment_image_tag follower, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class: "border"
-            p style="width:100px;font-size:0.8rem"
-              | #{follower.name}
+            = attachment_image_tag follower, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class: "border border-dark rounded-circle"
+            p.text-dark
+              span.font-weight-bold
+                | #{follower.name}
               br
-              | さん
+              span
+                | さん
   .row.mt-3
     .col-sm-8.d-flex.justify-content-center.border
       .align-self-center
