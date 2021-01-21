@@ -1,15 +1,11 @@
 javascript:
   $(function(){
-      // inputのidから情報の取得
-      $('#user_profile_image').on('change', function (e) {
-  // ここから既存の画像のurlの取得
+    $('#user_profile_image').on('change', function (e) {
       var reader = new FileReader();
       reader.onload = function (e) {
-          $(".inputimage").attr('src', e.target.result);
+        $(".inputimage").attr('src', e.target.result);
+        $(".inputimage").fadeIn(500);
       }
-  // ここまで
-        if(e.target.result){
-          reader.readAsDataURL(e.target.files[0]);//取得したurlにアップロード画像のurlを挿入--if文とすることで画像選択キャンセル時のエラー発生を抑える
-        }
-      });
+      reader.readAsDataURL(e.target.files[0]); //取得したurlにアップロード画像のurlを挿入
+    });
   });
