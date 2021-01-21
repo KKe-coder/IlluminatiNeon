@@ -48,10 +48,17 @@ ul {
   input {
     background-color: #FAC7C1;
   }
+  textarea {
+    background-color: #FAC7C1;
+  }
 }
 
 select {
   width: 100%;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
+}
+
+body {
+  background-color: #060817;
 }

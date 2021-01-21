@@ -1,122 +1,169 @@
-h3.text-center.mt-3
-  - if @user == current_user && params[:showing] != "current_user_posts"
-    | マイページ
-  - else
-    | #{@user.name}さんのページ
-.overflow-auto#followings-trigger style="display:none;height:140px"
-  button.followings type="button" class="close" aria-label="Close"
-    span aria-hidden="true"
-      | &times;
-  - if @user == current_user && params[:showing] != "current_user_posts"
-    h5 あなたのフォロー一覧
-  - else
-    h5 #{@user.name}さんのフォロー一覧
-  .d-flex.justify-content-start.overflow-auto
-    - @user.followings.each do |following|
-      .text-center.ml-2
-        = link_to user_path(following.id) do
-          = attachment_image_tag following, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class: "border"
-          p style="width:100px;font-size:0.8rem"
-            | #{following.name}
-            br
-            | さん
-.overflow-auto#followers-trigger style="display:none;height:140px"
-  button.followers type="button" class="close" aria-label="Close"
-    span aria-hidden="true"
-      | &times;
-  - if @user == current_user && params[:showing] != "current_user_posts"
-    h5 あなたのフォロワー一覧
-  - else
-    h5 #{@user.name}さんのフォロワー一覧
-  .d-flex.justify-content-start.overflow-auto
-    - @user.followers.each do |follower|
-      .text-center.ml-2
-        = link_to user_path(follower.id) do
-          = attachment_image_tag follower, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class: "border"
-          p style="width:100px;font-size:0.8rem"
-            | #{follower.name}
-            br
-            | さん
-.row.mt-3
-  .col-sm-8.d-flex.justify-content-center.border
-    .align-self-center
-      = attachment_image_tag @user, :profile_image, size: "80x80", fallback: "no_image_user.jpg", class: "border"
-    p.ml-3.align-self-center
-      b style="font-size:1.5rem"
+.user-show
+  h2.mt-3.text-center.text-light.rounded-pill.border.border-light
+    - if @user == current_user && params[:showing] != "current_user_posts"
+      / ログイン中ユーザーであり、マイページプレビューモードがOFFのとき
+      | マ　イ　ペ　ー　ジ
+    - else
+      b
         | #{@user.name}
-      | さん
-      br
-      | &nbsp;登録日：#{@user.created_at.strftime("%Y/%m/%d")}
-      br
-      | &nbsp;お住まい：#{@user.residence}
-      br
-      | &nbsp;
-      - if @user.residence == "---"
-        - if @user == current_user && params[:showing] != "current_user_posts"
-          = link_to user_registration_path(@user.id) do
-            u
-              | お住まいが未登録です。
+      span.non-user-name
+        |さんのページ
+  .row.justify-content-center.mt-2
+    - if flash[:alert]
+      p.alert-info
+        i.fas.fa-exclamation-triangle
+        |#{flash[:alert]}
+  .overflow-auto.f-popup#followings-trigger
+    button type="button" class="close followings" aria-label="Close"
+      span.text-primary aria-hidden="true"
+        | &times;
+    - if @user == current_user && params[:showing] != "current_user_posts"
+      h5.text-primary.text-center.mx-auto あなたのフォロー一覧
+    - else
+      h5.text-primary.text-center.mx-auto
+        | #{@user.name}
+        span.non-user-name
+          |さんのフォロー一覧
+    .d-flex.justify-content-start.overflow-auto.bg-primary.rounded.f-objects
+      - @user.followings.each do |following|
+        .text-center.ml-2
+          = link_to user_path(following.id) do
+            = attachment_image_tag following, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class: "border border-dark rounded-circle"
+            p.text-dark
+              span.font-weight-bold
+                | #{following.name}
               br
-              | 登録はこちら
-      - else
-        u
-          = link_to ">>#{@user.residence}の投稿を探す", posts_path(posts_category: "#{@user.residence}")
+              span
+                | さん
+  .overflow-auto.f-popup.mt-1#followers-trigger
+    button type="button" class="close followers" aria-label="Close"
+      span.text-info aria-hidden="true"
+        | &times;
+    - if @user == current_user && params[:showing] != "current_user_posts"
+      h5.text-info.text-center.mx-auto  あなたのフォロワー一覧
+    - else
+      h5.text-info.text-center.mx-auto
+        | #{@user.name}
+        span.non-user-name
+          |さんのフォロワー一覧
+    .d-flex.justify-content-start.overflow-auto.bg-info.rounded.f-objects
+      - @user.followers.each do |follower|
+        .text-center.ml-2
+          = link_to user_path(follower.id) do
+            = attachment_image_tag follower, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class: "border border-dark rounded-circle"
+            p.text-dark
+              span.font-weight-bold
+                | #{follower.name}
+              br
+              span
+                | さん
+  .row.mt-3
+    .col-sm-8.d-flex.justify-content-start
+      .align-self-center.ml-5
+        = attachment_image_tag @user, :profile_image, size: "100x100", fallback: "no_image_user.jpg", class: "border rounded-circle"
+      p.align-self-center.text-light.ml-5
+        b style="font-size:1.5rem"
+          | #{@user.name}
+        | さん
+        br
+        | &nbsp;登録日：#{@user.created_at.strftime("%Y/%m/%d")}
+        br
+        | &nbsp;お住まい：#{@user.residence}
+        br
+        | &nbsp;
+        - if @user.residence == "---"
+          - if @user == current_user && params[:showing] != "current_user_posts"
+            = link_to edit_user_registration_path do
+              u
+                | お住まいが未登録です。
+                br
+                | 登録はこちら
+        - else
+          u
+            = link_to ">>#{@user.residence}の投稿を探す", posts_path(posts_category: "#{@user.residence}")
 
-  .col-sm-4
-    .align-self-between
-      .btn.btn-primary.btn-sm.btn-block.followings
-       |フォロー数：#{@user.followings.count}
-      javascript:
-        $('.followings').on('click', function() {
-          $('#followings-trigger').fadeToggle(500);
-        });
-      .btn.btn-info.btn-sm.btn-block.followers.mt-2
-       |フォロワー数：#{@user.followers.count}
-      javascript:
-        $('.followers').on('click', function() {
-          $('#followers-trigger').fadeToggle(500);
-        });
-      = link_to "♡いいね数：#{@user.favorites.count}", posts_path(posts_category: "user-favorite"), class: "btn btn-danger btn-sm mt-2 btn-block"
-      - if @user == current_user && params[:showing] != "current_user_posts"
-        = link_to "会員情報編集", edit_user_registration_path, class: "btn btn-success btn-sm mt-2 btn-block"
-      - elsif params[:showing] == "current_user_posts"
-      - else
-        - if user_signed_in?
-          #follow
-            = render 'shared/follow', user: @user
-h3.text-center.mt-3
+    .col-sm-4
+      .align-self-between
+        .btn.btn-primary.btn-sm.btn-block.followings
+         |フォロー数：#{@user.followings.count}
+        javascript:
+          $('.followings').on('click', function() {
+            $('#followings-trigger').fadeToggle(500);
+          });
+        .btn.btn-info.btn-sm.btn-block.followers.mt-2
+         |フォロワー数：#{@user.followers.count}
+        javascript:
+          $('.followers').on('click', function() {
+            $('#followers-trigger').fadeToggle(500);
+          });
+        = link_to "♡いいね数：#{@user.favorites.count}", posts_path(posts_category: "user-favorite"), class: "btn btn-danger btn-sm mt-2 btn-block"
+        - if @user == current_user && params[:showing] != "current_user_posts"
+          = link_to "会員情報編集", edit_user_registration_path, class: "btn btn-success btn-sm mt-2 btn-block"
+        - elsif params[:showing] == "current_user_posts"
+        - else
+          - if user_signed_in?
+            #follow
+              = render 'shared/follow', user: @user
   - if @user == current_user && params[:showing] != "current_user_posts"
-    | マイタイムライン
-    .text-right
-      = link_to "自分の投稿を見る", user_path(@user.id, showing: "current_user_posts")
-  - else
-    | #{@user.name}さんのつぶやき・投稿
-.row.mt-3.border
-  .col-sm-6.murmurs_usershow
-    = render 'shared/murmurs_usershow'
-  .col-sm-6
-    .border-bottom
+      h5.text-center.mt-3
+          = link_to "他のユーザーから見た時のプレビューモード", user_path(@user.id, showing: "current_user_posts"), class:"btn btn-light"
+  h3.mt-3.text-center.text-light.rounded-pill.border.border-light
+    - if @user == current_user && params[:showing] != "current_user_posts"
+        span マイタイムライン
+    - else
+      b
+        | #{@user.name}
+      span style="font-size:1.4rem"
+        |さんの
+        br
+        |つぶやき・投稿
+  .row.mt-3
+    .col-sm-6
+      - if @user == current_user && params[:showing] == "current_user_posts"
+        h5.mt-1.text-center.text-light.rounded-sm.border.border-light
+          |#{@user.name}さんのつぶやき
+      - elsif @user == current_user && params[:showing] != "current_user_posts"
+        h5.mt-1.text-center.text-light.rounded-sm.border.border-light
+          |フォロワーのつぶやき
+      - else
+        h5.mt-1.text-center.text-light.rounded-sm.border.border-light
+          |#{@user.name}さんのつぶやき
+      .murmurs_usershow
+        = render 'shared/murmurs_usershow'
+    .col-sm-6
+      - if @user == current_user && params[:showing] == "current_user_posts"
+        h5.mt-1.text-center.text-light.rounded-sm.border.border-light
+          |#{@user.name}さんの投稿
+      - elsif @user == current_user && params[:showing] != "current_user_posts"
+        h5.mt-1.text-center.text-light.rounded-sm.border.border-light
+          |フォロワーの投稿
+      - else
+        h5.mt-1.text-center.text-light.rounded-sm.border.border-light
+          |#{@user.name}さんの投稿
       - @posts.each do |post|
         .row
           .mx-1.mx-auto
             .d-flex.justify-content-between
-              - if ((Time.now - post.created_at) / 60 ) >= 60
-                = ((Time.now - post.created_at) / 3600 ).round(0)
-                | 時間前
-              - else
-                = ((Time.now - post.created_at) / 60 ).round(0)
-                | 分前
+              span.text-light
+                - if ((Time.now - post.created_at) / 60 ) >= 60
+                  = ((Time.now - post.created_at) / 3600 ).round(0)
+                  |時間前
+                - else
+                  = ((Time.now - post.created_at) / 60 ).round(0)
+                  |分前
               .d-flex.justify-content-between
-                span.border
+                span.border.text-light.rounded-lg
                   | #{post.place}
-                span #{post.category}
+                - if post.category == "Illumination"
+                  span.text-warning.ml-1 #{post.category}
+                - else
+                  span.text-danger.ml-1 #{post.category}
             = link_to(post_path(post.id)) do
-              = attachment_image_tag post, :image, width: "100%", fallback: "no_image_post.jpg"
-        .row
-            span id="star-usershow-ave-#{post.id}"
-            strong.ml-3
-              u
-                = link_to post.title, post_path(post.id)
+              = attachment_image_tag post, :image, width: "100%", fallback: "no_image_post.jpg", class:"mt-1 rounded", width:"256px", height:"150px"
+        .row.align-items-center.ml-5.mt-1
+            span.ml-2 id="star-usershow-ave-#{post.id}"
+            span.text-light.ml-2
+              |(#{post.avgrate.round(2)}点)
             javascript:
               $(function() {
                 if((document.getElementById('star-usershow-ave-#{post.id}').getElementsByTagName("img").length == 0 )){
@@ -133,23 +180,24 @@ h3.text-center.mt-3
                   });
                 }
               });
-        .d-flex.justify-content-end.mt-2.mb-2
+        h5.mt-1.text-center.font-weight-bold
+          = link_to post.title, post_path(post.id), class:"text-light"
+        .text-center.mb-2.border-bottom
           - if @user == current_user && params[:showing] != "current_user_posts"
-            .align-self-end
-              | by
-            .d-flex.align-items-end
-              = link_to user_path(post.user_id) do
-                .d-flex.align-items-end
-                  = attachment_image_tag post.user, :profile_image, size: "40x40", fallback: "no_image_user.jpg", class: "border"
-                  |#{post.user.name}
-              | さん
+            = link_to user_path(post.user_id) do
+              = attachment_image_tag post.user, :profile_image, size: "40x40", fallback: "no_image_user.jpg", class: "border rounded-circle"
+              b.ml-2.text-success #{post.user.name}
+            span.text-light さん
       - if @user.posts.blank?
         - if @user == current_user && params[:showing] == "current_user_posts"
-          u
+          p.text-center.text-white.border-bottom
             | まだ投稿がないみたいです。
         - elsif @user == current_user && params[:showing] != "current_user_posts"
-          - unless @user.posts.nil?
-            | まだ投稿がないみたいです。
+          - if @user.followings.blank?
+            p.text-center.text-white.border-bottom
+              | まだ投稿がないみたいです。
+              br
+              | フォローまたは投稿してみませんか？
         - else
-          u
+          p.text-center.text-white.border-bottom
             | まだ投稿がないみたいです。

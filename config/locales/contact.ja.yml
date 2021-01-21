@@ -1,0 +1,14 @@
+ja:
+  activerecord:
+    errors:
+     models:
+      contact:
+        attributes:
+          messages:
+            blank: が入力されていません
+    attributes:
+      contact:
+        name: お名前
+        email: メールアドレス
+        message: お問い合わせ内容
+

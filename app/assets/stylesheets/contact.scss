@@ -1,3 +1,16 @@
-// Place all the styles related to the contacts controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.contact {
+  height: 100vh;
+  h2 {
+    transform: rotate(0.05deg);
+    width: 60%;
+    margin: 0 auto;
+  }
+  h2, p, td, span, .btn {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    transform: rotate(0.05deg);
+  }
+  p {
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+  }
+}

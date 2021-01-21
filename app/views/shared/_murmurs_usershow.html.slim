@@ -1,25 +1,27 @@
 - @murmurs.each do |murmur|
-  .text-break
+  span.text-light.text-break.border-bottom.border-warning
     = murmur.body
     | &nbsp;
     br
-    .d-flex.justify-content-end
-      - if @user == current_user && params[:showing] != "current_user_posts"  # ログイン中であり、マイページモードがOFFのとき
-        - if params[:murmur] && params[:del_mur] == "on"                   # マイページモードがONにおいて、時表示無
-        - elsif params[:murmur]                                               # マイページモードがO
+    .d-flex.justify-content-end.mt-1.border-bottom
+      - if @user == current_user && params[:showing] != "current_user_posts"
+        - if params[:murmur] && params[:del_mur] == "on"
+        - elsif params[:murmur]
           - unless params[:murmur][:mypagemode] == "on"
             .d-flex.align-items-end
               = link_to user_path(murmur.user_id) do
                 .d-flex.align-items-end
-                  = attachment_image_tag murmur.user, :profile_image, size: "40x40", fallback: "no_image_user.jpg", class: "border"
-                  |#{murmur.user.name}さん…
+                  = attachment_image_tag murmur.user, :profile_image, size: "40x40", fallback: "no_image_user.jpg", class:"border rounded-circle mb-1"
+                  b.text-success #{murmur.user.name}
+                  span.text-light さん…
         - elsif params[:del_mur] == "on"
         - else
          .d-flex.align-items-end
            = link_to user_path(murmur.user_id) do
              .d-flex.align-items-end
-               = attachment_image_tag murmur.user, :profile_image, size: "40x40", fallback: "no_image_user.jpg", class: "border"
-               |#{murmur.user.name}さん…
+               = attachment_image_tag murmur.user, :profile_image, size: "40x40", fallback: "no_image_user.jpg", class:"border rounded-circle mb-1"
+               b.text-success #{murmur.user.name}
+               span.text-light さん…
       u.align-self-end
         - if ((Time.now - murmur.created_at) / 60 ) >= 60
           = ((Time.now - murmur.created_at) / 3600 ).round(0)
@@ -30,14 +32,14 @@
   - if murmur.user == current_user
     .d-flex.justify-content-end
       - if params[:showing] == "current_user_posts" || params[:del_mur] == "on" # マイページプレビューモードがONになってるとき
-        = button_to user_murmur_path(user_id: @user.id, id: murmur.id, del_mur: "on"), method: :delete, remote: :true, class:"btn btn-info btn-sm loading", id:"loading" do
+        = button_to user_murmur_path(user_id: @user.id, id: murmur.id, del_mur: "on"), method: :delete, remote: :true, class:"btn btn-danger btn-sm loading", id:"loading" do
           i.fas.fa-trash-alt
       - elsif params[:murmur] # マイページプレビューモードがON中、つぶやき投稿を行った時
         - if params[:murmur][:mypagemode]
-          = button_to user_murmur_path(user_id: @user.id, id: murmur.id, del_mur: "on"), method: :delete, remote: :true, class:"btn btn-primary btn-sm", id:"loading" do
+          = button_to user_murmur_path(user_id: @user.id, id: murmur.id, del_mur: "on"), method: :delete, remote: :true, class:"btn btn-danger btn-sm", id:"loading" do
             i.fas.fa-trash-alt
         - else # マイページプレビューモードがOFF中、マイページにてつぶやき投稿を行った時
-          = button_to user_murmur_path(user_id: @user.id, id: murmur.id), method: :delete, remote: :true, class:"btn btn-warning btn-sm", id:"loading" do
+          = button_to user_murmur_path(user_id: @user.id, id: murmur.id), method: :delete, remote: :true, class:"btn btn-danger btn-sm", id:"loading" do
             i.fas.fa-trash-alt
       - else #それ以外
         = button_to user_murmur_path(user_id: @user.id, id: murmur.id), method: :delete, remote: :true, class:"btn btn-danger btn-sm", id:"loading" do
@@ -45,13 +47,15 @@
 - if @user.murmurs.blank?
   - if @user == current_user
     - if params[:showing] == "current_user_posts" || params[:del_mur] == "on" # マイページプレビューモードがON中
-      u
+      p.text-center.text-white.border-bottom
         | まだつぶやきがないみたいです。
     - else
       - if @user.followings.blank?
-        u
-          | まだつぶやきがないみたいです。フォローまたはつぶやいてみませんか？
+        p.text-center.text-white.border-bottom
+          | まだつぶやきがないみたいです。
+          br
+          | フォローまたはつぶやいてみませんか？
   - else
-    u
+    p.text-center.text-white.border-bottom
       | まだつぶやきがないみたいです。
 = render 'shared/loading_button'

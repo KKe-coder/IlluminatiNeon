@@ -1,16 +1,40 @@
-h5  お問合せフォーム
-
-= form_with model: @contact do |f|
-  = f.label :name, "お名前"
-  br
-  = f.text_field :name
-  br
-  = f.label :email, "メールアドレス"
-  br
-  = f.text_field :email
-  br
-  = f.label :message, "お問い合わせ内容"
-  br
-  = f.text_field :message
-  br
-  = f.submit "メール送信"
+.contact
+  h2.mt-3.text-center.text-light.rounded-pill.border.border-light
+    | お問い合わせ
+  p.mt-2.text-right.text-danger
+    | ※印のところは入力必須項目です。
+  .row.justify-content-center
+    - if flash[:notice]
+      p.alert-success
+        i.fas.fa-check
+        |#{flash[:notice]}
+  = form_with model: @contact, local:true do |f|
+    table.table.table-borderless.mt-3
+      tbody
+        tr
+          td.align-middle.text-right
+            span.text-light
+              |お名前&emsp;&nbsp;
+              br
+              |(10文字以内)
+            span.text-danger  ※
+          td
+            = f.text_field :name, autofocus: true, autocomplete: "name", class:"form-control"
+        tr
+          td.align-middle.text-right
+            span.text-light
+              |メールアドレス
+            span.text-danger  ※
+          td
+            = f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control"
+        tr
+          td.align-middle.text-right
+            span.text-light
+              |お問い合わせ内容&emsp;&nbsp;
+              br
+              |(200文字以内)
+            span.text-danger  ※
+          td
+            = f.text_area :message, autofocus: true, autocomplete: "message", class:"form-control", size:"20x10"
+    .row.justify-content-center
+      = f.submit "管理者にメールを送信", class: "btn btn-lg btn-outline-light"
