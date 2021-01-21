@@ -18,7 +18,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # GET /users/edit
   def edit
     if current_user.email == 'guest@example.com'
-      redirect_to user_path(current_user.id), alert: 'ゲストユーザーの変更・削除はできません。'
+      redirect_to user_path(id: current_user.id), alert: 'ゲストユーザーの変更・削除はできません。'
     else
       super
     end
