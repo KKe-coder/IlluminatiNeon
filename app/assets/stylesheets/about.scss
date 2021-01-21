@@ -1,0 +1,32 @@
+.innabout {
+  height: 100vh;
+  h1, h2, h4 {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    transform: rotate(0.05deg);
+  }
+  h2 {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    transform: rotate(0.05deg);
+    text-shadow: 1px 0 10px yellow;
+  }
+
+  h4 {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    transform: rotate(0.05deg);
+    text-shadow: 1px 0 10px red;
+  }
+  .about-box1 {
+    background-image: image-url("about-background1.jpg");
+    background-size: cover;
+    background-position: center;
+  }
+  .about-box2 {
+    background-image: image-url("about-background2.jpg");
+    background-size: cover;
+    background-position: center;
+    h2 {
+      letter-spacing: 10px;
+    }
+  }
+
+}

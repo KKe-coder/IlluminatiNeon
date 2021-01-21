@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
+  before_action :authenticate_user!
   before_action :reject_user, only: [:create]
   # before_action :configure_sign_in_params, only: [:create]
 
@@ -22,29 +23,27 @@ class Users::SessionsController < Devise::SessionsController
   def new_guest
     user = User.guest
     sign_in user
-    redirect_to root_path
+    redirect_to user_path(current_user.id)
   end
 
   def after_sign_in_path_for(resource)
     user_path(current_user.id)
   end
 
-  # protected
+  protected
 
-  # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_in_params
-  #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
-  # end
+  # 退会後のユーザーログイン阻止
   def reject_user
     @user = User.find_by(email: params[:user][:email].downcase)
     if @user
-      if (@user.valid_password?(params[:user][:password]) && (@user.active_for_authentication? == false)) # active_for_authentication?アクションにより self.is_deleted == "入会中"の際実行される
-        flash[:danger] = "退会済です。"
+      if (@user.valid_password?(params[:user][:password]) && (@user.active_for_authentication? == false))
         redirect_to new_user_session_path
       end
-    else
-      flash[:danger] = "必須項目を入力してください。"
     end
   end
+  # If you have extra params to permit, append them to the sanitizer.
+  # def configure_sign_in_params
+  #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
+  #
 
 end

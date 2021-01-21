@@ -1,11 +1,44 @@
-h1 Homes#top
-
-- if user_signed_in?
-
-  p hello!!!#{@header_user.name}
-
-- else
-
-  p hello!!!Please login.
-
-  = link_to 'Guest login', users_guest_sign_in_path, method: :post
+.toppage
+  .jumbotron.mb-0
+    h1.display-4.text-light
+      span.text-warning
+        |I
+      |lluminatio
+      span.text-danger
+        |N
+      |eo
+      span.text-success
+        |N
+      |へようこそ!
+    p.lead.text-light
+      |美しい
+      span.text-warning
+        |イルミネーション
+      |と、幻惑的な
+      span.text-danger
+        |ネオン
+      |を共有する
+      span.text-success
+        |サイト
+      |です。
+    .text-center.mt-5
+      - unless user_signed_in?
+        .mt-2
+          = link_to "新規登録", new_user_registration_path, class:"btn btn-lg btn-outline-warning"
+          = link_to "ログイン", new_user_session_path, class:"btn btn-lg btn-outline-light ml-4"
+          = link_to "ゲストログイン", users_guest_sign_in_path, method: :post, class:"btn btn-lg btn-outline-danger ml-4"
+          = link_to "About", about_path, class:"btn btn-lg btn-outline-success ml-4"
+      - else
+        span.lead.text-warning
+          |#{current_user.name}
+        span.text-danger
+          |さん
+        span.text-light
+          |、
+        span.text-success
+          |お帰りなさい。
+        .mt-2
+          = link_to "マイページ", user_path(current_user.id) , class:"btn btn-lg btn-outline-warning"
+          = link_to "投稿一覧", posts_path, class:"btn btn-lg btn-outline-light ml-4"
+          = link_to "新規投稿", new_post_path, class:"btn btn-lg btn-outline-danger ml-4"
+          = link_to "ログアウト", destroy_user_session_path, method: :delete, class:"btn btn-lg btn-outline-success ml-4"

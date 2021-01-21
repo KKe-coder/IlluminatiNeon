@@ -1,23 +1,51 @@
-.row.mx-auto.border.mt-2
+.row.mx-auto.position-fixed.header-bottom
   .col.text-center
     - if user_signed_in?
       .d-flex.justify-content-between
-        = attachment_image_tag current_user, :profile_image, size: "50x50", fallback: "no_image_user.jpg", class:"align-self-center"
-        span.align-self-center
-          = link_to @header_user.name, user_path(@header_user.id)
-          |さん、ようこそ！
+        .bottom-login
+          = link_to user_path(@header_user.id) do
+            = attachment_image_tag current_user, :profile_image, size: "45x45", fallback: "no_image_user.jpg", class:"align-self-center rounded-circle"
+            span.font-weight-bold.text-success.user-name
+              |#{@header_user.name}
+          span.welcome.text-light
+            | さん、ようこそ！
         .align-self-center.form-inline
           = form_with(model:[@header_user, @header_murmur], url: user_murmurs_path(@header_user.id),method: :post) do |f|
-            = f.text_area :body, placeholder: "つぶやいてみる", size: "20x1", class: "form-control"
+            = f.text_field :body, placeholder: "つぶやいてみる", size: "20x1", class: "form-control"
             = f.hidden_field :id, value: params[:id]
             - if params[:showing] == "current_user_posts"
               = f.hidden_field :mypagemode, value: "on"
-            = button_tag type: "submit", class: "align-top btn btn-info", id: "create_murmur" do
+            = button_tag type: "submit", class: "align-top btn btn-light", id: "create_murmur" do
               i.fas.fa-pen-nib
         .d-flex.justify-content-start.align-self-center.murmurs_header style="width:50%"
           = render 'shared/create_murmur'
     - else
-      | IlluminatioNeonにようこそ！美しいイルミネーションと、幻想的なネオンを共有するサイトです。
+      p.text-light.bottom-nologin
+        span.font-weight-bold
+          span.text-warning
+            |I
+          |lluminatio
+          span.text-danger
+            |N
+          |eo
+          span.text-success
+            |N
+        |にようこそ！美しい
+        span.text-warning
+          |イルミネーション
+        |と、幻惑的な
+        span.text-danger
+          |ネオン
+        |を共有する
+        span.text-success
+          |サイト
+        |です。
+      p.text-light.bottom-nologin
+        | 閲覧はログインせずに行えますが、投稿やレビュー等には
+        = link_to 'ログイン', new_user_session_path, class:"text-info font-weight-bold"
+        |や
+        = link_to '新規登録', new_user_registration_path, class:"text-info font-weight-bold"
+        | が必要になります。
 
 javascript:
   $('#create_murmur').on('click', function() {

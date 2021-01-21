@@ -2,7 +2,7 @@ doctype html
 html
   head
     title
-      | IlluminatioNeon
+      | IlluminatioNeoN
     = csrf_meta_tags
     = csp_meta_tag
     meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"
@@ -10,22 +10,15 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    = render 'shared/header_top'
-    = render 'shared/header_bottom'
-    .row.mx-auto
-      .col-sm-3.border
-        = render 'shared/column', objects: @left_posts, count: @left_count
-      .col-sm-6
-        .notifications
-          - flash.each do |key, value|
-            = content_tag(:div, value, class: key)
-        - unless user_signed_in?
-          .border.text-center
-            | 閲覧はログインせずに行えますが、
-            br
-            |投稿等には
-            = link_to 'ログイン', new_user_session_path
-            | が必要になります。
-        = yield
-      .col-sm-3.border
-        = render 'shared/column', objects: @right_posts, count: @right_count
+    - unless current_page?(root_path)
+      = render 'shared/header_top'
+      = render 'shared/header_bottom'
+      .row.mx-auto.main-background
+        .col-sm-2.left-column
+          = render 'shared/column', objects: @left_posts, count: @left_count
+        .col-sm-8.main-column.position-absolute
+          = yield
+        .col-sm-2.right-column
+          = render 'shared/column', objects: @right_posts, count: @right_count
+    - else
+      = yield

@@ -1,0 +1,37 @@
+.user-show {
+  h2 {
+    width: 65%;
+    margin: 0 auto;
+    .non-user-name {
+      font-size: 1.5rem;
+    }
+  }
+  h3 {
+    width: 65%;
+    margin: 0 auto;
+  }
+  h2, h3, h5, p, td, span, a, .btn, u {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    transform: rotate(0.05deg);
+  }
+  p {
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+  }
+  .f-popup {
+    display: none;
+    h5 {
+      width: 65%;
+      .non-user-name {
+        font-size: 1rem;
+      }
+    }
+    .f-objects {
+      height: 90px;
+      p {
+        width: 100px;
+        font-size: 0.8rem;
+      }
+    }
+  }
+}

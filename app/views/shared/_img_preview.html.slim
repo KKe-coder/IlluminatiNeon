@@ -8,6 +8,8 @@ javascript:
           $(".inputimage").attr('src', e.target.result);
       }
   // ここまで
-      reader.readAsDataURL(e.target.files[0]); //取得したurlにアップロード画像のurlを挿入
+        if(e.target.result){
+          reader.readAsDataURL(e.target.files[0]);//取得したurlにアップロード画像のurlを挿入--if文とすることで画像選択キャンセル時のエラー発生を抑える
+        }
       });
   });

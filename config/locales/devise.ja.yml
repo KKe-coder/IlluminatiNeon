@@ -1,0 +1,10 @@
+ja:
+  devise:
+    failure:
+      inactive: "有効なユーザーではありません。"
+    mailer:
+      reset_password_instructions:
+        subject: "【IlluminatioNeon】パスワード再発行申請のお知らせ"
+  errors:
+    messages:
+      not_found: "は登録されていないようです。"
