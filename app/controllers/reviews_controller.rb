@@ -4,9 +4,12 @@ class ReviewsController < ApplicationController
     @post = Post.find(params[:post_id])
     review = current_user.reviews.new(review_params)
     review.post_id = @post.id
-    review.save
-    @post.avgrate = ((@post.reviews.sum(:rate) + @post.rate) / (@post.reviews.count + 1))
-    @post.update(post_params)
+    if review.save
+      @post.avgrate = ((@post.reviews.sum(:rate) + @post.rate) / (@post.reviews.count + 1))
+      @post.update(post_params)
+    else
+      render 'error'
+    end
   end
 
   def destroy

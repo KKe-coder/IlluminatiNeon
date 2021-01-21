@@ -2,3 +2,5 @@ $(".murmurs_header").html("<%= j(render 'shared/create_murmur') %>").hide().fade
 $("#murmur_body").val("")
 $('.murmurs_usershow').html("<%= j(render 'shared/murmurs_usershow') %>").hide().fadeIn('slow');
 $('#create_murmur').html('<i class="fas fa-check"></i>');
+var vaildmurmurmark = function(){$('#create_murmur').html('<i class="fas fa-pen-nib"></i>');}
+setTimeout(vaildmurmurmark, 1000);
