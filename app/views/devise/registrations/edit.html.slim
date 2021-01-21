@@ -4,6 +4,8 @@
   p.mt-2.text-right.text-danger
     | ※印のところは入力必須項目です。
   = form_with model: current_user, url: user_registration_path, local: true do |f|
+    .row.justify-content-center
+      = devise_error_messages!
     table.table.table-borderless.mt-3
       tbody
         tr
@@ -41,14 +43,14 @@
               |変更後パスワード
             span &emsp;&nbsp;
           td
-            = f.password_field :password, class:"form-control"
+            = f.password_field :password, class:"form-control", placeholder: "変更する場合のみ入力"
         tr
           td.align-middle.text-right
             span.text-light
               |変更後パスワード(再入力)
             span &emsp;&nbsp;
           td
-            = f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control"
+            = f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control", placeholder: "変更する場合のみ入力"
         tr
           td.align-middle.text-right
             span.text-light
@@ -62,5 +64,4 @@
             = link_to "退会をご希望ですか？", unsubscribe_path
     .row.justify-content-center
       = f.submit "Update", class: "btn btn-bg btn-primary"
-  = devise_error_messages!
   = render 'shared/img_preview'
