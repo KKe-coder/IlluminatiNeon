@@ -1,10 +1,11 @@
 onstar = ($(".onstar")).val()
 offstar = ($(".offstar")).val()
 halfstar = ($(".halfstar")).val() <%# hiddenされているinputタグよりratyの3種画像URLを変数に代入 %>
-$(".reviews").html("<%= j(render 'shared/show_reviews') %>").hide().fadeIn('slow');
+$(".reviews").html("")
+$(".reviews").html("<%= j(render 'shared/show_reviews') %>").hide().fadeIn('2000');
 avgrate = ($(".avgrate_form")).val() <%# 再描画されたhiddenされているinputタグより@post.avgrateの値を変数に代入 %>
-$(".reviewcounter").html("<span>現在のレビュー件数: <%= @post.reviews.count %>件</span>").hide().fadeIn('slow');
-$("#starreview").hide().fadeIn('slow');
+$(".reviewcounter").html("<span>現在のレビュー件数: <%= @post.reviews.count %>件</span>").hide().fadeIn('2000');
+$("#starreview").hide().fadeIn('2000');
 $(".testsougou").html("<span id=\"starave\"></span><p class=\"text-center\"><%= @post.avgrate.round(2) %>点</p>");
 $(function() {
   if((document.getElementById('starave').getElementsByTagName("img").length == 0 )){
@@ -19,4 +20,4 @@ $(function() {
    });
   }
 });
-$(".testsougou").hide().fadeIn('slow');
+$(".testsougou").hide().fadeIn('2000');

@@ -84,10 +84,8 @@
   - else
     h5.mt-2.text-light.text-center レビューにはログインが必要です。
 
-  .col-sm-11.mx-auto
-    table.table.table-borderless.table-sm
-      tbody.reviews
-        = render 'shared/show_reviews', post: @post
+  .col-sm-11.mx-auto.reviews
+    = render 'shared/show_reviews', post: @post
   input.onstar type="hidden" name="avgrate" value="#{asset_path('star-on.png')}"
   input.offstar type="hidden" name="avgrate" value="#{asset_path('star-off.png')}"
   input.halfstar type="hidden" name="avgrate" value="#{asset_path('star-half.png')}"
