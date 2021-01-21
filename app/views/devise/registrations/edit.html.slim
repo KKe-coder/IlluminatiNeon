@@ -58,10 +58,8 @@
             span.text-danger  ※
           td
             = f.password_field :current_password, autocomplete: "current-password", class:"form-control"
-        tr
-          td
-          td
-            = link_to "退会をご希望ですか？", unsubscribe_path
     .row.justify-content-center
-      = f.submit "Update", class: "btn btn-bg btn-primary"
+      = f.submit "編集完了", class: "btn btn-lg btn-outline-light"
+    .mt-2.text-right
+      = link_to "退会をご希望ですか？", unsubscribe_path, class:"text-info"
   = render 'shared/img_preview'
