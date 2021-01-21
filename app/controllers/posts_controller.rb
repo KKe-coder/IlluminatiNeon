@@ -2,11 +2,11 @@ class PostsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    case params[:posts_category]
-    when "Illumination"
-      @posts = Post.where(category: "Illumination")
-    when "Neon"
-      @posts = Post.where(category: "Neon")
+    if params[:posts_place]
+      @posts = Post.where(place: params[:posts_place])
+      if @posts.blank?
+        #メッセージを
+      end
     else
       @posts = Post.all
     end

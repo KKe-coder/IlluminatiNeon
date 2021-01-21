@@ -80,7 +80,7 @@
                 | 登録はこちら
         - else
           u
-            = link_to ">>#{@user.residence}の投稿を探す", posts_path(posts_category: "#{@user.residence}")
+            = link_to ">>#{@user.residence}の投稿を探す", posts_path(posts_place: "#{@user.residence}")
 
     .col-sm-4
       .align-self-between

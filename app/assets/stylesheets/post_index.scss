@@ -3,6 +3,10 @@
     width: 60%;
     margin: 0 auto;
   }
+  .justify-content-center p {
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+  }
   h2, h4, h5, p, td, span, .btn, li{
     font-family: 'M PLUS Rounded 1c', sans-serif;
     transform: rotate(0.05deg);

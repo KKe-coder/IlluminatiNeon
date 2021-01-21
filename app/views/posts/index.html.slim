@@ -3,6 +3,11 @@
     | 投　稿　一　覧
   span.text-light
     = params
+  .row.justify-content-center
+    - if flash[:notice]
+      p.alert-info.mt-5
+        i.fas.fa-exclamation-triangle
+          |#{flash[:notice]}
   .card-columns.text-light.text-center
     - @posts.each do |post|
       .card.border-light.bg-transparent style="width:13rem;"
