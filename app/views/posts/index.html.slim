@@ -1,44 +1,29 @@
-h1 Posts#index
-p Find me in app/views/posts/index.html.slim
-
-= params
-
-- @posts.each do |post|
-  p
-    |画像
-  = attachment_image_tag post, :image, size:"40x40"
-  p
-    |タイトル
-    strong
-      |&nbsp;
-      = link_to post.title, post_path(post.id)
-  p
-    |投稿者
-    strong  #{post.user.name}
-  p
-    |投稿日時
-    strong  #{post.created_at.strftime('%Y/%m/%d %H:%M')}
-  p
-    |居住地
-    strong  #{post.user.residence}
-  p
-    |投稿者
-    strong  #{post.user.name}
-  p
-    |カテゴリ
-    strong  #{post.category}
-  p
-    |カラー
-    strong  #{post.color}
-  p
-    |場所
-    strong  #{post.place}
-
-  p
-    |評価 &nbsp;
-    span id="star-rate-#{post.id}"
-
-  h1 -
-
-  = render 'shared/starids', object: post
+.post-index
+  h2.mt-3.text-center.text-light.rounded-pill.border.border-light
+    | 投　稿　一　覧
+  span.text-light
+    = params
+  .card-columns.text-light.text-center
+    - @posts.each do |post|
+      .card.border-light.bg-transparent style="width:13rem;"
+        = attachment_image_tag post, :image, class:"bd-placeholder-img card-img", width:"100%", height:"180px"
+        .card-img-overlay
+          .card-title
+            = link_to post_path(post.id) do
+              h4.mt-2.font-weight-bold.text-light #{post.title}
+          ul.list-group.list-group-flush
+            li.list-group-item.bg-transparent
+              span.border.rounded-lg #{post.place}
+              span #{post.created_at.strftime('%m/%d %H:%M')}
+            li.list-group-item.bg-transparent #{post.category} #{post.color}
+            li.list-group-item.bg-transparent.mt-3
+              = link_to user_path(post.user_id) do
+                = attachment_image_tag post.user, :profile_image, size: "30x30", fallback: "no_image_user.jpg", class: "border rounded-circle ml-1"
+                span.font-weight-bold.text-success.ml-1
+                  |#{post.user.name}
+              span
+                |さん
+              br
+              <span id="star-rate-#{post.id}"></span>
+      = render 'shared/starids', object: post
 
