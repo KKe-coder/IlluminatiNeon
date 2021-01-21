@@ -1,6 +1,4 @@
-h1 Posts#edit
-p Find me in app/views/posts/edit.html.slim
-
+.post-edit
 = form_with model:@post, local:true do |f|
   = f.label :image
   = f.attachment_field :image

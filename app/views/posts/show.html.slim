@@ -37,7 +37,7 @@
             - if @post.color == "Red"
               span.ml-5.text-danger #{@post.color}
             - elsif @post.color == "Orange"
-              span.ml-5.text-orange #{@post.color}
+              span.ml-5 style="color:#FF9933" #{@post.color}
             - elsif @post.color == "Yellow"
               span.ml-5.text-warning #{@post.color}
             - elsif @post.color == "Green"
@@ -45,9 +45,9 @@
             - elsif @post.color == "Blue"
               span.ml-5.text-primary #{@post.color}
             - elsif @post.color == "Indigo"
-              span.ml-5.text-orange #{@post.color}
+              span.ml-5 style="color:#3333CC" #{@post.color}
             - else
-              span.ml-5.text-orange #{@post.color}
+              span.ml-5 style="color:#9933FF" #{@post.color}
         li.text-center.text-light.mb-1
           span.font-weight-bold #{@post.place}&emsp;
           span 現在&nbsp;
