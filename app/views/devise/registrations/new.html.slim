@@ -7,7 +7,7 @@
     table.table.table-borderless.mt-3
       tbody
         tr
-          td.align-middle
+          td.align-middle.text-right
             span.text-light
               |プロフィール画像
           td.text-center
@@ -15,32 +15,35 @@
             .align-self-bottom.mt-1
               = f.attachment_field :profile_image, class:"text-truncate text-light", format: 'jpg'
         tr
-          td.align-middle
+          td.align-middle.text-right
             span.text-light
               |ユーザーネーム(6文字以内)
             span.text-danger  ※
           td
             = f.text_field :name, autofocus: true, autocomplete: "name", class:"form-control"
         tr
-          td.align-middle
+          td.align-middle.text-right
             span.text-light
               |メールアドレス
             span.text-danger  ※
           td
             = f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control"
         tr
-          td.align-middle.text-light お住まいの都道府県
+          td.align-middle.text-right
+            span.text-light
+              |お住まいの都道府県
+            span &emsp;&nbsp;
           td.align-self-center
             = f.select :residence, options_for_select(User.residences.keys), class:"form-control"
         tr
-          td.align-middle
+          td.align-middle.text-right
             span.text-light
               |パスワード(6文字以上)
             span.text-danger  ※
           td
             = f.password_field :password, class:"form-control"
         tr
-          td.align-middle
+          td.align-middle.text-right
             span.text-light
               |パスワード(再入力)
             span.text-danger  ※

@@ -12,9 +12,12 @@ class ContactsController < ApplicationController
 
   def create
     @contact = Contact.new(contact_params)
-    @contact.save
-    ContactMailer.send_mail(@contact).deliver_now
-    redirect_to new_contacts_path, notice: '管理者にメールが送信されました。'
+    if @contact.save
+      ContactMailer.send_mail(@contact).deliver_now
+      redirect_to new_contacts_path, notice: '管理者にメールが送信されました。'
+    else
+      render :new
+    end
   end
 
   private
