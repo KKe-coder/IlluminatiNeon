@@ -1,6 +1,6 @@
 .innabout {
   height: 100vh;
-  h1 {
+  h1, h2, h4 {
     font-family: 'M PLUS Rounded 1c', sans-serif;
     transform: rotate(0.05deg);
   }
@@ -16,13 +16,11 @@
     text-shadow: 1px 0 10px red;
   }
   .about-box1 {
-    height: 300px;
     background-image: image-url("about-background1.jpg");
     background-size: cover;
     background-position: center;
   }
   .about-box2 {
-    height: 300px;
     background-image: image-url("about-background2.jpg");
     background-size: cover;
     background-position: center;
