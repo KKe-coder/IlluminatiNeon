@@ -68,7 +68,8 @@
           p.text-center #{@post.rate.round(2)}点
         li.text-light
           span 感想
-          p #{@post.impression}
+          br
+          span.text-break style="width:300px" #{@post.impression}
   .row.mt-3.text-light
     u.mx-auto
       | レビューしてみましょう!
@@ -80,12 +81,12 @@
         = f.text_area :comment, placeholder: "レビュー", size:"20x1", class:"form-control"
         .d-flex.justify-content-center
           span.text-light.mt-1#starreview
-            = render 'shared/star'
             = f.label :rate, "評価(5段階)", class:"mr-1 mt-2"
             = f.hidden_field :rate, id: :review_star
           = f.submit "送信する", class:"btn btn-success ml-3 mt-1 mb-1"
   - else
     h5.mt-2.text-light.text-center レビューにはログインが必要です。
+    span#starreview style="display:none;"
 
   .col-sm-11.mx-auto.reviews
     = render 'shared/show_reviews', post: @post
@@ -94,7 +95,7 @@
   input.halfstar type="hidden" name="avgrate" value="#{asset_path('star-half.png')}"
 
 = render 'shared/starids', object: @post
-
+= render 'shared/star'
 javascript:
   $(function(){
       $.ajax({
