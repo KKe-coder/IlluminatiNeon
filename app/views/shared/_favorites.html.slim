@@ -3,11 +3,13 @@
     - if @post.favorited_by?(current_user)
       p
         = link_to post_favorites_path(@post), method: :delete, remote: :true, class:"btn btn-danger" do
-          | ♥ #{@post.favorites.count} Favorite!!
+          i.fas.fa-heart&nbsp;
+            #{@post.favorites.count} いいねを解除する
     - else
       p
-        = link_to post_favorites_path(@post), method: :post, remote: :true, class:"btn btn-danger" do
-          | ♡ #{@post.favorites.count} Favorite!!
+        = link_to post_favorites_path(@post), method: :post, remote: :true, class:"btn btn-outline-danger" do
+          i.far.fa-heart&nbsp;
+            #{@post.favorites.count} いいね!!
   - else
     p
         | 自分の投稿にいいねはできません。

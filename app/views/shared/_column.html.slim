@@ -14,9 +14,10 @@
         h5.text-center.text-light
           i.fas.fa-crown
           |&nbsp;#{count}位
-        span.ml-1 id="star-rank-ave-#{count}"
-        span.text-light.ml-1
-          |(#{post.avgrate.round(2)}点)
+        .text-center
+          span id="star-rank-ave-#{count}"
+          span.text-light
+            |(#{post.avgrate.round(2)}点)
       - else
         - if count == 4
           h4.mt-1.text-center.text-danger.rounded-pill.border.border-danger.right-title 最新投稿
@@ -33,9 +34,10 @@
               |&nbsp;
               = ((Time.now - post.created_at) / 60 ).round(0)
               | 分前
-        span.ml-1 id="star-rank-ave-#{count}"
-        span.text-light.ml-1
-          |(#{post.avgrate.round(2)}点)
+        .text-center
+          span id="star-rank-ave-#{count}"
+          span.text-light
+            |(#{post.avgrate.round(2)}点)
       .d-flex.justify-content-between
         span.ml-1.border.text-light.rounded-lg #{post.place}
         - if post.category == "Illumination"
@@ -44,15 +46,15 @@
           span.text-danger #{post.category}
       = link_to(post_path(post.id)) do
         = attachment_image_tag post, :image, width: "100%", height: "114px", fallback: "no_image_post.jpg", class:"mt-1 rounded"
-  .row.mt-1.mb-1.d-flex.border-bottom.border-light.rounded-bottom
-    = link_to user_path(post.user_id) do
-      = attachment_image_tag post.user, :profile_image, size: "45x45", fallback: "no_image_user.jpg", class: "rounded-circle ml-1 border border-light"
-    span.text-light.ml-1.mb-1
-      = link_to post.title, post_path(post.id), class:"text-light font-weight-bold"
-      br
-      = link_to post.user.name, user_path(post.user_id), class:"posts-creater text-success"
-      span style="font-size:0.7rem"
-        | さん
+  .row.mt-1.mb-1.d-flex.border-bottom.border-light.rounded-bottom.justify-content-center
+      = link_to user_path(post.user_id) do
+        = attachment_image_tag post.user, :profile_image, size: "45x45", fallback: "no_image_user.jpg", class: "rounded-circle ml-1 border border-light"
+      span.text-light.ml-1.mb-1
+        = link_to post.title, post_path(post.id), class:"text-light font-weight-bold"
+        br
+        = link_to post.user.name, user_path(post.user_id), class:"posts-creater text-success"
+        span style="font-size:0.7rem"
+          | さん
 
   javascript:
     $(function() {

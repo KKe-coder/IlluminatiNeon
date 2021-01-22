@@ -30,27 +30,30 @@
           = render 'shared/favorites', post: @post
         li
           h5.text-center
-            - if @post.category == "Illumination"
-              span.text-warning #{@post.category}
-            - else
-              span.text-danger #{@post.category}
-            - if @post.color == "Red"
-              span.ml-5.text-danger #{@post.color}
-            - elsif @post.color == "Orange"
-              span.ml-5.text-orange #{@post.color}
-            - elsif @post.color == "Yellow"
-              span.ml-5.text-warning #{@post.color}
-            - elsif @post.color == "Green"
-              span.ml-5.text-success #{@post.color}
-            - elsif @post.color == "Blue"
-              span.ml-5.text-primary #{@post.color}
-            - elsif @post.color == "Indigo"
-              span.ml-5.text-orange #{@post.color}
-            - else
-              span.ml-5.text-orange #{@post.color}
+            = link_to posts_path(category: "#{@post.category}")
+              - if @post.category == "Illumination"
+                span.text-warning #{@post.category}
+              - else
+                span.text-danger #{@post.category}
+            = link_to posts_path(color: "#{@post.color}")
+              - if @post.color == "Red"
+                span.ml-5.text-danger #{@post.color}
+              - elsif @post.color == "Orange"
+                span.ml-5.text-orange #{@post.color}
+              - elsif @post.color == "Yellow"
+                span.ml-5.text-warning #{@post.color}
+              - elsif @post.color == "Green"
+                span.ml-5.text-success #{@post.color}
+              - elsif @post.color == "Blue"
+                span.ml-5.text-primary #{@post.color}
+              - elsif @post.color == "Indigo"
+                span.ml-5.text-orange #{@post.color}
+              - else
+                span.ml-5.text-orange #{@post.color}
         li.text-center.text-light.mb-1
-          span.font-weight-bold #{@post.place}&emsp;
-          span 現在&nbsp;
+          = link_to posts_path(posts_place: "#{@post.place}")
+            span.font-weight-bold.text-light #{@post.place}
+          span &emsp;現在&nbsp;
           span#temp
           span ℃／
           img#opwicon

@@ -1,34 +1,98 @@
 .post-index
   h2.mt-3.text-center.text-light.rounded-pill.border.border-light
     | 投　稿　一　覧
-  span.text-light
-    = params
+  h5.mt-3.text-center.text-light
+    |現在の絞り込み条件:
+    .text-warning
+      |#{@condition}
+    - unless @condition == "なし"
+      = link_to "解除する", posts_path, class:"btn btn-outline-danger btn-sm"
   .row.justify-content-center
-    - if flash[:notice]
+    table.table.table-borderless.text-light
+      tbody.text-center
+        tr
+          th.text-right
+            |評価順
+            i.fas.fa-star.text-warning
+          td
+            = link_to "高い順", posts_path(rated: "up"), class:"text-light border rounded-sm"
+          td
+            = link_to "低い順", posts_path(rated: "down"), class:"text-light border rounded-sm"
+        tr
+          th.text-right
+            |いいね数順
+            i.far.fa-heart.text-danger
+          td
+            = link_to "多い順", posts_path(favoritecount: "up"), class:"text-light border rounded-sm"
+          td
+            = link_to "少ない順", posts_path(favoritecount: "down"), class:"text-light border rounded-sm"
+        tr
+          th.text-right
+            |レビュー数順
+            i.far.fa-comments.text-warning
+          td
+            = link_to "多い順", posts_path(reviewcount: "up"), class:"text-light border rounded-sm"
+          td
+            = link_to "少ない順", posts_path(reviewcount: "down"), class:"text-light border rounded-sm"
+        tr
+          th.text-right カテゴリ
+          td colspan="3"
+            = link_to "イルミネーション", posts_path(category: "Illumination"), class:"text-warning border rounded-sm"
+          td
+            = link_to "ネオン", posts_path(category: "Neon"), class:"text-danger border rounded-sm"
+        tr
+          th.text-right 場所
+          td colspan="2"
+            select onChange="location.href=value;"
+              option value="" 選択
+              - Post.places.each do |place|
+                option value="/posts?posts_place=#{place[0]}" #{place[0]}
+        tr
+          th.text-right カラー
+          td
+            = link_to "Red", posts_path(color: "Red"), class:"text-danger border rounded-sm"
+          td
+            = link_to "Orange", posts_path(color: "Orange"), class:"border rounded-sm"
+          td
+            = link_to "Yellow", posts_path(color: "Yellow"), class:"text-warning border rounded-sm"
+          td
+            = link_to "Green", posts_path(color: "Green"), class:"text-success border rounded-sm"
+          td
+            = link_to "Blue", posts_path(color: "Blue"), class:"text-info border rounded-sm"
+          td
+            = link_to "Indigo", posts_path(color: "Indigo"), class:"border rounded-sm"
+          td
+            = link_to "Purple", posts_path(color: "Purple"), class:"border rounded-sm"
+  .row.justify-content-center
+    - if @posts.blank?
       p.alert-info.mt-5
         i.fas.fa-exclamation-triangle
-          |#{flash[:notice]}
-  .card-columns.text-light.text-center
+          |投稿が見つかりませんでした。
+  .d-flex.flex-wrap.text-light.text-center.justify-content-center
     - @posts.each do |post|
-      .card.border-light.bg-transparent style="width:13rem;"
-        = attachment_image_tag post, :image, class:"bd-placeholder-img card-img", width:"100%", height:"180px"
-        .card-img-overlay
-          .card-title
-            = link_to post_path(post.id) do
-              h4.mt-2.font-weight-bold.text-light #{post.title}
-          ul.list-group.list-group-flush
-            li.list-group-item.bg-transparent
-              span.border.rounded-lg #{post.place}
-              span #{post.created_at.strftime('%m/%d %H:%M')}
-            li.list-group-item.bg-transparent #{post.category} #{post.color}
-            li.list-group-item.bg-transparent.mt-3
-              = link_to user_path(post.user_id) do
-                = attachment_image_tag post.user, :profile_image, size: "30x30", fallback: "no_image_user.jpg", class: "border rounded-circle ml-1"
-                span.font-weight-bold.text-success.ml-1
-                  |#{post.user.name}
-              span
-                |さん
-              br
-              <span id="star-rate-#{post.id}"></span>
-      = render 'shared/starids', object: post
+        .card.border-light.bg-transparent style="width:13rem;"
+          = attachment_image_tag post, :image, class:"bd-placeholder-img card-img", width:"100%", height:"180px"
+          .card-img-overlay
+            .card-title
+              = link_to post_path(post.id) do
+                h4.mt-2.font-weight-bold.text-info #{post.title}
+            ul.list-group.list-group-flush
+              li.list-group-item.bg-transparent
+                span.border.rounded-lg #{post.place}
+                span #{post.created_at.strftime('%m/%d %H:%M')}
+              li.list-group-item.bg-transparent
+                i.fas.fa-heart.text-danger&nbsp;#{post.favorites.count}&nbsp;
+                i.far.fa-comments.text-warning&nbsp;#{post.reviews.count}
+              li.list-group-item.bg-transparent.mt-3
+                = link_to user_path(post.user_id) do
+                  = attachment_image_tag post.user, :profile_image, size: "30x30", fallback: "no_image_user.jpg", class: "border rounded-circle ml-1"
+                  span.font-weight-bold.text-success.ml-1
+                    |#{post.user.name}
+                span
+                  |さん
+                br
+                <span id="star-rate-#{post.id}"></span>
+                span.text-bottom
+                  |(#{post.rate.round(2)}点)
+              = render 'shared/starids', object: post
 
