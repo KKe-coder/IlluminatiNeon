@@ -25,8 +25,8 @@ end
 
 10.times do |n|
   Faker::Config.locale = :en
-  title = Faker::Lorem.word
-  impression = Faker::Lorem.sentence
+  title = Faker::Lorem.characters(number: 1..7)
+  impression = Faker::Lorem.characters(number: 1..100)
   Post.create!(
   user: User.find(rand(1..20)),
   title: title,
@@ -43,8 +43,8 @@ end
 
 10.times do |n|
   Faker::Config.locale = :en
-  title = Faker::Lorem.word
-  impression = Faker::Lorem.sentence
+  title = Faker::Lorem.characters(number: 1..7)
+  impression = Faker::Lorem.characters(number: 1..100)
   Post.create!(
   user: User.find(rand(1..20)),
   title: title,
@@ -61,7 +61,7 @@ end
 
 30.times do |n|
   Faker::Config.locale = :en
-  body = Faker::Lorem.sentence
+  body = Faker::Lorem.characters(number: 1..30)
   Murmur.create!(
   user: User.find(rand(1..20)),
   body: body
