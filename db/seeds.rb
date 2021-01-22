@@ -10,7 +10,7 @@ AdminUser.create!(email: ENV['ADMIN_ID'],
                   password_confirmation: ENV['ADMIN_PW'])
 
 20.times do |n|
-  name = Faker::Name.last_name
+  name = Faker::Lorem.characters(number: 1..6)
   email = Faker::Internet.email
   password = 'password'
   User.create!(
@@ -25,8 +25,8 @@ end
 
 10.times do |n|
   Faker::Config.locale = :en
-  title = Faker::Lorem.word
-  impression = Faker::Lorem.sentence
+  title = Faker::Lorem.characters(number: 1..7)
+  impression = Faker::Lorem.characters(number: 1..100)
   Post.create!(
   user: User.find(rand(1..20)),
   title: title,
@@ -43,8 +43,8 @@ end
 
 10.times do |n|
   Faker::Config.locale = :en
-  title = Faker::Lorem.word
-  impression = Faker::Lorem.sentence
+  title = Faker::Lorem.characters(number: 1..7)
+  impression = Faker::Lorem.characters(number: 1..100)
   Post.create!(
   user: User.find(rand(1..20)),
   title: title,
@@ -61,7 +61,7 @@ end
 
 30.times do |n|
   Faker::Config.locale = :en
-  body = Faker::Lorem.sentence
+  body = Faker::Lorem.characters(number: 1..30)
   Murmur.create!(
   user: User.find(rand(1..20)),
   body: body
