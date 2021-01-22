@@ -9,7 +9,7 @@
         tr
           td.align-middle.text-right
             span.text-light
-              |【タイトル】
+              |タイトル(7文字以内)
             span.text-danger  ※
           td
             = f.text_field :title, class:"form-control"
@@ -17,7 +17,7 @@
         tr
           td.align-middle.text-right
             span.text-light
-              |【画像】
+              |画像
             span.text-danger  ※
           td
             img.inputimage.rounded
@@ -26,7 +26,7 @@
         tr
           td.align-middle.text-right
             span.text-light
-              |【タイプ】
+              |タイプ
             span.text-danger  ※
           td
             span.text-light style="font-size:0.8rem" 投稿する画像は、どちらのタイプですか？
@@ -39,7 +39,7 @@
         tr
           td.align-middle.text-right
             span.text-light
-              |【カラー】
+              |カラー
             span.text-danger  ※
           td
             span.text-light style="font-size:0.8rem" 投稿する画像の基本のカラーはどれですか？
@@ -48,7 +48,7 @@
         tr
           td.align-middle.text-right
             span.text-light
-              |【場所】
+              |場所
             span.text-danger  ※
           td
             span.text-light style="font-size:0.8rem" 投稿する画像の場所はどこですか？
@@ -57,7 +57,7 @@
         tr
           td.align-middle.text-right
             span.text-light
-              |【評価】
+              |評価
             span.text-danger  ※
           td
             span.text-light style="font-size:0.8rem" 5段階で評価をして下さい。
@@ -67,10 +67,10 @@
         tr
           td.align-middle.text-right
             span.text-light
-              |【評価】
+              |感想(100文字以内)
             span.text-danger  ※
           td
-            = f.text_area :impression, class:"form-control"
+            = f.text_area :impression, class:"form-control", size:"20x7"
     .row.justify-content-center
       = f.submit "投稿する", class: "btn btn-lg btn-outline-warning"
 

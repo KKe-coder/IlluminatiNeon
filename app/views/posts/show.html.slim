@@ -39,7 +39,7 @@
               - if @post.color == "Red"
                 span.ml-5.text-danger #{@post.color}
               - elsif @post.color == "Orange"
-                span.ml-5.text-orange #{@post.color}
+                span.ml-5 style="color:#FF9933" #{@post.color}
               - elsif @post.color == "Yellow"
                 span.ml-5.text-warning #{@post.color}
               - elsif @post.color == "Green"
@@ -47,9 +47,9 @@
               - elsif @post.color == "Blue"
                 span.ml-5.text-primary #{@post.color}
               - elsif @post.color == "Indigo"
-                span.ml-5.text-orange #{@post.color}
+                span.ml-5 style="color:#3333CC" #{@post.color}
               - else
-                span.ml-5.text-orange #{@post.color}
+                span.ml-5 style="color:#9933FF" #{@post.color}
         li.text-center.text-light.mb-1
           = link_to posts_path(posts_place: "#{@post.place}")
             span.font-weight-bold.text-light #{@post.place}
@@ -95,7 +95,7 @@
 
 = render 'shared/starids', object: @post
 
-/javascript:
+javascript:
   $(function(){
       $.ajax({
         url: "https://api.openweathermap.org/data/2.5/weather?q=" + "#{@post.place}" + "&units=metric&appid=" + "#{ENV['OPW_API']}",
