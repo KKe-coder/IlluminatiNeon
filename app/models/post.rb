@@ -2,7 +2,9 @@ class Post < ApplicationRecord
 
   belongs_to :user
   has_many :favorites, dependent: :destroy
+  has_many :favorited_users, through: :favorites, source: :user
   has_many :reviews, dependent: :destroy
+  has_many :reviewed_users, through: :reviews, source: :user
 
   attachment :image
   validates :rate, presence: true, numericality: { greater_than_or_equal_to: 0.5, less_than_or_equal_to: 5}

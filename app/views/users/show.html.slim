@@ -80,7 +80,7 @@
                 | 登録はこちら
         - else
           u
-            = link_to ">>#{@user.residence}の投稿を探す", posts_path(posts_category: "#{@user.residence}")
+            = link_to ">>#{@user.residence}の投稿を探す", posts_path(posts_place: "#{@user.residence}")
 
     .col-sm-4
       .align-self-between
@@ -96,7 +96,7 @@
           $('.followers').on('click', function() {
             $('#followers-trigger').fadeToggle(500);
           });
-        = link_to "♡いいね数：#{@user.favorites.count}", posts_path(posts_category: "user-favorite"), class: "btn btn-danger btn-sm mt-2 btn-block"
+        = link_to "♡いいね数：#{@user.favorites.count}", posts_path(favorited: @user.id), class: "btn btn-danger btn-sm mt-2 btn-block"
         - if @user == current_user && params[:showing] != "current_user_posts"
           = link_to "会員情報編集", edit_user_registration_path, class: "btn btn-success btn-sm mt-2 btn-block"
         - elsif params[:showing] == "current_user_posts"

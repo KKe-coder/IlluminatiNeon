@@ -1,0 +1,37 @@
+.post-index {
+  h2 {
+    width: 60%;
+    margin: 0 auto;
+  }
+  .justify-content-center p {
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+  }
+  h2, h4, h5, p, th, td, span, .btn, li{
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    transform: rotate(0.05deg);
+  }
+  .table th{
+    padding: 0;
+    padding-right: 0.5rem;
+  }
+
+  .table td {
+    padding: 0;
+  }
+
+  .card-img-overlay {
+    padding: 0;
+    text-shadow: 1px 2px 3px #060817;
+    .text-success {
+      font-size: 1.2rem;
+    }
+    .list-group-item {
+      padding: 0;
+      border: 0;
+      span[id*="star-rate"] img{
+        width: 1.2rem;
+      }
+    }
+  }
+}
