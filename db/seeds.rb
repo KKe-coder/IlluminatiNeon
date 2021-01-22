@@ -10,7 +10,7 @@ AdminUser.create!(email: ENV['ADMIN_ID'],
                   password_confirmation: ENV['ADMIN_PW'])
 
 20.times do |n|
-  name = Faker::Name.last_name
+  name = Faker::Lorem.characters(number: 1..6)
   email = Faker::Internet.email
   password = 'password'
   User.create!(
