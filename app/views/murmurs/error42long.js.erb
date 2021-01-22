@@ -1,0 +1,7 @@
+$(".murmurs_header").html("<span class=\"text-light\">つぶやきが長すぎます！！(30文字以内)</span>").hide().fadeIn('slow');
+$('#create_murmur').html('<i class="fas fa-exclamation-triangle"></i>');
+var errormurmur = function(){$(".murmurs_header").html("<%= j(render 'shared/create_murmur') %>").hide().fadeIn('slow');}
+var vaildmurmurmark = function(){$('#create_murmur').html('<i class="fas fa-pen-nib"></i>');}
+$("#murmur_body").val("")
+setTimeout(errormurmur, 2000);
+setTimeout(vaildmurmurmark, 2000);

@@ -1,7 +1,8 @@
 onstar = ($(".onstar")).val()
 offstar = ($(".offstar")).val()
 halfstar = ($(".halfstar")).val() <%# hiddenされているinputタグよりratyの3種画像URLを変数に代入 %>
-$(".reviews").html("<%= j(render 'shared/show_reviews') %>").hide().fadeIn('slow');
+$(".reviews").html("") <%# htmlを1度リセット" %>
+$(".reviews").html("<%= j(render 'shared/show_reviews') %>").hide().fadeIn(2000);
 avgrate = ($(".avgrate_form")).val() <%# 再描画されたhiddenされているinputタグより@post.avgrateの値を変数に代入 %>
 $(".reviewcounter").html("<span>現在のレビュー件数: <%= @post.reviews.count %>件</span>").hide().fadeIn('slow');
 $("#review_comment").val("");
@@ -22,4 +23,4 @@ $(function() {
    });
   }
 });
-$(".testsougou").hide().fadeIn('slow');
+$(".testsougou").hide().fadeIn('2000');

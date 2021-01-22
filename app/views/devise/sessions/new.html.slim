@@ -16,10 +16,6 @@
               |パスワード
           td
             = f.password_field :password, autocomplete: "current-password", class:"form-control"
-        tr
-          td
-          td.text-right
-            = link_to "パスワードをお忘れですか？", new_user_password_path, class:"text-info"
     .row.justify-content-center
       - if flash[:alert]
         p.alert-info
@@ -27,3 +23,7 @@
           |#{flash[:alert]}
     .row.justify-content-center
       = f.submit "ログイン", class: "btn btn-lg btn-outline-light"
+    .mt-2.text-right
+      = link_to "パスワードをお忘れですか？", new_user_password_path, class:"text-info"
+    .row.justify-content-center.mt-5
+      = link_to "ゲストとしてログインする", users_guest_sign_in_path, method: :post, class:"btn btn btn-outline-danger"

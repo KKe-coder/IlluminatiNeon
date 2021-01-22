@@ -27,6 +27,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # PUT /resource
   def update
     super
+    if current_user.save
+    else
+      render :show
+    end
   end
 
   # DELETE /resource

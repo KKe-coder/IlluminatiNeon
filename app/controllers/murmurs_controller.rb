@@ -4,19 +4,26 @@ class MurmursController < ApplicationController
     user = current_user
     murmur = Murmur.new(murmur_params)
     murmur.user_id = user.id
-    murmur.save
-    @user = User.find(params[:user_id])
-    unless params[:murmur][:id].blank?
-      @user = User.find(params[:murmur][:id])
-    end
-    @murmurs = (Murmur.where(user_id: @user.id)).reverse
-      if user_signed_in? && @user == current_user
-        @murmurs = (Murmur.where(user_id: @user.followings.ids) + Murmur.where(user_id: @user.id)).sort.reverse
-        case params[:murmur][:mypagemode]
-        when "on"
-        @murmurs = (Murmur.where(user_id: @user.id)).reverse
-        end
+    if murmur.save
+      @user = User.find(params[:user_id])
+      unless params[:murmur][:id].blank?
+        @user = User.find(params[:murmur][:id])
       end
+      @murmurs = (Murmur.where(user_id: @user.id)).reverse
+        if user_signed_in? && @user == current_user
+          @murmurs = (Murmur.where(user_id: @user.followings.ids) + Murmur.where(user_id: @user.id)).sort.reverse
+          case params[:murmur][:mypagemode]
+          when "on"
+          @murmurs = (Murmur.where(user_id: @user.id)).reverse
+          end
+        end
+    else
+      if murmur.errors.full_messages == ["Bodyを入力してください"]
+        render 'error4blank'
+      else
+        render 'error42long'
+      end
+    end
   end
 
   def destroy

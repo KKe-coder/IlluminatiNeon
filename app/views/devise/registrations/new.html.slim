@@ -13,7 +13,7 @@
           td.text-center
             = attachment_image_tag @user, :profile_image, size: "100x100", fallback: "no_image_user.jpg", class: "inputimage rounded-circle border border-light"
             .align-self-bottom.mt-1
-              = f.attachment_field :profile_image, class:"text-truncate text-light", format: 'jpg'
+              = f.attachment_field :profile_image, class:"text-truncate text-light"
         tr
           td.align-middle.text-right
             span.text-light

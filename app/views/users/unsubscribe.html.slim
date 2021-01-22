@@ -1,20 +1,20 @@
-h2.text-center.mt-3
-  | 退会確認
+.user-unsubscribe
+  h2.mt-3.text-center.text-light.rounded-pill.border.border-light
+    | 退 会 確 認
 
-p.text-center.mt-3
-  |退会すると、会員登録情報や
-  br
-  |これまでの自身の投稿が閲覧できなくなります。
-  br
-  |本当に退会する場合は、「退会する」をクリックしてください。
+  .row.ml-3.mt-5
+    = link_to edit_user_registration_path, class:"btn btn-outline-info" do
+      i.fas.fa-arrow-circle-left
+      | 前のページに戻る
 
-.row.justify-content-start
-  = link_to edit_user_registration_path, id:"loading", class:"btn btn-info" do
-    i.fas.fa-arrow-circle-left
-    | 前のページに戻る
-.row.justify-content-center.mt-5
-  = link_to withdraw_path, method: :patch, id:"loading", class:"btn btn-lg btn-danger" do
-    i.fas.fa-user-slash
-    | 退会
+  h5.text-center.mt-5.text-light
+    |退会すると、会員登録情報や
+    br
+    |これまでの自身の投稿が閲覧できなくなります。
+    br
+    |本当に退会する場合は、「退会する」をクリックしてください。
 
-= render 'shared/loading_button'
+  .row.justify-content-center.mt-5
+    = link_to withdraw_path, method: :patch, class:"btn btn-lg btn-outline-danger" do
+      i.fas.fa-user-slash
+      | 退会する
