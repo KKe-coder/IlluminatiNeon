@@ -52,17 +52,17 @@
           td
             = link_to "Red", posts_path(color: "Red"), class:"text-danger border rounded-sm"
           td
-            = link_to "Orange", posts_path(color: "Orange"), class:"border rounded-sm"
+            = link_to "Orange", posts_path(color: "Orange"), class:"border rounded-sm", style:"color:#FF9933"
           td
             = link_to "Yellow", posts_path(color: "Yellow"), class:"text-warning border rounded-sm"
           td
             = link_to "Green", posts_path(color: "Green"), class:"text-success border rounded-sm"
           td
-            = link_to "Blue", posts_path(color: "Blue"), class:"text-info border rounded-sm"
+            = link_to "Blue", posts_path(color: "Blue"), class:"text-primary border rounded-sm"
           td
-            = link_to "Indigo", posts_path(color: "Indigo"), class:"border rounded-sm"
+            = link_to "Indigo", posts_path(color: "Indigo"), class:"border rounded-sm", style:"color:#3333CC"
           td
-            = link_to "Purple", posts_path(color: "Purple"), class:"border rounded-sm"
+            = link_to "Purple", posts_path(color: "Purple"), class:"border rounded-sm", style:"color:#9933FF"
   .row.justify-content-center
     - if @posts.blank?
       p.alert-info.mt-5
