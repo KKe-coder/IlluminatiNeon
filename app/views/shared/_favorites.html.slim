@@ -9,5 +9,5 @@
         = link_to post_favorites_path(@post), method: :post, remote: :true, class:"btn btn-danger" do
           | ♡ #{@post.favorites.count} Favorite!!
   - else
-    p
+    p.text-light
         | 自分の投稿にいいねはできません。

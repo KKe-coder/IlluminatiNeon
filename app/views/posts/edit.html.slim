@@ -1,30 +1,78 @@
-h1 Posts#edit
-p Find me in app/views/posts/edit.html.slim
+.post-edit
+  h2.mt-3.text-center.text-light.rounded-pill.border.border-light
+    | 投 稿 編 集
+  p.mt-2.text-right.text-danger
+    | ※印のところは入力必須項目です。
+  = form_with model: @post, local:true do |f|
+    table.table.table-borderless.mt-3
+      tbody
+        tr
+          td.align-middle.text-right
+            span.text-light
+              |タイトル(7文字以内)
+            span.text-danger  ※
+          td
+            = f.text_field :title, class:"form-control"
 
-= form_with model:@post, local:true do |f|
-  = f.label :image
-  = f.attachment_field :image
-  br
-  = f.label :title
-  = f.text_field :title
-  br
-  = f.label :category
-  = f.select :category, options_for_select(Post.categories.keys)
-  br
-  = f.label :color
-  = f.select :color, options_for_select(Post.colors.keys)
-  br
-  = f.label :place
-  = f.select :place, options_for_select(Post.places.keys)
-  br
-  span#star
-    = f.label :rate
-    = f.hidden_field :rate, id: :post_star
-  br
-  = f.label :impression
-  = f.text_field :impression
-  br
-  = f.submit 'Save'
+        tr
+          td.align-middle.text-right
+            span.text-light
+              |画像
+            span.text-danger  ※
+          td
+            img.inputimage.rounded
+            .div style="width:250px"
+              = f.attachment_field :image, class:"text-truncate text-light"
+        tr
+          td.align-middle.text-right
+            span.text-light
+              |タイプ
+            span.text-danger  ※
+          td
+            span.text-light style="font-size:0.8rem" 投稿する画像は、どちらのタイプですか？
+            br
+            = f.radio_button :category, :Illumination, checked: "checked"
+            = f.label :Illumination, "イルミネーション", class:"text-warning"
+            span &nbsp;
+            = f.radio_button :category, :Neon
+            = f.label :Neon, "ネオン", class:"text-danger"
+        tr
+          td.align-middle.text-right
+            span.text-light
+              |カラー
+            span.text-danger  ※
+          td
+            span.text-light style="font-size:0.8rem" 投稿する画像の基本のカラーはどれですか？
+            br
+            = f.select :color, options_for_select(Post.colors.keys, selected:@post.color), include_blank: "選択"
+        tr
+          td.align-middle.text-right
+            span.text-light
+              |場所
+            span.text-danger  ※
+          td
+            span.text-light style="font-size:0.8rem" 投稿する画像の場所はどこですか？
+            br
+            = f.select :place, options_for_select(Post.places.keys, selected:@post.place), include_blank: "選択"
+        tr
+          td.align-middle.text-right
+            span.text-light
+              |評価
+            span.text-danger  ※
+          td
+            span.text-light style="font-size:0.8rem" 5段階で評価をして下さい。
+            br
+            span#star
+              = f.hidden_field :rate, id: :post_star
+        tr
+          td.align-middle.text-right
+            span.text-light
+              |感想(100文字以内)
+            span.text-danger  ※
+          td
+            = f.text_area :impression, class:"form-control", size:"20x7"
+    .row.justify-content-center
+      = f.submit "変更する", class: "btn btn-lg btn-outline-warning"
 
 javascript:
   $(function() {
@@ -39,4 +87,16 @@ javascript:
         score: "#{@post.rate}",
       });
     }
+  });
+
+javascript:
+  $(function(){
+      $('#post_image').on('change', function (e) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $(".inputimage").attr('src', e.target.result);
+          $(".inputimage").fadeIn(500);
+        }
+        reader.readAsDataURL(e.target.files[0]);
+      });
   });
