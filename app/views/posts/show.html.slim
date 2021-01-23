@@ -57,12 +57,12 @@
           span#temp
           span ℃／
           img#opwicon
-        li.text-light
+        li.text-light.text-center
           span.align-middle  総合評価&emsp;
           span.text-center.testsougou
             span#starave
             p.text-center #{@post.avgrate.round(2)}点
-        li.text-light
+        li.text-light.text-center
           span.align-middle 個人評価&emsp;
           <span id="star-rate-#{@post.id}"></span>
           p.text-center #{@post.rate.round(2)}点
