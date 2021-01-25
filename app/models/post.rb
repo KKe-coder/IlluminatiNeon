@@ -11,6 +11,7 @@ class Post < ApplicationRecord
   validates :title, presence: true, length: { maximum: 7 }
   validates :image, presence: true
   validates :color, presence: true
+  validates :category, presence: true
   validates :place, presence: true
   validates :impression, presence: true, length: { maximum: 100 }
 

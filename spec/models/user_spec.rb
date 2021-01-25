@@ -1,49 +1,97 @@
 require 'rails_helper'
 
-RSpec.describe 'Userモデルのテスト', type: :model do
+RSpec.describe 'Postモデルのテスト', type: :model do
   describe 'バリデーションテスト' do
-    subject { user.valid? }
-    let!(:other_user) { create(:user) }
-    let(:user) { build(:user) }
-    context 'nameカラム' do
-      it 'ユーザーネームが空白であれば登録×' do
-        user.name = ''
+    subject { post.valid? }
+    let(:user) { create(:user) }
+    let!(:post) { build(:post, user_id: user.id) }
+    context 'titleカラム' do
+      it 'タイトルが空白であれば登録×' do
+        post.title = ''
         is_expected.to eq false
       end
-      it 'ユーザーネームが1文字であれば登録◯' do
-        user.name = Faker::Lorem.characters(number:1)
+      it 'タイトルが1文字であれば登録◯' do
+        post.title = Faker::Lorem.characters(number:1)
         is_expected.to eq true
       end
-      it 'ユーザーネームが6文字であれば登録◯' do
-        user.name = Faker::Lorem.characters(number:6)
+      it 'タイトルが7文字であれば登録◯' do
+        post.title = Faker::Lorem.characters(number:7)
         is_expected.to eq true
       end
-      it 'ユーザーネームが7文字であれば登録×' do
-        user.name = Faker::Lorem.characters(number:7)
+      it 'タイトルが8文字であれば登録×' do
+        post.title = Faker::Lorem.characters(number:8)
         is_expected.to eq false
       end
-      it '重複したユーザーネームは登録×' do
-        user.name = other_user.name
+    end
+    context 'imageカラム' do
+      it '画像が空白であれば登録×' do
+        post.image = ""
+        is_expected.to eq false
+      end
+    end
+    context 'categoryカラム' do
+      it 'タイプが選択されなければ登録×' do
+        post.category = ""
+        is_expected.to eq false
+      end
+    end
+    context 'colorカラム' do
+      it 'カラーが選択されなければ登録×' do
+        post.color = ""
+        is_expected.to eq false
+      end
+    end
+    context 'rateカラム' do
+      it '評価が無ければ登録×' do
+        post.rate = ""
+        is_expected.to eq false
+      end
+      it '評価が0ならば登録×' do
+        post.rate = 0
+        is_expected.to eq false
+      end
+      it '評価が0.5ならば登録◯' do
+        post.rate = 0.5
+        is_expected.to eq true
+      end
+      it '評価が5ならば登録◯' do
+        post.rate = 5
+        is_expected.to eq true
+      end
+      it '評価が6ならば登録×' do
+        post.rate = 6
+        is_expected.to eq false
+      end
+    end
+    context 'impressionカラム' do
+      it '感想が空白であれば登録×' do
+        post.impression = ""
+        is_expected.to eq false
+      end
+      it '感想が1文字であれば登録◯' do
+        post.impression = Faker::Lorem.characters(number:1)
+        is_expected.to eq true
+      end
+      it '感想が100文字であれば登録◯' do
+        post.impression = Faker::Lorem.characters(number:100)
+        is_expected.to eq true
+      end
+      it '感想が101文字であれば登録×' do
+        post.impression = Faker::Lorem.characters(number:101)
         is_expected.to eq false
       end
     end
   end
   describe 'アソシエーションテスト' do
     context 'モデルとの関係' do
-      it 'User:Post = 1:N' do
-        expect(User.reflect_on_association(:posts).macro).to eq :has_many
+      it 'Post:User = N:1' do
+        expect(Post.reflect_on_association(:user).macro).to eq :belongs_to
       end
-      it 'User:Murmur = 1:N' do
-        expect(User.reflect_on_association(:murmurs).macro).to eq :has_many
+      it 'Post:Favorite = 1:N' do
+        expect(Post.reflect_on_association(:favorites).macro).to eq :has_many
       end
-      it 'User:Favorite = 1:N' do
-        expect(User.reflect_on_association(:favorites).macro).to eq :has_many
-      end
-      it 'User:Review = 1:N' do
-        expect(User.reflect_on_association(:reviews).macro).to eq :has_many
-      end
-      it 'User:Relationship = 1:N' do
-        expect(User.reflect_on_association(:relationships).macro).to eq :has_many
+      it 'Post:Review = 1:N' do
+        expect(Post.reflect_on_association(:reviews).macro).to eq :has_many
       end
     end
   end
