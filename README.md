@@ -1,5 +1,7 @@
 # IlluminatiNeon
-<img src="https://user-images.githubusercontent.com/72348241/103642143-11f6ae80-4f96-11eb-9c7f-205ea887a1af.gif" width="300">
+デプロイURL名→IlluminatioNeoN
+
+<img src="https://user-images.githubusercontent.com/72348241/105709818-94e9a400-5f59-11eb-9302-f3b557b8124b.jpg" width="300">
 
 ## サイト概要
 美しく、幻想的な電飾夜景の様子を写真で投稿し、レビューと共有をし、
