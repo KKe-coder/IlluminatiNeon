@@ -93,6 +93,12 @@ RSpec.describe 'Postモデルのテスト', type: :model do
       it 'Post:Review = 1:N' do
         expect(Post.reflect_on_association(:reviews).macro).to eq :has_many
       end
+      it 'Post:Review = 1:N' do
+        expect(Post.reflect_on_association(:reviews).macro).to eq :has_many
+      end
+      it 'Post:Review = 1:N' do
+        expect(Post.reflect_on_association(:reviews).macro).to eq :has_many
+      end
     end
   end
 end

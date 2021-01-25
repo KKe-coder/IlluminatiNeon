@@ -84,8 +84,11 @@ RSpec.describe 'Userモデルのテスト', type: :model do
       it 'User:Review = 1:N' do
         expect(User.reflect_on_association(:reviews).macro).to eq :has_many
       end
-      it 'User:Relationship = 1:N' do
-        expect(User.reflect_on_association(:relationships).macro).to eq :has_many
+      it 'User:Followers = 1:N (User同士の中間テーブル接続)' do
+        expect(User.reflect_on_association(:followers).macro).to eq :has_many
+      end
+      it 'User:Followings = 1:N (User同士の中間テーブル接続)' do
+        expect(User.reflect_on_association(:followings).macro).to eq :has_many
       end
     end
   end
