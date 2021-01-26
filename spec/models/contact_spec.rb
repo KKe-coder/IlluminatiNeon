@@ -10,15 +10,15 @@ RSpec.describe 'Contactモデルのテスト', type: :model do
         is_expected.to eq false
       end
       it 'お名前が1文字であれば登録◯' do
-        contact.name = Faker::Lorem.characters(number:1)
+        contact.name = SecureRandom.alphanumeric(1)
         is_expected.to eq true
       end
       it 'お名前が10文字であれば登録◯' do
-        contact.name = Faker::Lorem.characters(number:10)
+        contact.name = SecureRandom.alphanumeric(10)
         is_expected.to eq true
       end
       it 'お名前が11文字であれば登録×' do
-        contact.name = Faker::Lorem.characters(number:11)
+        contact.name = SecureRandom.alphanumeric(11)
         is_expected.to eq false
       end
     end
@@ -28,15 +28,15 @@ RSpec.describe 'Contactモデルのテスト', type: :model do
         is_expected.to eq false
       end
       it 'メールアドレスが1文字であれば登録◯' do
-        contact.email = Faker::Lorem.characters(number:1)
+        contact.email = SecureRandom.alphanumeric(1)
         is_expected.to eq true
       end
-      it 'メールアドレスが30文字であれば登録◯' do
-        contact.email = Faker::Lorem.characters(number:30)
+      it 'メールアドレスが50文字であれば登録◯' do
+        contact.email = SecureRandom.alphanumeric(50)
         is_expected.to eq true
       end
-      it 'メールアドレスが31文字であれば登録×' do
-        contact.email = Faker::Lorem.characters(number:31)
+      it 'メールアドレスが51文字であれば登録×' do
+        contact.email = SecureRandom.alphanumeric(51)
         is_expected.to eq false
       end
     end
@@ -46,15 +46,15 @@ RSpec.describe 'Contactモデルのテスト', type: :model do
         is_expected.to eq false
       end
       it 'お問い合わせ内容が1文字であれば登録◯' do
-        contact.message = Faker::Lorem.characters(number:1)
+        contact.message = SecureRandom.alphanumeric(1)
         is_expected.to eq true
       end
       it 'お問い合わせ内容が200文字であれば登録◯' do
-        contact.message = Faker::Lorem.characters(number:200)
+        contact.message = SecureRandom.alphanumeric(200)
         is_expected.to eq true
       end
       it 'お問い合わせ内容が201文字であれば登録×' do
-        contact.message = Faker::Lorem.characters(number:201)
+        contact.message = SecureRandom.alphanumeric(201)
         is_expected.to eq false
       end
     end

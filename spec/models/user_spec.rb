@@ -11,15 +11,15 @@ RSpec.describe 'Userモデルのテスト', type: :model do
         is_expected.to eq false
       end
       it 'ユーザーネームが1文字であれば登録◯' do
-        user.name = Faker::Lorem.characters(number:1)
+        user.name = SecureRandom.alphanumeric(1)
         is_expected.to eq true
       end
       it 'ユーザーネームが6文字であれば登録◯' do
-        user.name = Faker::Lorem.characters(number:6)
+        user.name = SecureRandom.alphanumeric(6)
         is_expected.to eq true
       end
       it 'ユーザーネームが7文字であれば登録×' do
-        user.name = Faker::Lorem.characters(number:7)
+        user.name = SecureRandom.alphanumeric(7)
         is_expected.to eq false
       end
       it '重複したユーザーネームは登録×' do
@@ -55,17 +55,17 @@ RSpec.describe 'Userモデルのテスト', type: :model do
         is_expected.to eq false
       end
       it 'パスワードが5文字であれば登録×' do
-        user.password = Faker::Lorem.characters(number:5)
+        user.password = SecureRandom.alphanumeric(5)
         user.password_confirmation = user.password
         is_expected.to eq false
       end
       it 'パスワードが6文字であれば登録◯' do
-        user.password = Faker::Lorem.characters(number:6)
+        user.password = SecureRandom.alphanumeric(6)
         user.password_confirmation = user.password
         is_expected.to eq true
       end
       it 'パスワードと再入力パスワードが異なる場合登録×' do
-        user.password_confirmation = user.password + "a"
+        user.password_confirmation = user.password + SecureRandom.alphanumeric(1)
         is_expected.to eq false
       end
     end

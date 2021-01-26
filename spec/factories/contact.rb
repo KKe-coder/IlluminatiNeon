@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :contact do
-    name { Faker::Lorem.characters(number:10) }
+    name { SecureRandom.alphanumeric(10) }
     email { Faker::Internet.email }
-    message { Faker::Lorem.characters(number:200) }
+    message { SecureRandom.alphanumeric(200) }
   end
 end
