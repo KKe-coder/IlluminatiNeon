@@ -1,8 +1,9 @@
 .right-column {
+  overflow: scroll;
   position: fixed !important;
   top: 136px;
   left: calc(16.6666666667% + 66.6666666667%);
-  height: 100%;
+  height: 500px;
   background-color: #060817;
   font-family: 'M PLUS Rounded 1c', sans-serif;
   .right-title {
@@ -26,14 +27,8 @@
     z-index: 0;
     font-size: 0.9rem;
   }
-  img {
-    transition: all 0.5s;
-  }
-  img:hover{
-    z-index: 1;
-    transform: translateX(-20px) scale(1.2);
-  }
-  img:active{
-    transform: scale(3.0);
-  }
+}
+//スクロールバー非表示
+.right-column::-webkit-scrollbar {
+    display:none;
 }
