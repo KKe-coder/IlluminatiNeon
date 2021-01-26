@@ -4,13 +4,13 @@ nav.navbar.navbar-expand.fixed-top
   ul.navbar-nav.mx-auto
     - if user_signed_in?
       li.nav-item
-        = link_to "マイページ", user_path(current_user.id) , class:"btn btn-lg btn-outline-warning"
+        = link_to "マイページ", user_path(current_user.id) , class:"btn btn-lg btn-outline-warning ml-4 mr-4"
       li.nav-item
-        = link_to "投稿一覧", posts_path, class:"btn btn-lg btn-outline-light ml-5"
+        = link_to "投稿一覧", posts_path, class:"btn btn-lg btn-outline-light ml-4 mr-4"
       li.nav-item
-        = link_to "新規投稿", new_post_path, class:"btn btn-lg btn-outline-danger ml-5"
+        = link_to "新規投稿", new_post_path, class:"btn btn-lg btn-outline-danger ml-4 mr-4"
       li.nav-item
-        = link_to "ログアウト", destroy_user_session_path, method: :delete, class:"btn btn-lg btn-outline-success ml-5"
+        = link_to "ログアウト", destroy_user_session_path, method: :delete, class:"btn btn-lg btn-outline-success ml-4 mr-4"
     - else
       li.nav-item
         = link_to "新規登録", new_user_registration_path, class:"btn btn-lg btn-outline-warning"
@@ -21,4 +21,4 @@ nav.navbar.navbar-expand.fixed-top
       li.nav-item
         = link_to "About", about_path, class:"btn btn-lg btn-outline-success ml-5"
     li.nav-item
-      = link_to '問い合わせ', new_contacts_path, class:"btn btn-lg btn-outline-info ml-5"
+      = link_to '問い合わせ', new_contacts_path, class:"btn btn-lg btn-outline-info ml-4"
