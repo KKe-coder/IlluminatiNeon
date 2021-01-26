@@ -11,19 +11,61 @@ RSpec.describe 'Userモデルのテスト', type: :model do
         is_expected.to eq false
       end
       it 'ユーザーネームが1文字であれば登録◯' do
-        user.name = Faker::Lorem.characters(number:1)
+        user.name = SecureRandom.alphanumeric(1)
         is_expected.to eq true
       end
       it 'ユーザーネームが6文字であれば登録◯' do
-        user.name = Faker::Lorem.characters(number:6)
+        user.name = SecureRandom.alphanumeric(6)
         is_expected.to eq true
       end
       it 'ユーザーネームが7文字であれば登録×' do
-        user.name = Faker::Lorem.characters(number:7)
+        user.name = SecureRandom.alphanumeric(7)
         is_expected.to eq false
       end
       it '重複したユーザーネームは登録×' do
         user.name = other_user.name
+        is_expected.to eq false
+      end
+    end
+    context 'emailカラム' do
+      it 'メールアドレスが空白であれば登録×' do
+        user.email = ""
+        is_expected.to eq false
+      end
+      it '重複したメールアドレスは登録×' do
+        user.email = other_user.email
+        is_expected.to eq false
+      end
+    end
+    context 'residenceカラム' do
+      it '居住地はデフォルト("---")でも登録◯' do
+        user.residence = 0
+        is_expected.to eq true
+      end
+    end
+    context 'profile_imageカラム' do
+      it 'プロフィール画像は空白でも登録◯' do
+        user.profile_image = ""
+        is_expected.to eq true
+      end
+    end
+    context 'passwordカラム' do
+      it 'パスワードが空白であれば登録×' do
+        user.password = ''
+        is_expected.to eq false
+      end
+      it 'パスワードが5文字であれば登録×' do
+        user.password = SecureRandom.alphanumeric(5)
+        user.password_confirmation = user.password
+        is_expected.to eq false
+      end
+      it 'パスワードが6文字であれば登録◯' do
+        user.password = SecureRandom.alphanumeric(6)
+        user.password_confirmation = user.password
+        is_expected.to eq true
+      end
+      it 'パスワードと再入力パスワードが異なる場合登録×' do
+        user.password_confirmation = user.password + SecureRandom.alphanumeric(1)
         is_expected.to eq false
       end
     end
@@ -42,8 +84,11 @@ RSpec.describe 'Userモデルのテスト', type: :model do
       it 'User:Review = 1:N' do
         expect(User.reflect_on_association(:reviews).macro).to eq :has_many
       end
-      it 'User:Relationship = 1:N' do
-        expect(User.reflect_on_association(:relationships).macro).to eq :has_many
+      it 'User:Followers = 1:N (User同士の中間テーブル接続)' do
+        expect(User.reflect_on_association(:followers).macro).to eq :has_many
+      end
+      it 'User:Followings = 1:N (User同士の中間テーブル接続)' do
+        expect(User.reflect_on_association(:followings).macro).to eq :has_many
       end
     end
   end
