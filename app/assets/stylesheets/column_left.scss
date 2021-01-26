@@ -4,6 +4,7 @@
   top: 136px;
   height: 79%;
   background-color: #060817;
+  transition: all 0.5s;
   font-family: 'M PLUS Rounded 1c', sans-serif;
   .left-title {
     background-color: #1C1F39;
@@ -30,4 +31,8 @@
 //スクロールバー非表示
 .left-column::-webkit-scrollbar {
     display:none;
+}
+
+.left-column:hover {
+  background-color: #1C1F39;
 }
