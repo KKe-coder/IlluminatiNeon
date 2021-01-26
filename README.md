@@ -1,11 +1,18 @@
 # IlluminatiNeon
-<img src="https://user-images.githubusercontent.com/72348241/103642143-11f6ae80-4f96-11eb-9c7f-205ea887a1af.gif" width="300">
+デプロイURL名→IlluminatioNeoN
+
+<img src="https://user-images.githubusercontent.com/72348241/105709818-94e9a400-5f59-11eb-9302-f3b557b8124b.jpg" width="300">
 
 ## サイト概要
 美しく、幻想的な電飾夜景の様子を写真で投稿し、レビューと共有をし、
 
-フォロー・フォロワー・マイタイムライン機能で"繋がれる"サイトです。
+フォロー・フォロワー・マイタイムライン機能で交流するサイトです。
 
+特色Ⅰ>>>マイページ：フォロワーのつぶやきや投稿を眺めつつ、自分自身の投稿もふわっと流れていくように…
+<img src="https://user-images.githubusercontent.com/72348241/105709366-fa896080-5f58-11eb-9dcb-85fad759eb09.gif" width="300">
+
+特色Ⅱ>>>投稿詳細ページ：投稿地の現在気温や天気を知ったり、コメントを付けて星評価のレビューをしたり等…
+<img src="https://user-images.githubusercontent.com/72348241/105709451-10972100-5f59-11eb-9648-2d5fabe6e600.gif" width="300">
 ### サイトテーマ
 
 - Illumination (イルミネーション)・Neon (ネオン)の合成語。
@@ -34,7 +41,7 @@
 - ブラウザ：Google Chrome 87.0.4280.88 (Official Build)
 - 言語：HTML, CSS, JavaScript, Ruby, SQL
 - フレームワーク：Ruby on Rails
-- JSライブラリ：jQuery
+- JSライブラリ：jQuery, raty.js
 - IDE：AWS Cloud9
 
 ## 使用素材

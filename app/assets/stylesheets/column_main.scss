@@ -3,4 +3,9 @@
   left: 16.6666666667%;
   background-color: #060817;
   Z-index: -1;
+  transition: all 0.5s;
+}
+
+.main-column:hover {
+  background-color: #1C1F39;
 }
