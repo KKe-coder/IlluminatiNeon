@@ -130,4 +130,25 @@ describe '[02]ユーザーログイン後テスト' do
       end
     end
   end
+  describe '[02-3]下部ヘッダーのテスト(ログイン後)' do
+    let(:user) { create(:user) }
+
+    before do
+      visit new_user_session_path
+      fill_in 'user[email]', with: user.email
+      fill_in 'user[password]', with: user.password
+      click_button 'ログイン'
+    end
+    context '表示内容の確認' do
+      it '「[ユーザー名]さん、ようこそ！」という文章が存在する' do
+        expect(page).to have_content user.name + 'さん、ようこそ！'
+      end
+      it '「つぶやいてみる」フォームが表示される' do
+        expect(page).to have_field 'murmur[body]'
+      end
+      it '「つぶやき送信」ペンボタンが表示される' do
+        expect(find("#create_murmur")).to have_selector '.fa-pen-nib'
+      end
+    end
+  end
 end
