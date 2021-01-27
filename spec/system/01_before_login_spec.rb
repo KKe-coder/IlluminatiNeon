@@ -238,7 +238,7 @@ describe '[01]ユーザーログイン前テスト' do
       it '「パスワード(再入力)」フォームが表示される' do
         expect(page).to have_field 'user[password_confirmation]'
       end
-      it '会員登録ボタンが表示される' do
+      it '「会員登録」ボタンが表示される' do
         expect(page).to have_button '会員登録'
       end
     end
@@ -256,6 +256,66 @@ describe '[01]ユーザーログイン前テスト' do
       it '新規登録後のリダイレクト先が、新規登録できたユーザーの詳細画面になっている' do
         click_button '会員登録'
         expect(current_path).to eq '/users/' + User.last.id.to_s
+      end
+    end
+  end
+  describe '[01-7]ユーザーログインのテスト' do
+    let(:user) { create(:user) }
+    before do
+      visit new_user_session_path
+    end
+    context '表示内容の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq '/users/sign_in'
+      end
+      it 'タイトル部「ロ グ イ ン」と表示される' do
+        expect(page).to have_content 'ロ グ イ ン'
+      end
+      it '「メールアドレス」フォームが表示される' do
+        expect(page).to have_field 'user[email]'
+      end
+      it '「パスワード」フォームが表示される' do
+        expect(page).to have_field 'user[password]'
+      end
+      it '「ログイン」ボタンが表示される' do
+        expect(page).to have_button 'ログイン'
+      end
+      it '「パスワードをお忘れですか？」のリンク表示がされる' do
+        expect(page).to have_content 'パスワードをお忘れですか？'
+      end
+      it '「ゲストとしてログインする」ボタンが表示される' do
+        expect(page).to have_content 'ゲストとしてログインする'
+      end
+    end
+    context '「ログイン」ボタン以外のリンク内容の確認' do
+      subject { current_path }
+      it '「パスワードをお忘れですか？」リンクを押すと、パスワード再発行手続き画面に遷移する' do
+        click_on 'パスワードをお忘れですか？'
+        is_expected.to eq '/users/password/new'
+      end
+      it '「ゲストとしてログインする」ボタンを押すと、ゲストとしてログインし、ゲストマイページに遷移する' do
+        click_on 'ゲストとしてログインする'
+        expect(page).to have_content 'ゲストさん'
+      end
+    end
+    context 'ユーザーログイン成功のテスト' do
+      before do
+        fill_in 'user[email]', with: user.email
+        fill_in 'user[password]', with: user.password
+        click_button 'ログイン'
+      end
+      it 'ログイン後のリダイレクト先が、ログインユーザーの詳細画面になっている' do
+        expect(current_path).to eq '/users/' + user.id.to_s
+      end
+    end
+    context 'ユーザーログイン失敗のテスト' do
+      before do
+        fill_in 'user[email]', with: ''
+        fill_in 'user[password]', with: ''
+        click_button 'ログイン'
+      end
+      it '無効な値ではログイン出来ず、ログイン画面に再度リダイレクトされる' do
+        expect(current_path).to eq '/users/sign_in'
       end
     end
   end
