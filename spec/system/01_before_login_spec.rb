@@ -242,5 +242,21 @@ describe '[01]ユーザーログイン前テスト' do
         expect(page).to have_button '会員登録'
       end
     end
+    context '新規会員登録のテスト' do
+      before do
+        fill_in 'user[name]', with: SecureRandom.alphanumeric(6)
+        fill_in 'user[email]', with: Faker::Internet.email
+        fill_in 'user[password]', with: 'password'
+        fill_in 'user[password_confirmation]', with: 'password'
+      end
+
+      it '正しく新規登録される' do
+        expect { click_button '会員登録' }.to change(User.all, :count).by(1)
+      end
+      it '新規登録後のリダイレクト先が、新規登録できたユーザーの詳細画面になっている' do
+        click_button '会員登録'
+        expect(current_path).to eq '/users/' + User.last.id.to_s
+      end
+    end
   end
 end
