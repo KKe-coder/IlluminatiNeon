@@ -7,5 +7,6 @@ FactoryBot.define do
     rate { 3 }
     place { "北海道" }
     impression { Faker::Lorem.characters(number:100) }
+    avgrate { 3 }
   end
 end
