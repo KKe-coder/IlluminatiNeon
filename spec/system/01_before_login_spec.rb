@@ -166,4 +166,81 @@ describe '[01]ユーザーログイン前テスト' do
       end
     end
   end
+  describe '[01-5]左右カラムのテスト' do
+    let(:user) { create(:user) }
+    let!(:post1) { create(:post, user: user, avgrate: 4.5) }
+    let!(:post2) { create(:post, user: user, avgrate: 4.7, title: "AVGTOP1") }
+    let!(:post3) { create(:post, user: user, avgrate: 4) }
+    let!(:post4) { create(:post, user: user) }
+    let!(:post5) { create(:post, user: user) }
+    let!(:post6) { create(:post, user: user, title: "CRETOP1") }
+    before do
+      visit new_user_registration_path
+    end
+    context '表示内容の確認' do
+      it '左側に「人気投稿」とタイトルの付いた見出しがあること' do
+        expect(page).to have_content '人気投稿'
+      end
+      it '左カラム最上部(カラム1番目)は、平均評価が最も高いものとなっていること' do
+        avgtop_columnpost = find_all('a.column-post-title')[0].native.inner_text
+        expect(avgtop_columnpost).to match("AVGTOP1")
+      end
+      it '右側に「最新投稿」とタイトルの付いた見出しがあること' do
+        expect(page).to have_content '最新投稿'
+      end
+      it '右カラム最上部(カラム4番目)は、投稿日時が最も新しいものとなっていること' do
+        createtop_columnpost = find_all('a.column-post-title')[3].native.inner_text
+        expect(createtop_columnpost).to match("CRETOP1")
+      end
+    end
+    context 'リンク内容の確認' do
+      subject { current_path }
+
+      it '投稿リンクを押すと、投稿詳細に遷移する' do
+        columnpost = find_all('a.column-post-title')[0].native.inner_text
+        columnpost = columnpost.delete(' ')
+        columnpost.gsub!(/\n/, '')
+        click_link columnpost
+        is_expected.to match(/posts/i)
+      end
+      it '人物名を押すと、ユーザー詳細に遷移する' do
+        columnuser = find_all('a.posts-creater')[0].native.inner_text
+        columnuser = columnuser.delete(' ')
+        columnuser.gsub!(/\n/, '')
+        click_link columnuser, match: :first
+        is_expected.to match(/users/i)
+      end
+    end
+  end
+  describe '[01-6]ユーザー新規登録のテスト' do
+    before do
+      visit new_user_registration_path
+    end
+    context '表示内容の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq '/users/sign_up'
+      end
+      it 'タイトル部「新規会員登録」と表示される' do
+        expect(page).to have_content '新規会員登録'
+      end
+      it '「ユーザーネーム(6文字以内)」フォームが表示される' do
+        expect(page).to have_field 'user[name]'
+      end
+      it '「メールアドレス」フォームが表示される' do
+        expect(page).to have_field 'user[email]'
+      end
+      it '「お住まいの都道府県」プルダウンメニューが表示される' do
+        expect(page).to have_field 'user[residence]'
+      end
+      it '「パスワード(6文字以上)」フォームが表示される' do
+        expect(page).to have_field 'user[password]'
+      end
+      it '「パスワード(再入力)」フォームが表示される' do
+        expect(page).to have_field 'user[password_confirmation]'
+      end
+      it '会員登録ボタンが表示される' do
+        expect(page).to have_button '会員登録'
+      end
+    end
+  end
 end
