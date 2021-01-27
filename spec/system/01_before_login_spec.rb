@@ -289,7 +289,7 @@ describe '[01]ユーザーログイン前テスト' do
     end
     context '「ログイン」ボタン以外のリンク内容の確認' do
       subject { current_path }
-      it '「パスワードをお忘れですか？」リンクを押すと、パスワード再発行手続き画面に遷移する' do
+      it '「パスワードをお忘れですか？」リンクを押すと、パスワード再発行手続画面に遷移する' do
         click_on 'パスワードをお忘れですか？'
         is_expected.to eq '/users/password/new'
       end
