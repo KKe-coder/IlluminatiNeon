@@ -1,5 +1,5 @@
 # IlluminatiNeon
-デプロイURL名→IlluminatioNeoN
+デプロイURL名：IlluminatioNeoN
 
 <img src="https://user-images.githubusercontent.com/72348241/105709818-94e9a400-5f59-11eb-9302-f3b557b8124b.jpg" width="300">
 
