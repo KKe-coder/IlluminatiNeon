@@ -48,7 +48,7 @@ describe '[02]ユーザーログイン後テスト' do
       end
     end
   end
-  describe '[02-2]上部ヘッダーのテスト(ログイン後)' do
+  describe '[02-2]上部ヘッダーのテスト' do
     let(:user) { create(:user) }
 
     before do
@@ -130,7 +130,7 @@ describe '[02]ユーザーログイン後テスト' do
       end
     end
   end
-  describe '[02-3]下部ヘッダーのテスト(ログイン後)' do
+  describe '[02-3]下部ヘッダーのテスト' do
     let(:user) { create(:user) }
 
     before do
@@ -148,6 +148,84 @@ describe '[02]ユーザーログイン後テスト' do
       end
       it '「つぶやき送信」ペンボタンが表示される' do
         expect(find("#create_murmur")).to have_selector '.fa-pen-nib'
+      end
+    end
+  end
+  describe '[02-4]投稿一覧表示テスト' do
+    let(:user) { create(:user) }
+    let!(:other_user) { create(:user) }
+    let!(:post) { create(:post, user: user) }
+    let!(:other_post) { create(:post, user: other_user) }
+
+    before do
+      visit new_user_session_path
+      fill_in 'user[email]', with: user.email
+      fill_in 'user[password]', with: user.password
+      click_button 'ログイン'
+      visit posts_path
+    end
+    context '表示内容の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq '/posts'
+      end
+      it 'タイトル「投稿一覧」が表示される' do
+        title = find_all('h2.mt-3')[0].native.inner_text
+        expect(title).to match("投　稿　一　覧")
+      end
+      it '自分と他者の投稿それぞれのユーザーリンク先が正しい' do
+        expect(page).to have_link '', href: user_path(post.user)
+        expect(page).to have_link '', href: user_path(other_post.user)
+      end
+      it '自分の他者の投稿のタイトルのリンク先がそれぞれ投稿詳細になっている' do
+        expect(page).to have_link post.title, href: post_path(post)
+        expect(page).to have_link other_post.title, href: post_path(other_post)
+      end
+    end
+  end
+  describe '[02-5]新規投稿テスト' do
+    let(:user) { create(:user) }
+
+    before do
+      visit new_user_session_path
+      fill_in 'user[email]', with: user.email
+      fill_in 'user[password]', with: user.password
+      click_button 'ログイン'
+      visit new_post_path
+    end
+    context '表示内容の確認' do
+      it 'URLが正しい' do
+        expect(current_path).to eq '/posts/new'
+      end
+      it 'タイトル「新規投稿」が表示される' do
+        title = find_all('h2.mt-3')[0].native.inner_text
+        expect(title).to match("新　規　投　稿")
+      end
+      it '「タイトル(7文字以内)」フォームが表示される' do
+        expect(page).to have_field 'post[title]'
+      end
+      it '「タイトル(7文字以内)」フォームが空欄であること' do
+        expect(find_field('post[title]').text).to be_blank
+      end
+      it '「画像」アップロードフォームが表示される' do
+        expect(page).to have_field 'post[image]'
+      end
+      it '「タイプ」選択フォームが表示される' do
+        expect(page).to have_field 'post[category]'
+      end
+      it '「カラー」選択フォームが表示される' do
+        expect(page).to have_field 'post[color]'
+      end
+      it '「場所」選択フォームが表示される' do
+        expect(page).to have_field 'post[place]'
+      end
+      it '「感想(200文字以内)」フォームが表示される' do
+        expect(page).to have_field 'post[impression]'
+      end
+      it '「感想(200文字以内)」フォームが空欄であること' do
+        expect(find_field('post[impression]').text).to be_blank
+      end
+      it '「投稿する」ボタンが表示される' do
+        expect(page).to have_button '投稿する'
       end
     end
   end
