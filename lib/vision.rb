@@ -8,9 +8,16 @@ module Vision
       # APIのURL作成
       api_url = "https://vision.googleapis.com/v1/images:annotate?key=#{ENV['GOOGLE_API_KEY']}"
 
-      # 画像をbase64にエンコード※本番環境のみS3にアップロードしてるので、参照先が違う
+      # 画像をbase64にエンコード※本番環境と開発環境での条件分岐を行う。
       if Rails.env.production?
-        base64_image = Base64.encode64(open("https://illuminatineon.s3-ap-northeast-1.amazonaws.com/store/#{image_file.id}").read)
+        require 'aws-sdk'
+        client = Aws::S3::Client.new(
+                                      :region => 'ap-northeast-1',
+                                      :access_key_id => ENV['S3_PRODUCTION_COLOR_KEY'],
+                                      :secret_access_key => ENV['S3_PRODUCTION_SECRET_KEY'],
+                                    )
+        image_object = client.get_object(:bucket => 'illuminatineon', :key => '#{image_file.id}').body.read
+        base64_image = Base64.encode64(image_object)
       else
         base64_image = Base64.encode64(open("#{Rails.root}/public/uploads/#{image_file.id}").read)
       end
