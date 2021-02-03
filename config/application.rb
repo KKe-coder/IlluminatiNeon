@@ -10,6 +10,7 @@ module IlluminatiNeon
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
+    config.paths.add 'lib', eager_load: true
     # KKe-coder added
     ## create slim
     config.generators.template_engine = :slim
