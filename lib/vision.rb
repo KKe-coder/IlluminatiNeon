@@ -10,14 +10,7 @@ module Vision
 
       # 画像をbase64にエンコード※本番環境と開発環境での条件分岐を行う。
       if Rails.env.production?
-        require 'aws-sdk'
-        client = Aws::S3::Client.new(
-                                      :region => 'ap-northeast-1',
-                                      :access_key_id => ENV['S3_PRODUCTION_COLOR_KEY'],
-                                      :secret_access_key => ENV['S3_PRODUCTION_SECRET_KEY'],
-                                    )
-        image_object = client.get_object(:bucket => 'illuminatineon', :key => '#{image_file.id}').body.read
-        base64_image = Base64.encode64(image_object)
+        base64_image = Base64.encode64(open("https://illuminatineon.s3-ap-northeast-1.amazonaws.com/store/#{image_file.id}").read)
       else
         base64_image = Base64.encode64(open("#{Rails.root}/public/uploads/#{image_file.id}").read)
       end
