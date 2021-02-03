@@ -8,9 +8,12 @@ module Vision
       # APIのURL作成
       api_url = "https://vision.googleapis.com/v1/images:annotate?key=#{ENV['GOOGLE_API_KEY']}"
 
-      # 画像をbase64にエンコード
-      base64_image = Base64.encode64(open("#{Rails.root}/public/uploads/#{image_file.id}").read)
-
+      # 画像をbase64にエンコード※本番環境のみS3にアップロードしてるので、参照先が違う
+      if Rails.env.production?
+        base64_image = Base64.encode64(open("https://s3-ap-northeast-1.amazonaws.com/illuminatineon/store/#{image_file.id}").read)
+      else
+        base64_image = Base64.encode64(open("#{Rails.root}/public/uploads/#{image_file.id}").read)
+      end
       # APIリクエスト用のJSONパラメータ
       params = {
         requests: [{
