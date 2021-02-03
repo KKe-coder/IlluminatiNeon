@@ -19,7 +19,7 @@ module Vision
           },
           features: [
             {
-              type: 'LABEL_DETECTION'
+              type: 'IMAGE_PROPERTIES'
             }
           ]
         }]

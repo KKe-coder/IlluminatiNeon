@@ -44,7 +44,7 @@
           td
             span.text-light style="font-size:0.8rem" 投稿する画像の基本のカラーはどれですか？
             br
-            = f.select :color, options_for_select(Post.colors.keys, selected:@post.color), include_blank: "選択"
+            = f.select :color, options_for_select(Post.colors.keys, selected:@post.color)
         tr
           td.align-middle.text-right
             span.text-light
