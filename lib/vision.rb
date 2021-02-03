@@ -10,7 +10,7 @@ module Vision
 
       # 画像をbase64にエンコード※本番環境のみS3にアップロードしてるので、参照先が違う
       if Rails.env.production?
-        puts "#{image_file.id}"
+        puts params
         base64_image = Base64.encode64(open("https://illuminatineon.s3-ap-northeast-1.amazonaws.com/store/#{image_file.id}").read)
       else
         base64_image = Base64.encode64(open("#{Rails.root}/public/uploads/#{image_file.id}").read)
