@@ -42,7 +42,7 @@
               |カラー
             span.text-danger  ※
           td
-            span.text-light style="font-size:0.8rem" 投稿する画像の基本のカラーはどれですか？
+            span.text-light style="font-size:0.8rem" 投稿する画像の基本のカラーが誤っていれば、変更して下さい
             br
             = f.select :color, options_for_select(Post.colors.keys, selected:@post.color)
         tr
