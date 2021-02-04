@@ -59,8 +59,10 @@ class PostsController < ApplicationController
     @post.user_id = current_user.id
     @post.avgrate = @post.rate
     if @post.save
-      safesearch = Vision.get_safesearch_data(@post.image)
+      $visionmode = "safesearch"
+      safesearch = Vision.get_image_data(@post.image)
       unless safesearch.value?("LIKELY") || safesearch.value?("VERY_LIKELY") || safesearch.value?("POSSIBLE")
+        $visionmode = "color"
         dominant_color = Vision.get_image_data(@post.image).values
         colors = { "Red" => [220, 53, 69], "Orange" => [255, 153, 51], "Yellow" => [255, 193, 7], "Green" => [40, 167, 69], "Blue" => [0, 123, 255], "Indigo" => [51, 51, 204], "Purple" => [153, 51, 255]}
         distance = {}
@@ -70,11 +72,9 @@ class PostsController < ApplicationController
           b = "#{(value[2] - dominant_color[2])**2}"
           distance[key] = "#{((r + g + b).to_i**(1 / 2.0)).round}"
           #ここまででColor differenceのHashを作成
-          if key == "Purple"
-            sorted_dis = distance.sort {|(k1, v1), (k2, v2)| v1.to_i <=> v2.to_i }.to_h
-            @post.update(color: sorted_dis.first.first)
-          end
         }
+        sorted_dis = distance.sort {|(k1, v1), (k2, v2)| v1.to_i <=> v2.to_i }.to_h
+        @post.update(color: sorted_dis.first.first)
         redirect_to post_path(@post.id)
       else
         @post.destroy
