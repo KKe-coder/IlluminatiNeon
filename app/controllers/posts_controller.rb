@@ -70,11 +70,9 @@ class PostsController < ApplicationController
           b = "#{(value[2] - dominant_color[2])**2}"
           distance[key] = "#{((r + g + b).to_i**(1 / 2.0)).round}"
           #ここまででColor differenceのHashを作成
-          if key == "Purple"
-            sorted_dis = distance.sort {|(k1, v1), (k2, v2)| v1.to_i <=> v2.to_i }.to_h
-            @post.update(color: sorted_dis.first.first)
-          end
         }
+        sorted_dis = distance.sort {|(k1, v1), (k2, v2)| v1.to_i <=> v2.to_i }.to_h
+        @post.update(color: sorted_dis.first.first)
         redirect_to post_path(@post.id)
       else
         @post.destroy
