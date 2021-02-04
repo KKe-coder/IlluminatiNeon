@@ -41,7 +41,6 @@ module Vision
       if (error = response_body['responses'][0]['error']).present?
         raise error['message']
       else
-        binding.pry
         unless $visionmode == "color"
           JSON.parse(response.body)['responses'][0]["safeSearchAnnotation"]
         else
