@@ -60,10 +60,8 @@ class PostsController < ApplicationController
     @post.avgrate = @post.rate
     if @post.save
       safesearch = Vision.get_safesearch_data(@post.image)
-      puts safesearch
       unless safesearch.value?("LIKELY") || safesearch.value?("VERY_LIKELY") || safesearch.value?("POSSIBLE")
         dominant_color = Vision.get_image_data(@post.image).values
-
         colors = { "Red" => [220, 53, 69], "Orange" => [255, 153, 51], "Yellow" => [255, 193, 7], "Green" => [40, 167, 69], "Blue" => [0, 123, 255], "Indigo" => [51, 51, 204], "Purple" => [153, 51, 255]}
         distance = {}
         colors.each{|key, value|
