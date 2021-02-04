@@ -83,5 +83,4 @@ gem 'refile-s3'
 
 group :production do
   gem 'mysql2'
-  gem 'aws-sdk'
 end
