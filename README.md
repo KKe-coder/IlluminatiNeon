@@ -53,4 +53,8 @@
 
 ## 使用API
 
-- [OpenWeatherMap](https://openweathermap.org/) (投稿の現在天気表示に使用)
+- [OpenWeatherMap](https://openweathermap.org/)
+  - 投稿の現在天気表示に使用)
+- [Google Vision API](https://cloud.google.com/vision?hl=ja)
+  1. 新規投稿の際、センシティブな画像が投稿できないよう判定
+  2. 新規投稿の際、メインカラーを自動判定し投稿にタグ付け
