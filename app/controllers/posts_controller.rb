@@ -79,7 +79,9 @@ class PostsController < ApplicationController
         }
         redirect_to post_path(@post.id)
       else
-        redirect_to posts_path
+        @post.destroy
+        @post.errors.messages[:image] = ["が不適切な可能性があります"]
+        render :new
       end
     else
       render :new
