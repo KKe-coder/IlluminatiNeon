@@ -91,8 +91,20 @@
                 span
                   |さん
                 br
-                <span id="star-rate-#{post.id}"></span>
+                <span id="star-index-ave-#{post.id}"></span>
                 span.text-bottom
-                  |(#{post.rate.round(2)}点)
-              = render 'shared/starids', object: post
-
+                  |(#{post.avgrate.round(2)}点)
+              javascript:
+                $(function() {
+                  if((document.getElementById('star-index-ave-#{post.id}').getElementsByTagName("img").length == 0 )){
+                    $('#star-index-ave-#{post.id}').raty({
+                      size: 36,
+                      starOff: "#{asset_path('star-off.png')}",
+                      starOn: "#{asset_path('star-on.png')}",
+                      starHalf: "#{asset_path('star-half.png')}",
+                      half: true,
+                      readOnly: true,
+                      score: "#{post.avgrate}",
+                    });
+                  }
+                });
