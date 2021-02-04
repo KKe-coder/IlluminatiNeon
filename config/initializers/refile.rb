@@ -1,4 +1,5 @@
 require 'refile/s3'
+#s3を外して別処理にする?
 Refile.backends['store'] = Refile::Backend::FileSystem.new('public/uploads/')
 if Rails.env.production? # 本番環境の場合はS3へアップロード
   aws = {
