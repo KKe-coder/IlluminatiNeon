@@ -69,7 +69,7 @@ class PostsController < ApplicationController
           g = "#{(value[1] - dominant_color[1])**2}"
           b = "#{(value[2] - dominant_color[2])**2}"
           distance[key] = "#{((r + g + b).to_i**(1 / 2.0)).round}"
-          #ここまででColor differenceのHashを作成
+          #ここまででcolor differenceのHashを作成
         }
         sorted_dis = distance.sort {|(k1, v1), (k2, v2)| v1.to_i <=> v2.to_i }.to_h
         @post.update(color: sorted_dis.first.first)
@@ -93,9 +93,29 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
+    @post_beforeimage = @post.image
     @post.avgrate = ((@post.reviews.sum(:rate) + @post.rate) / (@post.reviews.count + 1))
     if @post.update(post_params)
-      redirect_to post_path(@post.id)
+      safesearch = Vision.safesearch_image(@post.image)
+      unless safesearch.value?("LIKELY") || safesearch.value?("VERY_LIKELY") || safesearch.value?("POSSIBLE")
+        dominant_color = Vision.getcolor_image(@post.image).values
+        colors = { "Red" => [220, 53, 69], "Orange" => [255, 153, 51], "Yellow" => [255, 193, 7], "Green" => [40, 167, 69], "Blue" => [0, 123, 255], "Indigo" => [51, 51, 204], "Purple" => [153, 51, 255]}
+        distance = {}
+        colors.each{|key, value|
+          r = "#{(value[0] - dominant_color[0])**2}"
+          g = "#{(value[1] - dominant_color[1])**2}"
+          b = "#{(value[2] - dominant_color[2])**2}"
+          distance[key] = "#{((r + g + b).to_i**(1 / 2.0)).round}"
+          #ここまででColor differenceのHashを作成
+        }
+        sorted_dis = distance.sort {|(k1, v1), (k2, v2)| v1.to_i <=> v2.to_i }.to_h
+        @post.update(color: sorted_dis.first.first)
+        redirect_to post_path(@post.id)
+      else
+        @post.update(image: @post_beforeimage.id)
+        @post.errors.messages[:image] = ["が不適切な可能性があります"]
+        render :edit
+      end
     else
       render :edit
     end
