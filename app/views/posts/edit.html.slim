@@ -4,6 +4,7 @@
   p.mt-2.text-right.text-danger
     | ※印のところは入力必須項目です。
   = form_with model: @post, local:true do |f|
+    = f.hidden_field :beforeimage, value: @post.image.id
     table.table.table-borderless.mt-3
       tbody
         tr
@@ -23,6 +24,8 @@
             img.inputimage.rounded
             .div style="width:250px"
               = f.attachment_field :image, class:"text-truncate text-light"
+            br
+            span.text-light ■カラーは投稿編集後、自動で判別します。
         tr
           td.align-middle.text-right
             span.text-light
@@ -36,15 +39,6 @@
             span &nbsp;
             = f.radio_button :category, :Neon
             = f.label :Neon, "ネオン", class:"text-danger"
-        tr
-          td.align-middle.text-right
-            span.text-light
-              |カラー
-            span.text-danger  ※
-          td
-            span.text-light style="font-size:0.8rem" 投稿する画像の基本のカラーが誤っていれば、変更して下さい
-            br
-            = f.select :color, options_for_select(Post.colors.keys, selected:@post.color)
         tr
           td.align-middle.text-right
             span.text-light

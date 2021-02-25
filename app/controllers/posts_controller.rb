@@ -93,7 +93,6 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    @post_beforeimage = @post.image
     @post.avgrate = ((@post.reviews.sum(:rate) + @post.rate) / (@post.reviews.count + 1))
     if @post.update(post_params)
       safesearch = Vision.safesearch_image(@post.image)
@@ -112,7 +111,8 @@ class PostsController < ApplicationController
         @post.update(color: sorted_dis.first.first)
         redirect_to post_path(@post.id)
       else
-        @post.update(image: @post_beforeimage.id)
+        #f.hidden_fieldにある前の画像データで上書きする
+        @post.update(image_id: params[:post][:beforeimage])
         @post.errors.messages[:image] = ["が不適切な可能性があります"]
         render :edit
       end
