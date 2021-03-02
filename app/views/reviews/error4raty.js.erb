@@ -1,3 +1,0 @@
-$(".reviews").html("<h4 class=\"text-light text-center mt-3\"><i class=\"fas fa-exclamation-triangle\"></i>評価の値が正しくありません!!</h4>").hide().fadeIn('slow');
-var errorreview = function(){$(".reviews").html("<%= j(render 'shared/show_reviews') %>").hide().fadeIn('slow');}
-setTimeout(errorreview, 2000);

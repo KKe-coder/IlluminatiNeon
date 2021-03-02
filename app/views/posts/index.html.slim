@@ -21,7 +21,7 @@
         tr
           th.text-right
             |いいね数順
-            i.far.fa-heart.text-danger
+            i.fas.fa-heart.text-danger
           td
             = link_to "多い順", posts_path(favoritecount: "up"), class:"text-light border rounded-sm"
           td
@@ -29,7 +29,7 @@
         tr
           th.text-right
             |レビュー数順
-            i.far.fa-comments.text-warning
+            i.fas.fa-comments.text-success
           td
             = link_to "多い順", posts_path(reviewcount: "up"), class:"text-light border rounded-sm"
           td
@@ -70,41 +70,16 @@
           |投稿が見つかりませんでした。
   .d-flex.flex-wrap.text-light.text-center.justify-content-center
     - @posts.each do |post|
-        .card.border-light.bg-transparent style="width:13rem;"
+      = link_to post_path(post.id) do
+        .card.border-light.bg-transparent.mr-2.mt-2 style="width:13rem;"
           = attachment_image_tag post, :image, class:"bd-placeholder-img card-img", width:"100%", height:"180px"
           .card-img-overlay
-            .card-title
-              = link_to post_path(post.id) do
-                h4.mt-2.font-weight-bold.text-info #{post.title}
+            .card-title.mt-5
+              h4.mt-2.font-weight-bold.text-info
+                span.rounded #{post.title}
             ul.list-group.list-group-flush
               li.list-group-item.bg-transparent
-                span.border.rounded-lg #{post.place}
-                span #{post.created_at.strftime('%m/%d %H:%M')}
-              li.list-group-item.bg-transparent
-                i.fas.fa-heart.text-danger&nbsp;#{post.favorites.count}&nbsp;
-                i.far.fa-comments.text-warning&nbsp;#{post.reviews.count}
-              li.list-group-item.bg-transparent.mt-3
-                = link_to user_path(post.user_id) do
-                  = attachment_image_tag post.user, :profile_image, size: "30x30", fallback: "no_image_user.jpg", class: "border rounded-circle ml-1"
-                  span.font-weight-bold.text-success.ml-1
-                    |#{post.user.name}
-                span
-                  |さん
-                br
-                <span id="star-index-ave-#{post.id}"></span>
-                span.text-bottom
-                  |(#{post.avgrate.round(2)}点)
-              javascript:
-                $(function() {
-                  if((document.getElementById('star-index-ave-#{post.id}').getElementsByTagName("img").length == 0 )){
-                    $('#star-index-ave-#{post.id}').raty({
-                      size: 36,
-                      starOff: "#{asset_path('star-off.png')}",
-                      starOn: "#{asset_path('star-on.png')}",
-                      starHalf: "#{asset_path('star-half.png')}",
-                      half: true,
-                      readOnly: true,
-                      score: "#{post.avgrate}",
-                    });
-                  }
-                });
+                .rounded
+                  i.fas.fa-heart.text-danger&nbsp;#{post.favorites.count}&nbsp;
+                  i.fas.fa-comments.text-success&nbsp;#{post.reviews.count}&nbsp;
+                  i.fas.fa-star.text-warning&nbsp;#{post.avgrate.round(2)}
