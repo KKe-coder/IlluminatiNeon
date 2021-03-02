@@ -1,6 +1,0 @@
-$(".murmurs_header").html("<span class=\"text-light\">空白のつぶやきはできません!!</span>").hide().fadeIn('slow');
-$('#create_murmur').html('<i class="fas fa-exclamation-triangle"></i>');
-var errormurmur = function(){$(".murmurs_header").html("<%= j(render 'shared/create_murmur') %>").hide().fadeIn('slow');}
-var vaildmurmurmark = function(){$('#create_murmur').html('<i class="fas fa-pen-nib"></i>');}
-setTimeout(errormurmur, 2000);
-setTimeout(vaildmurmurmark, 2000);
