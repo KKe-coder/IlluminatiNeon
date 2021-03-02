@@ -23,15 +23,19 @@
   .card-img-overlay {
     padding: 0;
     text-shadow: 1px 2px 3px #060817;
-    .text-success {
-      font-size: 1.2rem;
-    }
     .list-group-item {
       padding: 0;
       border: 0;
-      span[id*="star-index"] img{
-        width: 1.2rem;
-      }
+    }
+    .rounded {
+      background-color: rgba(26,28,53,0.7);
+      transition: .3s ease-in-out;
+    }
+  }
+  .card-img-overlay:hover {
+    .rounded {
+      background-color: rgba(0,0,0,0.8);
+
     }
   }
 }
