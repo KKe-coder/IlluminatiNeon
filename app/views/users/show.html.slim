@@ -145,8 +145,11 @@
           .mx-1.mx-auto
             .d-flex.justify-content-between
               span.text-light
-                - if ((Time.now - post.created_at) / 60 ) >= 60
-                  = ((Time.now - post.created_at) / 3600 ).round(0)
+                - if ((Time.now - post.created_at) / 60 ) >= 60 * 24
+                  = ((Time.now - post.created_at) / (60*60*24) ).floor
+                  |日前
+                - elsif ((Time.now - post.created_at) / 60 ) >= 60
+                  = ((Time.now - post.created_at) / (60*60) ).round(0)
                   |時間前
                 - else
                   = ((Time.now - post.created_at) / 60 ).round(0)
