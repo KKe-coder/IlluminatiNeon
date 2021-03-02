@@ -22,11 +22,17 @@
         - if count == 4
           h4.mt-1.text-center.text-danger.rounded-pill.border.border-danger.right-title 最新投稿
         h5.text-center.text-light
-          - if ((Time.now - post.created_at) / 60 ) >= 60
+          - if ((Time.now - post.created_at) / 60 ) >= 60 * 24
             span.text-danger
               i.far.fa-clock
               |&nbsp;
-              = ((Time.now - post.created_at) / 3600 ).round(0)
+              = ((Time.now - post.created_at) / (60 * 60 * 24) ).floor
+              | 日前
+          - elsif ((Time.now - post.created_at) / 60 ) >= 60
+            span.text-danger
+              i.far.fa-clock
+              |&nbsp;
+              = ((Time.now - post.created_at) / (60 * 60) ).round(0)
               | 時間前
           - else
             span.text-warning
