@@ -18,11 +18,7 @@ class MurmursController < ApplicationController
           end
         end
     else
-      if murmur.errors.full_messages == ["Bodyを入力してください"]
-        render 'error4blank'
-      else
-        render 'error42long'
-      end
+      render 'error'
     end
   end
 
