@@ -4,8 +4,11 @@
       = murmur.body
     br
     u
-      - if ((Time.now - murmur.created_at) / 60 ) >= 60
-        = ((Time.now - murmur.created_at) / 3600 ).round(0)
+      - if ((Time.now - murmur.created_at) / 60 ) >= 60 * 24
+        = ((Time.now - murmur.created_at) / (60*60*24) ).floor
+        | 日前
+      - elsif ((Time.now - murmur.created_at) / 60 ) >= 60
+        = ((Time.now - murmur.created_at) / (60*60) ).round(0)
         | 時間前
       - else
         = ((Time.now - murmur.created_at) / 60 ).round(0)
