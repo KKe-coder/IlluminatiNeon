@@ -106,4 +106,7 @@ Rails.application.configure do
 
   # devise mailer settings
   config.action_mailer.default_url_options = { host: "https://illuminationeon.com" }
+
+  # log_rotate
+  config.logger = Logger.new("log/production.log", 5, 10 * 1024 * 1024)
 end
